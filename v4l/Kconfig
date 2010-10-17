@@ -128,15 +128,24 @@ config VIDEO_SAA7146_VV
 	depends on VIDEO_V4L2
 	select VIDEOBUF_DMA_SG
 	select VIDEO_SAA7146
-config IR_CORE
-	tristate
+menuconfig IR_CORE
+	tristate "Infrared remote controller adapters"
 	depends on INPUT
 	default INPUT
+	---help---
+	  Enable support for Remote Controllers on Linux. This is
+	  needed in order to support several video capture adapters.
+
+	  Enable this option if you have a video capture board even
+	  if you don't need IR, as otherwise, you may not be able to
+	  compile the driver for your adapter.
 
 config VIDEO_IR
 	tristate
 	depends on IR_CORE
 	default IR_CORE
+
+if IR_CORE
 
 # LIRC disabled for insufficient kernel version
 config LIRC
@@ -151,7 +160,7 @@ config LIRC
 	   Enable this option to build the Linux Infrared Remote
 	   Control (LIRC) core device interface driver. The LIRC
 	   interface passes raw IR to and from userspace, where the
-	   LIRC daemon handles protocol decoding for IR reception ann
+	   LIRC daemon handles protocol decoding for IR reception and
 	   encoding for IR transmitting (aka "blasting").
 
 config RC_MAP
@@ -193,6 +202,7 @@ config IR_RC5_DECODER
 config IR_RC6_DECODER
 	tristate "Enable IR raw decoder for the RC6 protocol"
 	depends on IR_CORE
+	select BITREVERSE
 	default y
 
 	---help---
@@ -202,6 +212,7 @@ config IR_RC6_DECODER
 config IR_JVC_DECODER
 	tristate "Enable IR raw decoder for the JVC protocol"
 	depends on IR_CORE
+	select BITREVERSE
 	default y
 
 	---help---
@@ -217,6 +228,18 @@ config IR_SONY_DECODER
 	   Enable this option if you have an infrared remote control which
 	   uses the Sony protocol, and you need software decoding support.
 
+config IR_RC5_SZ_DECODER
+	tristate "Enable IR raw decoder for the RC-5 (streamzap) protocol"
+	depends on IR_CORE
+	select BITREVERSE
+	default y
+
+	---help---
+	   Enable this option if you have IR with RC-5 (streamzap) protocol,
+	   and if the IR is decoded in software. (The Streamzap PC Remote
+	   uses an IR protocol that is almost standard RC-5, but not quite,
+	   as it uses an additional bit).
+
 # IR_LIRC_CODEC disabled for insufficient kernel version
 config IR_LIRC_CODEC
 	tristate "Enable IR to LIRC bridge"
@@ -231,6 +254,20 @@ config IR_LIRC_CODEC
 
 	   Enable this option to pass raw IR to and from userspace via
 	   the LIRC interface.
+
+config IR_ENE
+	tristate "ENE eHome Receiver/Transceiver (pnp id: ENE0100/ENE02xxx)"
+	depends on PNP
+	depends on IR_CORE
+	---help---
+	   Say Y here to enable support for integrated infrared receiver
+	   /transceiver made by ENE.
+
+	   You can see if you have it by looking at lspnp output.
+	   Output should include ENE0100 ENE0200 or something similar.
+
+	   To compile this driver as a module, choose M here: the
+	   module will be called ene_ir.
 
 # IR_IMON disabled for insufficient kernel version
 config IR_IMON
@@ -267,6 +304,33 @@ config IR_MCEUSB
 
 	   To compile this driver as a module, choose M here: the
 	   module will be called mceusb.
+
+config IR_NUVOTON
+	tristate "Nuvoton w836x7hg Consumer Infrared Transceiver"
+	depends on PNP
+	depends on IR_CORE
+	---help---
+	   Say Y here to enable support for integrated infrared receiver
+	   /transciever made by Nuvoton (formerly Winbond). This chip is
+	   found in the ASRock ION 330HT, as well as assorted Intel
+	   DP55-series motherboards (and of course, possibly others).
+
+	   To compile this driver as a module, choose M here: the
+	   module will be called nuvoton-cir.
+
+config IR_STREAMZAP
+	tristate "Streamzap PC Remote IR Receiver"
+	depends on USB_ARCH_HAS_HCD
+	depends on IR_CORE
+	select USB
+	---help---
+	   Say Y here if you want to use a Streamzap PC Remote
+	   Infrared Receiver.
+
+	   To compile this driver as a module, choose M here: the
+	   module will be called streamzap.
+
+endif #IR_CORE
 
 #
 # Tuner drivers for DVB and V4L
@@ -308,7 +372,7 @@ config MEDIA_TUNER
 menuconfig MEDIA_TUNER_CUSTOMISE
 	bool "Customize analog and hybrid tuner modules to build"
 	depends on MEDIA_TUNER
-	default n
+	default y if EMBEDDED
 	help
 	  This allows the user to deselect tuner drivers unnecessary
 	  for their hardware from the build. Use this option with care
@@ -453,6 +517,13 @@ config MEDIA_TUNER_MAX2165
 	help
 	  A driver for the silicon tuner MAX2165 from Maxim.
 
+config MEDIA_TUNER_TDA18218
+	tristate "NXP TDA18218 silicon tuner"
+	depends on VIDEO_MEDIA && I2C
+	default m if MEDIA_TUNER_CUSTOMISE
+	help
+	  NXP TDA18218 silicon tuner driver.
+
 endif # MEDIA_TUNER_CUSTOMISE
 
 #
@@ -545,7 +616,7 @@ config VIDEO_FIXED_MINOR_RANGES
 
 config VIDEO_HELPER_CHIPS_AUTO
 	bool "Autoselect pertinent encoders/decoders and other helper chips"
-	default y
+	default y if !EMBEDDED
 	---help---
 	  Most video cards may require additional modules to encode or
 	  decode audio/video standards. This option will autoselect
@@ -1005,10 +1076,22 @@ config VIDEO_SH_VOU
 	help
 	  Support for the Video Output Unit (VOU) on SuperH SoCs.
 
+config VIDEO_VIU
+	tristate "Freescale VIU Video Driver"
+	depends on VIDEO_V4L2 && PPC_MPC512x
+	select VIDEOBUF_DMA_CONTIG
+	default y
+	---help---
+	  Support for Freescale VIU video driver. This device captures
+	  video data, or overlays video on DIU frame buffer.
+
+	  Say Y here if you want to enable VIU device on MPC5121e Rev2+.
+	  In doubt, say N.
+
 config VIDEO_VIVI
 	tristate "Virtual Video Driver"
 	depends on VIDEO_DEV && VIDEO_V4L2 && !SPARC32 && !SPARC64
-	depends on (FRAMEBUFFER_CONSOLE || STI_CONSOLE) && FONTS
+	depends on FRAMEBUFFER_CONSOLE || STI_CONSOLE
 	select FONT_8x16
 	select VIDEOBUF_VMALLOC
 	default n
@@ -1115,9 +1198,9 @@ config VIDEO_ISIF
 
 config VIDEO_OMAP2_VOUT
 	tristate "OMAP2/OMAP3 V4L2-Display driver"
-	depends on ARCH_OMAP24XX || ARCH_OMAP34XX
+	depends on ARCH_OMAP2 || ARCH_OMAP3
 	select VIDEOBUF_GEN
-	select VIDEOBUF_DMA_SG
+	select VIDEOBUF_DMA_CONTIG
 	select OMAP2_DSS
 	select OMAP2_VRAM
 	select OMAP2_VRFB
@@ -1131,7 +1214,7 @@ config VIDEO_BT848
 	select I2C_ALGOBIT
 	select VIDEO_BTCX
 	select VIDEOBUF_DMA_SG
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
 	select VIDEO_MSP3400 if VIDEO_HELPER_CHIPS_AUTO
@@ -1196,75 +1279,15 @@ config VIDEO_W9966
 	  Check out <file:Documentation/video4linux/w9966.txt> for more
 	  information.
 
-config VIDEO_CPIA
-	tristate "CPiA Video For Linux (DEPRECATED)"
-	depends on VIDEO_V4L1
-	default n
-	---help---
-	  This driver is DEPRECATED please use the gspca cpia1 module
-	  instead. Note that you need atleast version 0.6.4 of libv4l for
-	  the cpia1 gspca module.
-
-	  This is the video4linux driver for cameras based on Vision's CPiA
-	  (Colour Processor Interface ASIC), such as the Creative Labs Video
-	  Blaster Webcam II. If you have one of these cameras, say Y here
-	  and select parallel port and/or USB lowlevel support below,
-	  otherwise say N. This will not work with the Creative Webcam III.
-
-	  Please read <file:Documentation/video4linux/README.cpia> for more
-	  information.
-
-	  This driver is also available as a module (cpia).
-
-config VIDEO_CPIA_PP
-	tristate "CPiA Parallel Port Lowlevel Support"
-	depends on PARPORT_1284 && VIDEO_CPIA && PARPORT
-	help
-	  This is the lowlevel parallel port support for cameras based on
-	  Vision's CPiA (Colour Processor Interface ASIC), such as the
-	  Creative Webcam II. If you have the parallel port version of one
-	  of these cameras, say Y here, otherwise say N. It is also available
-	  as a module (cpia_pp).
-
-config VIDEO_CPIA_USB
-	tristate "CPiA USB Lowlevel Support"
-	depends on VIDEO_CPIA && USB
-	help
-	  This is the lowlevel USB support for cameras based on Vision's CPiA
-	  (Colour Processor Interface ASIC), such as the Creative Webcam II.
-	  If you have the USB version of one of these cameras, say Y here,
-	  otherwise say N. This will not work with the Creative Webcam III.
-	  It is also available as a module (cpia_usb).
-
 config VIDEO_CPIA2
 	tristate "CPiA2 Video For Linux"
-	depends on VIDEO_DEV && USB && VIDEO_V4L1
+	depends on VIDEO_DEV && USB && VIDEO_V4L2
 	---help---
 	  This is the video4linux driver for cameras based on Vision's CPiA2
 	  (Colour Processor Interface ASIC), such as the Digital Blue QX5
 	  Microscope. If you have one of these cameras, say Y here
 
 	  This driver is also available as a module (cpia2).
-
-config VIDEO_SAA5246A
-	tristate "SAA5246A, SAA5281 Teletext processor"
-	depends on I2C && VIDEO_V4L2
-	help
-	  Support for I2C bus based teletext using the SAA5246A or SAA5281
-	  chip. Useful only if you live in Europe.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called saa5246a.
-
-config VIDEO_SAA5249
-	tristate "SAA5249 Teletext processor"
-	depends on I2C && VIDEO_V4L2
-	help
-	  Support for I2C bus based teletext using the SAA5249 chip. At the
-	  moment this is only useful on some European WinTV cards.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called saa5249.
 
 config VIDEO_VINO
 	tristate "SGI Vino Video For Linux (EXPERIMENTAL)"
@@ -1273,14 +1296,6 @@ config VIDEO_VINO
 	help
 	  Say Y here to build in support for the Vino video input system found
 	  on SGI Indy machines.
-
-config VIDEO_STRADIS
-	tristate "Stradis 4:2:2 MPEG-2 video driver  (EXPERIMENTAL)"
-	depends on EXPERIMENTAL && PCI && VIDEO_V4L1 && VIRT_TO_BUS
-	help
-	  Say Y here to enable support for the Stradis 4:2:2 MPEG-2 video
-	  driver for PCI.  There is a product page at
-	  <http://www.stradis.com/>.
 
 config VIDEO_ZORAN
 	tristate "Zoran ZR36057/36067 Video For Linux"
@@ -1373,9 +1388,8 @@ config VIDEO_MEYE
 
 config VIDEO_SAA7134
 	tristate "Philips SAA7134 support"
-	depends on VIDEO_DEV && PCI && I2C && INPUT
+	depends on VIDEO_DEV && PCI && I2C
 	select VIDEOBUF_DMA_SG
-	select VIDEO_IR
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
 	select CRC32
@@ -1397,6 +1411,14 @@ config VIDEO_SAA7134_ALSA
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called saa7134-alsa.
+
+config VIDEO_SAA7134_RC
+	bool "Philips SAA7134 Remote Controller support"
+	depends on VIDEO_IR
+	depends on VIDEO_SAA7134
+	default y
+	---help---
+	  Enables Remote Controller support on saa7134 driver.
 
 config VIDEO_SAA7134_DVB
 	tristate "DVB/ATSC Support for saa7134 based TV cards"
@@ -1475,7 +1497,7 @@ config VIDEO_CX88
 	select VIDEOBUF_DMA_SG
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEO_WM8775 if VIDEO_HELPER_CHIPS_AUTO
 	---help---
 	  This is a video4linux driver for Conexant 2388x based
@@ -1486,7 +1508,7 @@ config VIDEO_CX88
 
 config VIDEO_CX88_ALSA
 	tristate "Conexant 2388x DMA audio support"
-	depends on VIDEO_CX88 && SND && EXPERIMENTAL
+	depends on VIDEO_CX88 && SND
 	select SND_PCM
 	---help---
 	  This is a video4linux driver for direct (DMA) audio on
@@ -1562,7 +1584,7 @@ config VIDEO_CX23885
 	select VIDEO_BTCX
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
-	select VIDEO_IR
+	depends on IR_CORE
 	select VIDEOBUF_DVB
 	select VIDEOBUF_DMA_SG
 	select VIDEO_CX25840
@@ -1613,7 +1635,7 @@ config VIDEO_IVTV
 	depends on VIDEO_V4L2 && PCI && I2C
 	depends on INPUT   # due to VIDEO_IR
 	select I2C_ALGOBIT
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
 	select VIDEO_CX2341X
@@ -1660,7 +1682,7 @@ config VIDEO_CX18
 	depends on VIDEO_V4L2 && DVB_CORE && PCI && I2C && EXPERIMENTAL
 	depends on INPUT	# due to VIDEO_IR
 	select I2C_ALGOBIT
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
 	select VIDEO_CX2341X
@@ -1766,7 +1788,7 @@ config SOC_CAMERA_MT9M001
 
 # SOC_CAMERA_MT9M111 disabled for insufficient kernel version
 config SOC_CAMERA_MT9M111
-	tristate "mt9m111 and mt9m112 support"
+	tristate "mt9m111, mt9m112 and mt9m131 support"
 	depends on SOC_CAMERA && I2C
 	default n
 	depends on VIDEO_KERNEL_VERSION
@@ -1774,7 +1796,8 @@ config SOC_CAMERA_MT9M111
 	  WARNING! This driver needs at least kernel 2.6.33!  It may not
 	  compile or work correctly on your kernel, which is too old.
 
-	  This driver supports MT9M111 and MT9M112 cameras from Micron
+	  This driver supports MT9M111, MT9M112 and MT9M131 cameras from
+	  Micron/Aptina
 
 # SOC_CAMERA_MT9T031 disabled for insufficient kernel version
 config SOC_CAMERA_MT9T031
@@ -1885,6 +1908,12 @@ config VIDEO_PXA27x
 	---help---
 	  This is a v4l2 driver for the PXA27x Quick Capture Interface
 
+config VIDEO_SH_MOBILE_CSI2
+	tristate "SuperH Mobile MIPI CSI-2 Interface driver"
+	depends on VIDEO_DEV && SOC_CAMERA && HAVE_CLK
+	---help---
+	  This is a v4l2 driver for the SuperH MIPI CSI-2 Interface
+
 config VIDEO_SH_MOBILE_CEU
 	tristate "SuperH Mobile CEU Interface driver"
 	depends on VIDEO_DEV && SOC_CAMERA && HAS_DMA && HAVE_CLK
@@ -1898,6 +1927,19 @@ config VIDEO_OMAP2
 	select VIDEOBUF_DMA_SG
 	---help---
 	  This is a v4l2 driver for the TI OMAP2 camera capture interface
+
+config VIDEO_MX2_HOSTSUPPORT
+        bool
+
+config VIDEO_MX2
+	tristate "i.MX27/i.MX25 Camera Sensor Interface driver"
+	depends on VIDEO_DEV && SOC_CAMERA && (MACH_MX27 || ARCH_MX25)
+	select VIDEOBUF_DMA_CONTIG
+	select VIDEO_MX2_HOSTSUPPORT
+	---help---
+	  This is a v4l2 driver for the i.MX27 and the i.MX25 Camera Sensor
+	  Interface
+
 
 #
 # USB Multimedia device configuration
@@ -2031,6 +2073,15 @@ config USB_GSPCA_JEILINJ
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called gspca_jeilinj.
+
+config USB_GSPCA_KONICA
+	tristate "Konica USB Camera V4L2 driver"
+	depends on VIDEO_V4L2 && USB_GSPCA
+	help
+	  Say Y here if you want support for cameras based on the Konica chip.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gspca_konica.
 
 config USB_GSPCA_MARS
 	tristate "Mars USB Camera Driver"
@@ -2292,6 +2343,15 @@ config USB_GSPCA_VC032X
 	  To compile this driver as a module, choose M here: the
 	  module will be called gspca_vc032x.
 
+config USB_GSPCA_XIRLINK_CIT
+	tristate "Xirlink C-It USB Camera Driver"
+	depends on VIDEO_V4L2 && USB_GSPCA
+	help
+	  Say Y here if you want support for Xirlink C-It bases cameras.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gspca_xirlink_cit.
+
 config USB_GSPCA_ZC3XX
 	tristate "ZC3XX USB Camera Driver"
 	depends on VIDEO_V4L2 && USB_GSPCA
@@ -2386,7 +2446,7 @@ config VIDEO_EM28XX
 	depends on VIDEO_DEV && I2C && INPUT
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEOBUF_VMALLOC
 	select VIDEO_SAA711X if VIDEO_HELPER_CHIPS_AUTO
 	select VIDEO_TVP5150 if VIDEO_HELPER_CHIPS_AUTO
@@ -2420,7 +2480,6 @@ config VIDEO_EM28XX_DVB
 	select DVB_LGDT330X if !DVB_FE_CUSTOMISE
 	select DVB_ZL10353 if !DVB_FE_CUSTOMISE
 	select DVB_TDA10023 if !DVB_FE_CUSTOMISE
-	select DVB_S921 if !DVB_FE_CUSTOMISE
 	select VIDEOBUF_DVB
 	---help---
 	  This adds support for DVB cards based on the
@@ -2431,7 +2490,7 @@ config VIDEO_TLG2300
 	depends on VIDEO_DEV && I2C && INPUT && SND && DVB_CORE
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEOBUF_VMALLOC
 	select SND_PCM
 	select VIDEOBUF_DVB
@@ -2448,9 +2507,10 @@ config VIDEO_CX231XX
 	depends on VIDEO_DEV && I2C && INPUT
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEOBUF_VMALLOC
 	select VIDEO_CX25840
+	select VIDEO_CX2341X
 
 	---help---
 	  This is a video4linux driver for Conexant 231xx USB based TV cards.
@@ -2506,10 +2566,13 @@ config USB_VICAM
 	  module will be called vicam.
 
 config USB_IBMCAM
-	tristate "USB IBM (Xirlink) C-it Camera support"
+	tristate "USB IBM (Xirlink) C-it Camera support (DEPRECATED)"
 	depends on VIDEO_V4L1
 	select VIDEO_USBVIDEO
 	---help---
+	  This driver is DEPRECATED please use the gspca xirlink_cit module
+	  instead.
+
 	  Say Y here if you want to connect a IBM "C-It" camera, also known as
 	  "Xirlink PC Camera" to your computer's USB port.
 
@@ -2521,10 +2584,13 @@ config USB_IBMCAM
 	  <file:Documentation/video4linux/ibmcam.txt> to learn more.
 
 config USB_KONICAWC
-	tristate "USB Konica Webcam support"
+	tristate "USB Konica Webcam support (DEPRECATED)"
 	depends on VIDEO_V4L1
 	select VIDEO_USBVIDEO
 	---help---
+	  This driver is DEPRECATED (and known to crash) please use the
+	  gspca konica module instead.
+
 	  Say Y here if you want support for webcams based on a Konica
 	  chipset. This is known to work with the Intel YC76 webcam.
 
@@ -2579,7 +2645,7 @@ config USB_SN9C102
 
 config USB_PWC
 	tristate "USB Philips Cameras"
-	depends on VIDEO_V4L1
+	depends on VIDEO_V4L2
 	---help---
 	  Say Y or M here if you want to use one of these Philips & OEM
 	  webcams:
@@ -2685,6 +2751,15 @@ config VIDEO_MEM2MEM_TESTDEV
 	---help---
 	  This is a virtual test device for the memory-to-memory driver
 	  framework.
+
+config  VIDEO_SAMSUNG_S5P_FIMC
+	tristate "Samsung S5P FIMC (video postprocessor) driver"
+	depends on VIDEO_DEV && VIDEO_V4L2 && PLAT_S5P
+	select VIDEOBUF_DMA_CONTIG
+	select V4L2_MEM2MEM_DEV
+	help
+	  This is a v4l2 driver for the S5P camera interface
+	  (video postprocessor)
 
 endif # V4L_MEM2MEM_DRIVERS
 
@@ -3331,7 +3406,7 @@ config DVB_BUDGET_CI
 	select DVB_LNBP21 if !DVB_FE_CUSTOMISE
 	select DVB_TDA10023 if !DVB_FE_CUSTOMISE
 	select MEDIA_TUNER_TDA827X if !MEDIA_TUNER_CUSTOMISE
-	select VIDEO_IR
+	depends on VIDEO_IR
 	help
 	  Support for simple SAA7146 based DVB cards
 	  (so called Budget- or Nova-PCI cards) without onboard
@@ -3394,7 +3469,7 @@ comment "Supported USB Adapters"
 	depends on DVB_CORE && USB && I2C
 config DVB_USB
 	tristate "Support for various USB DVB devices"
-	depends on DVB_CORE && USB && I2C && INPUT
+	depends on DVB_CORE && USB && I2C && IR_CORE
 	help
 	  By enabling this you will be able to choose the various supported
 	  USB1.1 and USB2.0 DVB devices.
@@ -3708,6 +3783,8 @@ config DVB_USB_AF9015
 	select MEDIA_TUNER_TDA18271 if !MEDIA_TUNER_CUSTOMISE
 	select MEDIA_TUNER_MXL5005S if !MEDIA_TUNER_CUSTOMISE
 	select MEDIA_TUNER_MC44S803 if !MEDIA_TUNER_CUSTOMISE
+	select MEDIA_TUNER_TDA18218 if !MEDIA_TUNER_CUSTOMISE
+	select MEDIA_TUNER_MXL5007T if !MEDIA_TUNER_CUSTOMISE
 	help
 	  Say Y here to support the Afatech AF9015 based DVB-T USB2.0 receiver
 
@@ -3740,6 +3817,17 @@ config DVB_USB_AZ6027
 	select DVB_STB6100 if !DVB_FE_CUSTOMISE
 	help
 	  Say Y here to support the AZ6027 device
+
+config DVB_USB_LME2510
+	tristate "LME DM04/QQBOX DVB-S USB2.0 support"
+	depends on DVB_USB
+	select DVB_TDA10086 if !DVB_FE_CUSTOMISE
+	select DVB_TDA826X if !DVB_FE_CUSTOMISE
+	select DVB_STV0288 if !DVB_FE_CUSTOMISE
+	select DVB_IX2505V if !DVB_FE_CUSTOMISE
+	depends on IR_CORE
+	help
+	  Say Y here to support the LME DM04/QQBOX DVB-S USB2.0 .
 config DVB_TTUSB_BUDGET
 	tristate "Technotrend/Hauppauge Nova-USB devices"
 	depends on DVB_CORE && USB && I2C && PCI
@@ -3785,7 +3873,7 @@ config DVB_TTUSB_DEC
 
 config SMS_SIANO_MDTV
 	tristate "Siano SMS1xxx based MDTV receiver"
-	depends on DVB_CORE && INPUT && HAS_DMA
+	depends on DVB_CORE && IR_CORE && HAS_DMA
 	---help---
 	  Choose Y or M here if you have MDTV receiver with a Siano chipset.
 
@@ -3918,7 +4006,7 @@ config DVB_DM1105
 	select DVB_CX24116 if !DVB_FE_CUSTOMISE
 	select DVB_SI21XX if !DVB_FE_CUSTOMISE
 	select DVB_DS3000 if !DVB_FE_CUSTOMISE
-	select VIDEO_IR
+	depends on VIDEO_IR
 	help
 	  Support for cards based on the SDMC DM1105 PCI chip like
 	  DvbWorld 2002
@@ -3976,7 +4064,7 @@ comment "Supported Mantis Adapters"
 	depends on DVB_CORE && PCI && I2C
 config MANTIS_CORE
 	tristate "Mantis/Hopper PCI bridge based devices"
-	depends on PCI && I2C && INPUT
+	depends on PCI && I2C && INPUT && IR_CORE
 
 	help
 	  Support for PCI cards based on the Mantis and Hopper PCi bridge.
@@ -4032,7 +4120,7 @@ comment "Supported DVB Frontends"
 config DVB_FE_CUSTOMISE
 	bool "Customise the frontend modules to build"
 	depends on DVB_CORE
-	default N
+	default y if EMBEDDED
 	help
 	  This allows the user to select/deselect frontend drivers for their
 	  hardware from the build.
@@ -4288,6 +4376,13 @@ config DVB_CX22702
 	help
 	  A DVB-T tuner module. Say Y when you want to support this frontend.
 
+config DVB_S5H1432
+	tristate "Samsung s5h1432 demodulator (OFDM)"
+	depends on DVB_CORE && I2C
+	default m if DVB_FE_CUSTOMISE
+	help
+	  A DVB-T tuner module. Say Y when you want to support this frontend.
+
 config DVB_DRX397XD
 	tristate "Micronas DRX3975D/DRX3977D based"
 	depends on DVB_CORE && I2C
@@ -4530,7 +4625,7 @@ comment "ISDB-T (terrestrial) frontends"
 	depends on DVB_CORE
 
 config DVB_S921
-	tristate "Sharp S921 frontend"
+	tristate "Sharp S921 tuner"
 	depends on DVB_CORE && I2C
 	default m if DVB_FE_CUSTOMISE
 	help
@@ -4615,6 +4710,7 @@ config DVB_LGS8GL5
 config DVB_LGS8GXX
 	tristate "Legend Silicon LGS8913/LGS8GL5/LGS8GXX DMB-TH demodulator"
 	depends on DVB_CORE && I2C
+	select FW_LOADER
 	default m if DVB_FE_CUSTOMISE
 	help
 	  A DMB-TH tuner module. Say Y when you want to support this frontend.
@@ -4636,6 +4732,13 @@ config DVB_TDA665x
 
 	  Currently supported tuners:
 	  * Panasonic ENV57H12D5 (ET-50DT)
+
+config DVB_IX2505V
+	tristate "Sharp IX2505V silicon tuner"
+	depends on DVB_CORE && I2C
+	default m if DVB_FE_CUSTOMISE
+	help
+	  A DVB-S tuner module. Say Y when you want to support this frontend.
 
 comment "Tools to develop new frontends"
 
@@ -4748,7 +4851,7 @@ config VIDEO_GO7007
 	depends on VIDEO_DEV && PCI && I2C && INPUT
 	depends on SND
 	select VIDEOBUF_DMA_SG
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEO_TUNER
 	select VIDEO_TVEEPROM
 	select SND_PCM
@@ -4858,7 +4961,7 @@ config VIDEO_CX25821
 	select I2C_ALGOBIT
 	select VIDEO_BTCX
 	select VIDEO_TVEEPROM
-	select VIDEO_IR
+	depends on VIDEO_IR
 	select VIDEOBUF_DVB
 	select VIDEOBUF_DMA_SG
 	select VIDEO_CX25840
@@ -4888,7 +4991,7 @@ config VIDEO_CX25821_ALSA
 
 config VIDEO_TM6000
 	tristate "TV Master TM5600/6000/6010 driver"
-	depends on VIDEO_DEV && I2C && INPUT && USB && EXPERIMENTAL
+	depends on VIDEO_DEV && I2C && INPUT && IR_CORE && USB && EXPERIMENTAL
 	select VIDEO_TUNER
 	select MEDIA_TUNER_XC2028
 	select MEDIA_TUNER_XC5000

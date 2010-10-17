@@ -18,8 +18,6 @@ TARDIR += include/linux/dvb/
 TARFILES += include/linux/usb/video.h
 TARFILES += include/linux/i2c-id.h
 TARFILES += include/linux/videodev.h
-TARFILES += include/linux/videotext.h
-TARFILES += include/linux/video_decoder.h
 TARFILES += include/linux/ivtv.h
 TARFILES += include/linux/mmc/sdio_ids.h
 TARFILES += include/linux/ivtvfb.h
@@ -56,11 +54,21 @@ help:
 
 ifeq ($(DIR),)
 tar:
-	@echo  Use: make tar DIR=<directory>
+	@echo "Use: make tar DIR=<directory>"
 	@exit -1
 else
 tar:
-	tar cvfj $(PWD)/linux-media.tar.bz2 -C $(DIR) $(TARFILES) $(TARDIR)
+	-rm $(PWD)/linux-media.tar.bz2
+	tar cf $(PWD)/linux-media.tar -C $(DIR) $(TARFILES)
+	for i in $(TARDIR); do \
+		if [ "`echo $$i|grep Documentation`" == "" ]; then \
+			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
+			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
+			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
+			tar rvf $(PWD)/linux-media.tar -C $(DIR) $$dir; \
+		else \
+			tar rvf $(PWD)/linux-media.tar -C $(DIR) $$i; \
+		fi; done; bzip2 $(PWD)/linux-media.tar
 endif
 
 untar:
