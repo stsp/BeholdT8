@@ -125,11 +125,8 @@ EXTRA_CFLAGS += -g
 
 EXTRA_CFLAGS += $(if $(wildcard $(srctree)/.mm), -DMM_KERNEL)
 
-# Make sure kernel's options are overridden by v4l-dvb options
-EXTRA_CFLAGS += -include $(obj)/config-compat.h
-
-# Allow kernel version compat tests without adding #include's
-EXTRA_CFLAGS += -include include/linux/version.h
+# Make sure to use the backport header for common stuff
+EXTRA_CFLAGS += -include $(obj)/compat.h
 
 #################################################
 # Kernel 2.4/2.6 specific rules

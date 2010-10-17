@@ -5,6 +5,9 @@
 #ifndef _COMPAT_H
 #define _COMPAT_H
 
+#include <linux/version.h>
+#include "config-compat.h"
+
 /* In v2.6.19-rc6-118-g52bad64 struct work_struct was was changed to be only for
  * non-delayed work and struct delayed_work was created for delayed work.  This
  * will rename the structures.  Hopefully no one will decide to name something
@@ -16,9 +19,9 @@
 
 #define EXPERIMENTAL_TREE
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 35)
-#define usb_buffer_alloc(dev, size, mem_flags, dma) usb_alloc_coherent(dev, size, mem_flags, dma)
-#define usb_buffer_free(dev, size, addr, dma) usb_free_coherent(dev, size, addr, dma)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 35)
+#define usb_alloc_coherent(dev, size, mem_flags, dma) usb_buffer_alloc(dev, size, mem_flags, dma)
+#define usb_free_coherent(dev, size, addr, dma) usb_buffer_free(dev, size, addr, dma)
 #endif
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 24)
