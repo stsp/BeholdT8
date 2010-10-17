@@ -27,11 +27,6 @@ TARFILES += include/linux/videodev2.h
 TARFILES += include/linux/meye.h
 TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
-TARFILES += include/asm-arm/arch-pxa/camera.h
-TARFILES += include/asm-arm/arch-pxa/pxa-regs.h
-TARFILES += arch/arm/plat-mxc/include/mach/mx1_camera.h
-TARFILES += arch/arm/plat-mxc/include/mach/mx3_camera.h
-TARFILES += arch/arm/plat-mxc/include/mach/memory.h
 
 # Documentation
 TARDIR += Documentation/dvb/
@@ -52,19 +47,6 @@ TARFILES += firmware/vicam/firmware.H16
 TARFILES += firmware/dabusb/bitstream.bin.ihex
 TARFILES += firmware/dabusb/firmware.HEX
 TARFILES += firmware/ttusb-budget/dspbootcode.bin.ihex
-
-## Miscelaneous arch-dependent drivers required for compilation
-## Probably, we can just get rid of them
-#TARFILES += arch/arm/mach-mx3/clock.c
-#TARFILES += arch/arm/mach-pxa/pcm990-baseboard.c
-#TARFILES += arch/arm/mach-pxa/devices.c
-#TARFILES += arch/arm/mach-mx1/devices.c
-#TARFILES += arch/arm/mach-mx1/mx1_camera_fiq.S
-#TARFILES += arch/arm/mach-mx1/ksym_mx1.c
-#TARFILES += arch/arm/mach-mx1/Makefile
-#TARFILES += arch/sh/boards/mach-kfr2r09/setup.c
-#TARFILES += arch/sh/boards/mach-migor/setup.c
-#TARFILES += arch/sh/boards/mach-ap325rxa/setup.c
 
 default: help
 
