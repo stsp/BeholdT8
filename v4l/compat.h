@@ -38,6 +38,27 @@
 #include <linux/i2c-dev.h>
 #endif
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 35)
+#include <linux/ctype.h>
+static inline int hex_to_bin(char ch)
+{
+        if ((ch >= '0') && (ch <= '9'))
+                return ch - '0';
+        ch = tolower(ch);
+        if ((ch >= 'a') && (ch <= 'f'))
+                return ch - 'a' + 10;
+        return -1;
+}
+#endif
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 33)
+#define	usb_enable_autosuspend(udev) udev->autosuspend_disabled = 0;
+#endif
+
+#ifndef FBIO_WAITFORVSYNC
+#define FBIO_WAITFORVSYNC      _IOW('F', 0x20, __u32)
+#endif
+
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 30)
 #include <linux/mm.h>
 #include <asm/uaccess.h>

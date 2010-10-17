@@ -79,3 +79,10 @@ clean:
 
 distclean: clean
 	-rm linux-media.tar.bz2
+
+apply_patches:
+	@if [ "$(VER)" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi
+	if [ -e ../backports/$(VER)/series ]; then \
+	for i in `cat ../backports/$(VER)/series`; do patch -p1 -i ../backports/$(VER)/$$i; done \
+	fi
+
