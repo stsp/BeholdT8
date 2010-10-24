@@ -46,18 +46,30 @@ TARFILES += firmware/dabusb/bitstream.bin.ihex
 TARFILES += firmware/dabusb/firmware.HEX
 TARFILES += firmware/ttusb-budget/dspbootcode.bin.ihex
 
+TODAY_TAR := linux-media-`date "+%Y-%m-%d"`.tar
+
 default: help
 
 help:
 	@echo "Use: make tar DIR=<directory>"
 	@echo "          untar|clean|distclean"
 
-ifeq ($(DIR),)
+todaytar:
+	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
+	-rm $(PWD)/$(TODAY_TAR).bz2
+	tar cf $(PWD)/$(TODAY_TAR) -C $(DIR) $(TARFILES)
+	for i in $(TARDIR); do \
+		if [ "`echo $$i|grep Documentation`" == "" ]; then \
+			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
+			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
+			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
+			tar rvf $(PWD)/$(TODAY_TAR) -C $(DIR) $$dir; \
+		else \
+			tar rvf $(PWD)/$(TODAY_TAR) -C $(DIR) $$i; \
+		fi; done; bzip2 $(PWD)/$(TODAY_TAR)
+
 tar:
-	@echo "Use: make tar DIR=<directory>"
-	@exit -1
-else
-tar:
+	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	-rm $(PWD)/linux-media.tar.bz2
 	tar cf $(PWD)/linux-media.tar -C $(DIR) $(TARFILES)
 	for i in $(TARDIR); do \
@@ -69,7 +81,6 @@ tar:
 		else \
 			tar rvf $(PWD)/linux-media.tar -C $(DIR) $$i; \
 		fi; done; bzip2 $(PWD)/linux-media.tar
-endif
 
 untar:
 	tar xvfj $(PWD)/linux-media.tar.bz2
