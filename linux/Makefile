@@ -83,8 +83,8 @@ tar:
 			tar rvf $(PWD)/linux-media.tar -C $(DIR) $$i; \
 		fi; done; bzip2 $(PWD)/linux-media.tar
 
-untar:
-	tar xvfj $(PWD)/linux-media.tar.bz2
+untar: linux-media.tar.bz2
+	tar xfj linux-media.tar.bz2
 
 clean:
 	-rm -rf $(MAINDIRS)
@@ -95,7 +95,7 @@ distclean: clean
 apply_patches apply-patches:
 	@if [ "$(VER)" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi
 	if [ -e ../backports/$(VER)/series ]; then \
-	for i in `cat ../backports/$(VER)/series`; do patch -p1 -i ../backports/$(VER)/$$i; done \
+	for i in `cat ../backports/$(VER)/series`; do patch -t -p1 -i ../backports/$(VER)/$$i; done \
 	fi
 
 unapply_patches unapply-patches:
