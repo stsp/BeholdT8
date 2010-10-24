@@ -47,6 +47,7 @@ TARFILES += firmware/dabusb/firmware.HEX
 TARFILES += firmware/ttusb-budget/dspbootcode.bin.ihex
 
 TODAY_TAR := linux-media-`date "+%Y-%m-%d"`.tar
+LATEST_TAR := http://linuxtv.org/downloads/drivers/linux-media-LATEST.tar.bz2
 
 default: help
 
@@ -102,4 +103,7 @@ unapply_patches unapply-patches:
 	if [ -e ../backports/$(VER)/series ]; then \
 	for i in `cat ../backports/$(VER)/series`; do patch -R -p1 -i ../backports/$(VER)/$$i; done \
 	fi
+
+download:
+	wget $(LATEST_TAR) -O linux-media.tar.bz2
 
