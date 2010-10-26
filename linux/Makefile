@@ -2,7 +2,7 @@
 # Files that need to be bundled with the building system
 #
 
-MAINDIRS += arch drivers include Documentation firmware sound
+MAINDIRS += Documentation drivers firmware include sound
 
 # Media drivers
 TARDIR += drivers/media/
@@ -88,6 +88,24 @@ untar: linux-media.tar.bz2
 
 clean:
 	-rm -rf $(MAINDIRS)
+
+dir: clean
+	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
+	for i in $(TARFILES); do \
+		install -D $(DIR)/$$i $$i; \
+	done
+	for i in $(TARDIR); do \
+		if [ "`echo $$i|grep Documentation`" == "" ]; then \
+			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
+			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
+			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
+			for j in $$dir; do \
+				install -D $(DIR)/$$j $$j; \
+			done; \
+		else \
+			install -d $$i; \
+			cp -ar $(DIR)/$$i $$i; \
+		fi; done
 
 distclean: clean
 	-rm linux-media.tar.bz2
