@@ -1,6 +1,10 @@
 # Use this for stuff for drivers that don't compile
 [2.6.99]
 
+[2.6.37]
+# Some stuff at viafb struct
+VIDEO_VIA_CAMERA
+
 [2.6.36]
 LIRC
 IR_LIRC_CODEC
