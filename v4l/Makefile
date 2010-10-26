@@ -54,12 +54,6 @@ firmware::
 	$(MAKE) -C firmware prep
 	$(MAKE) -C firmware
 
-man::
-	$(MAKE) -C ../media-specs man
-
-spec::
-	$(MAKE) -C ../media-specs
-
 #################################################
 # Object specific rules
 
@@ -218,7 +212,7 @@ firmware_install::
 	make -C firmware install
 
 man_install::
-	$(MAKE) -C ../media-specs man_install
+	$(MAKE) -C  man_install
 
 #################################################
 # Compiling preparation rules
@@ -293,9 +287,9 @@ clean::
 	@find . -name '*.c' -type l -exec rm '{}' \;
 	@find . -name '*.h' -type l -exec rm '{}' \;
 	-rm -f *~ *.o *.ko .*.o.cmd .*.ko.cmd *.mod.c av7110_firm.h fdump \
-		config-compat.h Module.symvers Module.markers modules.order
+		config-compat.h Module.symvers Module.markers modules.order \
+		*.unsigned .*.ko.unsigned.cmd
 	$(MAKE) -C firmware $@
-	$(MAKE) -C ../media-specs $@
 
 distclean:: clean
 	-rm -f .version .*.o.flags .*.o.d Makefile.media \
@@ -306,7 +300,6 @@ distclean:: clean
 	@find .. -name '*.orig' -exec rm '{}' \;
 	@find .. -name '*.rej' -exec rm '{}' \;
 	$(MAKE) -C firmware $@
-	$(MAKE) -C ../media-specs $@
 
 #################################################
 # Kernel module insert/removal rules
