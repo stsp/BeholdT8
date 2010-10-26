@@ -51,7 +51,8 @@ TARFILES += firmware/ttusb-budget/dspbootcode.bin.ihex
 TODAY_TAR := linux-media-`date "+%Y-%m-%d"`.tar
 LATEST_TAR := http://linuxtv.org/downloads/drivers/linux-media-LATEST.tar.bz2
 
-default: help
+default:
+	make -C ..
 
 help:
 	@echo "Use: make tar DIR=<directory>"
