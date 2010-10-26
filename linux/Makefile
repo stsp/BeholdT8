@@ -90,7 +90,7 @@ untar: linux-media.tar.bz2
 	tar xfj linux-media.tar.bz2
 
 clean:
-	-rm -rf $(MAINDIRS)
+	-rm -rf $(MAINDIRS) .patches_applied
 
 dir: clean
 	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
@@ -119,7 +119,9 @@ apply_patches apply-patches:
 	@if [ "$(KERNELRELEASE)" != "" ]; then dir=$(KERNELRELEASE); fi; \
 	if [ "$(VER)" != "" ]; then dir=$(KERNELRELEASE); fi; \
 	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
+	if [ -e .patches_applied ]; then echo "Patches already applied."; exit -1; fi; \
 	echo "Applying patches for kernel $$dir"; \
+	touch .patches_applied; \
 	if [ -e ../backports/$$dir/series ]; then \
 	for i in `cat ../backports/$$dir/series`; do \
 		echo patch -t -p1 -i ../backports/$$dir/$$i; \
@@ -127,6 +129,7 @@ apply_patches apply-patches:
 	done; fi
 
 unapply_patches unapply-patches:
+	if [ ! -e .patches_applied ]; then echo "No patches applied."; exit -1; fi;
 	@if [ "$(KERNELRELEASE)" != "" ]; then dir=$(KERNELRELEASE); fi; \
 	if [ "$(VER)" != "" ]; then dir=$(KERNELRELEASE); fi; \
 	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
@@ -136,6 +139,7 @@ unapply_patches unapply-patches:
 		echo patch -t -R -p1 -i ../backports/$$dir/$$i; \
 		patch -t -R -p1 -i ../backports/$$dir/$$i || break; \
 	done; fi
+	rm .patches_applied
 
 download:
 	wget $(LATEST_TAR) -O linux-media.tar.bz2
