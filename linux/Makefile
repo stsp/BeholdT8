@@ -2,6 +2,8 @@
 # Files that need to be bundled with the building system
 #
 
+-include ../v4l/.version
+
 MAINDIRS += Documentation drivers firmware include sound
 
 # Media drivers
@@ -91,6 +93,8 @@ clean:
 
 dir: clean
 	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
+	@echo "Searching in $(DIR)/Makefile for kernel version."
+
 	for i in $(TARFILES); do \
 		install -D $(DIR)/$$i $$i; \
 	done
@@ -111,16 +115,26 @@ distclean: clean
 	-rm linux-media.tar.bz2
 
 apply_patches apply-patches:
-	@if [ "$(VER)" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi
-	if [ -e ../backports/$(VER)/series ]; then \
-	for i in `cat ../backports/$(VER)/series`; do patch -t -p1 -i ../backports/$(VER)/$$i; done \
-	fi
+	@if [ "$(KERNELRELEASE)" != "" ]; then dir=$(KERNELRELEASE); fi; \
+	if [ "$(VER)" != "" ]; then dir=$(KERNELRELEASE); fi; \
+	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
+	echo "Applying patches for kernel $$dir"; \
+	if [ -e ../backports/$$dir/series ]; then \
+	for i in `cat ../backports/$$dir/series`; do \
+		echo patch -t -p1 -i ../backports/$$dir/$$i; \
+		patch -t -p1 -i ../backports/$$dir/$$i || break; \
+	done; fi
 
 unapply_patches unapply-patches:
-	@if [ "$(VER)" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi
-	if [ -e ../backports/$(VER)/series ]; then \
-	for i in `cat ../backports/$(VER)/series`; do patch -R -p1 -i ../backports/$(VER)/$$i; done \
-	fi
+	@if [ "$(KERNELRELEASE)" != "" ]; then dir=$(KERNELRELEASE); fi; \
+	if [ "$(VER)" != "" ]; then dir=$(KERNELRELEASE); fi; \
+	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
+	echo "Applying patches for kernel $$dir"; \
+	if [ -e ../backports/$$dir/series ]; then \
+	for i in `cat ../backports/$$dir/series`; do \
+		echo patch -t -R -p1 -i ../backports/$$dir/$$i; \
+		patch -t -R -p1 -i ../backports/$$dir/$$i || break; \
+	done; fi
 
 download:
 	wget $(LATEST_TAR) -O linux-media.tar.bz2
