@@ -3,3 +3,6 @@ work_handler.patch
 dvb_net.patch
 kfifo.patch
 pvrusb2_sysfs.patch
+fix_define_warnings.patch
+input_handlers_are_int.patch
+
