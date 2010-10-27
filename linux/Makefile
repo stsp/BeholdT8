@@ -127,7 +127,7 @@ apply_patches apply-patches:
 	if [ -e .patches_applied ]; then echo "Patches already applied."; exit -1; fi; \
 	if [ ! -e ../backports/$$dir/series ]; then echo "Version $$dir not supported."; exit 1; fi; \
 	echo "Applying patches for kernel $$dir"; \
-	touch .patches_applied; \
+	echo $$dir > .patches_applied; \
 	for i in `cat ../backports/$$dir/series`; do \
 		echo patch -f -N -p1 -i ../backports/$$dir/$$i; \
 		patch -f -N -p1 -i ../backports/$$dir/$$i || break; \
@@ -135,16 +135,8 @@ apply_patches apply-patches:
 
 unapply_patches unapply-patches:
 	@if [ ! -e .patches_applied ]; then echo "No patches applied."; exit -1; fi;
-	@if [ "$(KERNELRELEASE)" != "" ]; then \
-		if [ -e ../backports/v$(KERNELRELEASE) ]; then \
-			dir="v$(KERNELRELEASE)"; \
-		else \
-			dir="v$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"; fi; \
-	fi; \
-	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
-	if [ "$(VER)" != "" ]; then dir=$(VER); fi; \
-	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
-	echo "Applying patches for kernel $$dir"; \
+	dir="`cat .patches_applied`"; \
+	echo "Unapplying patches for kernel $$dir"; \
 	if [ -e ../backports/$$dir/series ]; then \
 	for i in `cat ../backports/$$dir/series`; do \
 		echo patch -f -R -p1 -i ../backports/$$dir/$$i; \
