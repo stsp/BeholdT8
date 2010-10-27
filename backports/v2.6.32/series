@@ -1,3 +1,4 @@
+i2c_new_probed_device.patch
 dvb_net.patch
 kfifo.patch
 pvrusb2_sysfs.patch
