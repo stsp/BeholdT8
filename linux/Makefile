@@ -116,7 +116,12 @@ distclean: clean
 	-rm linux-media.tar.bz2
 
 apply_patches apply-patches:
-	@if [ "$(KERNELRELEASE)" != "" ]; then dir="v$(KERNELRELEASE)"; fi; \
+	@if [ "$(KERNELRELEASE)" != "" ]; then \
+		if [ -e ../backports/v$(KERNELRELEASE) ]; then \
+			dir="v$(KERNELRELEASE)"; \
+		else \
+			dir="v$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"; fi; \
+	fi; \
 	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
 	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
 	if [ -e .patches_applied ]; then echo "Patches already applied."; exit -1; fi; \
@@ -130,7 +135,12 @@ apply_patches apply-patches:
 
 unapply_patches unapply-patches:
 	@if [ ! -e .patches_applied ]; then echo "No patches applied."; exit -1; fi;
-	@if [ "$(KERNELRELEASE)" != "" ]; then dir="v$(KERNELRELEASE)"; fi; \
+	@if [ "$(KERNELRELEASE)" != "" ]; then \
+		if [ -e ../backports/v$(KERNELRELEASE) ]; then \
+			dir="v$(KERNELRELEASE)"; \
+		else \
+			dir="v$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"; fi; \
+	fi; \
 	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
 	if [ "$(VER)" != "" ]; then dir=$(VER); fi; \
 	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
