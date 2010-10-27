@@ -19,7 +19,6 @@ echo "***********************************************************"
 sleep 5
 run make -C linux/ download
 run make -C linux/ untar
-run make -C linux/ apply-patches VER=$VER
 run make
 
 echo "**********************************************************"
