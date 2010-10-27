@@ -8,8 +8,6 @@ run ()
 	fi
 }
 
-VER="v`uname -r|cut -d'-' -f 1`"
-
 echo "***********************************************************"
 echo "* This script will download the latest tarball and build it"
 echo "* Assuming that your kernel is compatible with the latest  "
