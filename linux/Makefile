@@ -120,11 +120,18 @@ apply_patches apply-patches:
 		if [ -e ../backports/v$(KERNELRELEASE) ]; then \
 			dir="v$(KERNELRELEASE)"; \
 		else \
-			dir="v$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"; fi; \
+			dir="v$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"; \
+		fi; \
 	fi; \
 	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
 	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
-	if [ -e .patches_applied ]; then echo "Patches already applied."; exit -1; fi; \
+	if [ -e ../backports/$$dir/series ]; then \
+		if [ "`cat .patches_applied`" == "$$dir" ]; then \
+			echo "Patches for $$dir already applied."; exit; \
+		else \
+			$(MAKE) unapply_patches; \
+		fi; \
+	fi; \
 	if [ ! -e ../backports/$$dir/series ]; then echo "Version $$dir not supported."; exit 1; fi; \
 	echo "Applying patches for kernel $$dir"; \
 	echo $$dir > .patches_applied; \
@@ -134,7 +141,7 @@ apply_patches apply-patches:
 	done
 
 unapply_patches unapply-patches:
-	@if [ ! -e .patches_applied ]; then echo "No patches applied."; exit -1; fi;
+	@if [ ! -e .patches_applied ]; then exit; fi;
 	dir="`cat .patches_applied`"; \
 	echo "Unapplying patches for kernel $$dir"; \
 	if [ -e ../backports/$$dir/series ]; then \
