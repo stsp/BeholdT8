@@ -10,9 +10,9 @@ diff -r 5254948f88c4 drivers/media/IR/ir-core-priv.h
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
  	struct input_dev		*input_dev;	/* pointer to the parent input_dev */
-diff -r 5254948f88c4 drivers/media/IR/ir-raw-event.c
---- a/drivers/media/IR/ir-raw-event.c	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/IR/ir-raw-event.c	Sun Oct 17 20:32:19 2010 -0200
+diff -r a58ca6e6d13a drivers/media/IR/ir-raw-event.c
+--- a/drivers/media/IR/ir-raw-event.c	Wed Oct 27 21:16:08 2010 -0200
++++ b/drivers/media/IR/ir-raw-event.c	Wed Oct 27 21:20:43 2010 -0200
 @@ -44,7 +44,7 @@
  	while (!kthread_should_stop()) {
  
@@ -23,7 +23,7 @@ diff -r 5254948f88c4 drivers/media/IR/ir-raw-event.c
  		if (!retval) {
  			set_current_state(TASK_INTERRUPTIBLE);
 @@ -92,7 +92,7 @@
- 	IR_dprintk(2, "sample: (05%dus %s)\n",
+ 	IR_dprintk(2, "sample: (%05dus %s)\n",
  		TO_US(ev->duration), TO_STR(ev->pulse));
  
 -	if (kfifo_in(&ir->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
@@ -31,17 +31,31 @@ diff -r 5254948f88c4 drivers/media/IR/ir-raw-event.c
  		return -ENOMEM;
  
  	return 0;
-@@ -282,8 +282,7 @@
+@@ -259,7 +259,6 @@
+ int ir_raw_event_register(struct input_dev *input_dev)
+ {
+ 	struct ir_input_dev *ir = input_get_drvdata(input_dev);
+-	int rc;
+ 	struct ir_raw_handler *handler;
+ 
+ 	ir->raw = kzalloc(sizeof(*ir->raw), GFP_KERNEL);
+@@ -269,12 +268,11 @@
  	ir->raw->input_dev = input_dev;
  
  	ir->raw->enabled_protocols = ~0;
 -	rc = kfifo_alloc(&ir->raw->kfifo, sizeof(s64) * MAX_IR_EVENT_SIZE,
 -			 GFP_KERNEL);
+-	if (rc < 0) {
 +	ir->raw->kfifo = kfifo_alloc(sizeof(s64) * MAX_IR_EVENT_SIZE, GFP_KERNEL, NULL);
- 	if (rc < 0) {
++	if (!ir->raw->kfifo) {
  		kfree(ir->raw);
  		ir->raw = NULL;
-@@ -329,7 +328,7 @@
+-		return rc;
++		return -ENOMEM;
+ 	}
+ 
+ 	spin_lock_init(&ir->raw->lock);
+@@ -316,7 +314,7 @@
  			handler->raw_unregister(ir->raw->input_dev);
  	mutex_unlock(&ir_raw_handler_lock);
  
