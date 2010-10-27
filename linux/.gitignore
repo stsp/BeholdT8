@@ -1,0 +1,6 @@
+.patches_applied
+Documentation/
+drivers/
+firmware/
+include/
+sound/
