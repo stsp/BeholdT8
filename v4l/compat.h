@@ -51,7 +51,7 @@ static inline int hex_to_bin(char ch)
 }
 #endif
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 33)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 34)
 #define	usb_enable_autosuspend(udev) udev->autosuspend_disabled = 0;
 #endif
 
@@ -674,6 +674,54 @@ static inline unsigned long hrtimer_forward_now(struct hrtimer *timer,
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 22)
 #define strncasecmp(a, b, c) strnicmp(a, b, c)
 #define strcasecmp(a, b) strnicmp(a, b, sizeof(a))
+#endif
+
+#ifdef NEED_FW_CSR_STRING
+
+#include <linux/firewire.h>
+#include <linux/firewire-constants.h>
+
+static inline int fw_csr_string(u32 *directory, int search_key, char *buf, size_t size)
+{
+	struct fw_csr_iterator ci;
+	int last_key = 0, key, value;
+	const u32 *block = NULL;
+	unsigned int quadlets, i;
+
+	fw_csr_iterator_init(&ci, directory);
+	while (fw_csr_iterator_next(&ci, &key, &value)) {
+		if (last_key == search_key &&
+		    key == (CSR_DESCRIPTOR | CSR_LEAF)) {
+			block = ci.p - 1 + value;
+			break;
+		}
+
+		last_key = key;
+	}
+
+	if (!block)
+		return -ENOENT;
+
+	quadlets = min(block[0] >> 16, 256U);
+	if (quadlets < 2)
+		return -ENODATA;
+
+	if (block[1] != 0 || block[2] != 0)
+		/* unknown language/character set */
+		return -ENODATA;
+
+	block += 3;
+	quadlets -= 2;
+	for (i = 0; i < quadlets * 4 && i < size - 1; i++) {
+		char c = block[i / 4] >> (24 - 8 * (i % 4));
+		if (c == '\0')
+			break;
+		buf[i] = c;
+	}
+	buf[i] = '\0';
+
+	return i;
+}
 #endif
 
 

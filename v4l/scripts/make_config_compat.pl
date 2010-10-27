@@ -338,6 +338,27 @@ sub check_bitops()
 	$out.= "\n#define NEED_BITOPS 1\n";
 }
 
+sub check_fw_csr_string()
+{
+	my @files = ( "$kdir/drivers/firewire/core-device.c" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or next;
+		while (<IN>) {
+			if (m/fw_csr_string\(/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define NEED_FW_CSR_STRING 1\n";
+}
+
+
 sub check_delayed_work()
 {
 	my @files = ( "$kdir//include/linux/workqueue.h" );
@@ -378,6 +399,7 @@ sub check_other_dependencies()
 	check_snd_BUG_ON();
 	check_bitops();
 	check_delayed_work();
+	check_fw_csr_string();
 }
 
 # Do the basic rules
