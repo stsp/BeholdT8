@@ -81,3 +81,24 @@ diff -r 128af39ba902 drivers/media/video/v4l2-common.c
  	else
  		client = i2c_new_device(adapter, info);
  
+diff -r b007f60705b1 drivers/media/video/ivtv/ivtv-i2c.c
+--- a/drivers/media/video/ivtv/ivtv-i2c.c	Tue Oct 26 23:18:24 2010 -0200
++++ b/drivers/media/video/ivtv/ivtv-i2c.c	Tue Oct 26 23:18:52 2010 -0200
+@@ -196,7 +196,7 @@
+ 	info.platform_data = init_data;
+ 	strlcpy(info.type, type, I2C_NAME_SIZE);
+ 
+-	return i2c_new_probed_device(adap, &info, addr_list, NULL) == NULL ?
++	return i2c_new_probed_device(adap, &info, addr_list) == NULL ?
+ 	       -1 : 0;
+ }
+ 
+@@ -225,7 +225,7 @@
+ 
+ 	memset(&info, 0, sizeof(struct i2c_board_info));
+ 	strlcpy(info.type, "ir_video", I2C_NAME_SIZE);
+-	return i2c_new_probed_device(&itv->i2c_adap, &info, addr_list, NULL);
++	return i2c_new_probed_device(&itv->i2c_adap, &info, addr_list);
+ }
+ 
+ int ivtv_i2c_register(struct ivtv *itv, unsigned idx)
