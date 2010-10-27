@@ -116,28 +116,29 @@ distclean: clean
 	-rm linux-media.tar.bz2
 
 apply_patches apply-patches:
-	@if [ "$(KERNELRELEASE)" != "" ]; then dir=$(KERNELRELEASE); fi; \
-	if [ "$(VER)" != "" ]; then dir=$(KERNELRELEASE); fi; \
+	@if [ "$(KERNELRELEASE)" != "" ]; then dir="v$(KERNELRELEASE)"; fi; \
+	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
 	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
 	if [ -e .patches_applied ]; then echo "Patches already applied."; exit -1; fi; \
 	echo "Applying patches for kernel $$dir"; \
 	touch .patches_applied; \
 	if [ -e ../backports/$$dir/series ]; then \
 	for i in `cat ../backports/$$dir/series`; do \
-		echo patch -t -p1 -i ../backports/$$dir/$$i; \
-		patch -t -p1 -i ../backports/$$dir/$$i || break; \
+		echo patch -f -N -p1 -i ../backports/$$dir/$$i; \
+		patch -f -N -p1 -i ../backports/$$dir/$$i || break; \
 	done; fi
 
 unapply_patches unapply-patches:
-	if [ ! -e .patches_applied ]; then echo "No patches applied."; exit -1; fi;
-	@if [ "$(KERNELRELEASE)" != "" ]; then dir=$(KERNELRELEASE); fi; \
-	if [ "$(VER)" != "" ]; then dir=$(KERNELRELEASE); fi; \
+	@if [ ! -e .patches_applied ]; then echo "No patches applied."; exit -1; fi;
+	@if [ "$(KERNELRELEASE)" != "" ]; then dir="v$(KERNELRELEASE)"; fi; \
+	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
+	if [ "$(VER)" != "" ]; then dir=$(VER); fi; \
 	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
 	echo "Applying patches for kernel $$dir"; \
 	if [ -e ../backports/$$dir/series ]; then \
 	for i in `cat ../backports/$$dir/series`; do \
-		echo patch -t -R -p1 -i ../backports/$$dir/$$i; \
-		patch -t -R -p1 -i ../backports/$$dir/$$i || break; \
+		echo patch -f -R -p1 -i ../backports/$$dir/$$i; \
+		patch -f -R -p1 -i ../backports/$$dir/$$i || break; \
 	done; fi
 	rm .patches_applied
 

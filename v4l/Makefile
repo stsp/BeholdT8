@@ -49,6 +49,8 @@ endif	# TOPDIR
 
 default:: config-compat.h Makefile.media links oss firmware
 	@echo Kernel build directory is $(OUTDIR)
+	@-$(MAKE) -C ../linux unapply_patches 2>/dev/null >/dev/null
+	$(MAKE) -C ../linux apply_patches
 	$(MAKE) -C $(OUTDIR) SUBDIRS=$(PWD) $(MYCFLAGS) modules
 	./scripts/rmmod.pl check
 #	$(MAKE) checkpatch
