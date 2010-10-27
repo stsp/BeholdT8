@@ -1,10 +1,10 @@
 ifeq ($(wildcard ../linux/include/linux/videodev2.h),)
 
 # No kernel source! User needs to download one
-default allyesconfig allmodconfig::
+def:
 	@echo 'No kernel files. You need to run "make download untar" or "make dir DIR=<your_git_source_dir>" first!'
 	exit 1
-else
+endif
 
 ifeq ($(obj),)
 obj = .
@@ -463,8 +463,6 @@ snapshot snap tarball:: update distclean
 	(cd ..; tar czf $(snapdir)/$(snap)-$(date).tar.gz .)
 	hg history --style scripts/map-changelog > /$(snapdir)/$(snap)-ChangeLog-$(date)
 	$(MAKE) -C $(snapdir)
-
-endif # if ../linux/include/linux/videodev2.h
 
 dir download apply-patches unapply-patches untar::
 	make -C ../linux $@
