@@ -136,20 +136,20 @@ apply_patches apply-patches:
 	echo "Applying patches for kernel $$dir"; \
 	echo $$dir > .patches_applied; \
 	for i in `cat ../backports/$$dir/series`; do \
-		echo patch -f -N -p1 -i ../backports/$$dir/$$i; \
-		patch -f -N -p1 -i ../backports/$$dir/$$i || break; \
+		echo patch -s -f -N -p1 -i ../backports/$$dir/$$i; \
+		patch -s -f -N -p1 -i ../backports/$$dir/$$i || break; \
 	done
 
 unapply_patches unapply-patches:
-	@if [ ! -e .patches_applied ]; then exit; fi;
+	@if [ -e .patches_applied ]; then \
 	dir="`cat .patches_applied`"; \
 	echo "Unapplying patches for kernel $$dir"; \
 	if [ -e ../backports/$$dir/series ]; then \
 	for i in `cat ../backports/$$dir/series`; do \
-		echo patch -f -R -p1 -i ../backports/$$dir/$$i; \
-		patch -f -R -p1 -i ../backports/$$dir/$$i || break; \
-	done; fi
-	rm .patches_applied
+		echo patch -s -f -R -p1 -i ../backports/$$dir/$$i; \
+		patch -s -f -R -p1 -i ../backports/$$dir/$$i || break; \
+	done; fi; \
+	rm .patches_applied; fi
 
 download:
 	wget $(LATEST_TAR) -O linux-media.tar.bz2
