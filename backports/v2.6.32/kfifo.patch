@@ -18,7 +18,7 @@ diff -r a58ca6e6d13a drivers/media/IR/ir-raw-event.c
  
  		spin_lock_irq(&raw->lock);
 -		retval = kfifo_out(&raw->kfifo, &ev, sizeof(ev));
-+		retval = kfifo_get(raw->kfifo, (void *)&ev, sizeof(ev));
++		retval = __kfifo_get(raw->kfifo, (void *)&ev, sizeof(ev));
  
  		if (!retval) {
  			set_current_state(TASK_INTERRUPTIBLE);
@@ -27,7 +27,7 @@ diff -r a58ca6e6d13a drivers/media/IR/ir-raw-event.c
  		TO_US(ev->duration), TO_STR(ev->pulse));
  
 -	if (kfifo_in(&ir->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
-+	if (kfifo_put(ir->raw->kfifo, (void *)ev, sizeof(*ev)) != sizeof(*ev))
++	if (__kfifo_put(ir->raw->kfifo, (void *)ev, sizeof(*ev)) != sizeof(*ev))
  		return -ENOMEM;
  
  	return 0;
