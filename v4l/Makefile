@@ -381,6 +381,10 @@ allyesconfig allmodconfig:: $(obj)/.version
 	./scripts/make_kconfig.pl $(OUTDIR) $(SRCDIR) 1
 	./scripts/fix_kconfig.pl
 
+stagingconfig:: $(obj)/.version
+	./scripts/make_kconfig.pl $(OUTDIR) $(SRCDIR) 1 1
+	./scripts/fix_kconfig.pl
+
 # rule to build kernel conf programs
 KMAKEVARS := config-targets=1 mixed-targets=0 dot-config=0 SRCDIR=$(SRCDIR)
 $(QCONF) $(GCONF) $(MCONF) $(CONF):

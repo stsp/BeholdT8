@@ -16,6 +16,7 @@ my ($version, $level, $sublevel, $kernver);
 my $kernel = shift;
 my $kernsrc = shift;
 my $force_kconfig = shift;
+my $enable_staging = shift;
 
 my $debug=0;
 
@@ -593,7 +594,7 @@ disable_config('DVB_AV7110_FIRMWARE');
 disable_config('DVB_CINERGYT2_TUNING');
 disable_config('VIDEO_HELPER_CHIPS_AUTO');
 disable_config('VIDEO_FIXED_MINOR_RANGES');
-disable_config('STAGING');
+disable_config('STAGING') if (!$enable_staging);
 disable_config('STAGING_BROKEN');
 $intopt { "DVB_MAX_ADAPTERS" } = 8;
 
