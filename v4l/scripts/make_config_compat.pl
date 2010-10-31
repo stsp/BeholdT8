@@ -340,7 +340,7 @@ sub check_bitops()
 
 sub check_fw_csr_string()
 {
-	my @files = ( "$kdir/drivers/firewire/core-device.c" );
+	my @files = ( "$kdir/include/linux/firewire.h" );
 
 	foreach my $file ( @files ) {
 		open IN, "<$file" or next;
