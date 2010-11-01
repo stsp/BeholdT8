@@ -60,11 +60,11 @@ help:
 	@echo "          untar|clean|distclean"
 
 todaytar:
-	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
+	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	-rm $(PWD)/$(TODAY_TAR).bz2
 	tar cf $(PWD)/$(TODAY_TAR) -C $(DIR) $(TARFILES)
 	for i in $(TARDIR); do \
-		if [ "`echo $$i|grep Documentation`" == "" ]; then \
+		if [ "`echo $$i|grep Documentation`" = "" ]; then \
 			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
@@ -74,11 +74,11 @@ todaytar:
 		fi; done; bzip2 $(PWD)/$(TODAY_TAR)
 
 tar:
-	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
+	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	-rm $(PWD)/linux-media.tar.bz2
 	tar cf $(PWD)/linux-media.tar -C $(DIR) $(TARFILES)
 	for i in $(TARDIR); do \
-		if [ "`echo $$i|grep Documentation`" == "" ]; then \
+		if [ "`echo $$i|grep Documentation`" = "" ]; then \
 			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
@@ -94,14 +94,14 @@ clean:
 	-rm -rf $(MAINDIRS) .patches_applied
 
 dir: clean
-	@if [ "$(DIR)" == "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
+	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	@echo "Searching in $(DIR)/Makefile for kernel version."
 
 	for i in $(TARFILES); do \
 		install -D $(DIR)/$$i $$i; \
 	done
 	for i in $(TARDIR); do \
-		if [ "`echo $$i|grep Documentation`" == "" ]; then \
+		if [ "`echo $$i|grep Documentation`" = "" ]; then \
 			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
@@ -125,9 +125,9 @@ apply_patches apply-patches:
 		fi; \
 	fi; \
 	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
-	if [ "$$dir" == "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
+	if [ "$$dir" = "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
 	if [ -e ../backports/$$dir/series ]; then \
-		if [ "`cat .patches_applied`" == "$$dir" ]; then \
+		if [ "`cat .patches_applied`" = "$$dir" ]; then \
 			echo "Patches for $$dir already applied."; exit; \
 		else \
 			$(MAKE) unapply_patches; \
