@@ -1,0 +1,10 @@
+diff -r 9c103e4170ab drivers/media/Kconfig
+--- a/drivers/media/Kconfig	Sun Nov 14 18:12:33 2010 -0200
++++ b/drivers/media/Kconfig	Sun Nov 14 18:13:11 2010 -0200
+@@ -1,3 +1,6 @@
++config BKL
++	bool
++	default y
+ #
+ # Multimedia device configuration
+ #
