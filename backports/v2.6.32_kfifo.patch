@@ -1,7 +1,7 @@
-diff -r 5254948f88c4 drivers/media/rc/ir-core.h
---- a/drivers/media/rc/rc-core-priv.h	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/rc/rc-core-priv.h	Sun Oct 17 20:32:19 2010 -0200
-@@ -35,7 +35,7 @@
+diff --git a/drivers/media/rc/rc-core-priv.h b/drivers/media/rc/rc-core-priv.h
+--- a/drivers/media/rc/rc-core-priv.h
++++ b/drivers/media/rc/rc-core-priv.h
+@@ -35,7 +35,7 @@ struct ir_raw_event_ctrl {
  	struct list_head		list;		/* to keep track of raw clients */
  	struct task_struct		*thread;
  	spinlock_t			lock;
@@ -9,11 +9,11 @@ diff -r 5254948f88c4 drivers/media/rc/ir-core.h
 +	struct kfifo			*kfifo;		/* fifo for the pulse/space durations */
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
- 	struct input_dev		*input_dev;	/* pointer to the parent input_dev */
-diff -r a58ca6e6d13a drivers/media/rc/rc-raw.c
---- a/drivers/media/rc/rc-raw.c	Wed Oct 27 21:16:08 2010 -0200
-+++ b/drivers/media/rc/rc-raw.c	Wed Oct 27 21:20:43 2010 -0200
-@@ -44,7 +44,7 @@
+ 	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
+diff --git a/drivers/media/rc/rc-raw.c b/drivers/media/rc/rc-raw.c
+--- a/drivers/media/rc/rc-raw.c
++++ b/drivers/media/rc/rc-raw.c
+@@ -44,7 +44,7 @@ static int ir_raw_event_thread(void *dat
  	while (!kthread_should_stop()) {
  
  		spin_lock_irq(&raw->lock);
@@ -22,52 +22,35 @@ diff -r a58ca6e6d13a drivers/media/rc/rc-raw.c
  
  		if (!retval) {
  			set_current_state(TASK_INTERRUPTIBLE);
-@@ -92,7 +92,7 @@
+@@ -90,7 +90,7 @@ int ir_raw_event_store(struct rc_dev *de
  	IR_dprintk(2, "sample: (%05dus %s)\n",
- 		TO_US(ev->duration), TO_STR(ev->pulse));
+ 		   TO_US(ev->duration), TO_STR(ev->pulse));
  
--	if (kfifo_in(&ir->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
-+	if (__kfifo_put(ir->raw->kfifo, (void *)ev, sizeof(*ev)) != sizeof(*ev))
+-	if (kfifo_in(&dev->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
++	if (__kfifo_put(dev->raw->kfifo, ev, sizeof(*ev)) != sizeof(*ev))
  		return -ENOMEM;
  
  	return 0;
-@@ -259,7 +259,6 @@
- int ir_raw_event_register(struct input_dev *input_dev)
- {
- 	struct ir_input_dev *ir = input_get_drvdata(input_dev);
--	int rc;
- 	struct ir_raw_handler *handler;
+@@ -259,11 +259,11 @@ int ir_raw_event_register(struct rc_dev 
  
- 	ir->raw = kzalloc(sizeof(*ir->raw), GFP_KERNEL);
-@@ -269,12 +268,11 @@
- 	ir->raw->input_dev = input_dev;
- 
- 	ir->raw->enabled_protocols = ~0;
--	rc = kfifo_alloc(&ir->raw->kfifo, sizeof(s64) * MAX_IR_EVENT_SIZE,
+ 	dev->raw->dev = dev;
+ 	dev->raw->enabled_protocols = ~0;
+-	rc = kfifo_alloc(&dev->raw->kfifo,
+-			 sizeof(struct ir_raw_event) * MAX_IR_EVENT_SIZE,
 -			 GFP_KERNEL);
--	if (rc < 0) {
-+	ir->raw->kfifo = kfifo_alloc(sizeof(s64) * MAX_IR_EVENT_SIZE, GFP_KERNEL, NULL);
-+	if (!ir->raw->kfifo) {
- 		kfree(ir->raw);
- 		ir->raw = NULL;
--		return rc;
-+		return -ENOMEM;
- 	}
+-	if (rc < 0)
++	dev->raw->kfifo = kfifo_alloc(sizeof(s64) * MAX_IR_EVENT_SIZE, GFP_KERNEL, NULL);
++	if (ir->raw->kfifo) {
++		rc = -ENOMEM;
+ 		goto out;
++	}
  
- 	spin_lock_init(&ir->raw->lock);
-@@ -316,7 +314,7 @@
- 			handler->raw_unregister(ir->raw->input_dev);
- 	mutex_unlock(&ir_raw_handler_lock);
- 
--	kfifo_free(&ir->raw->kfifo);
-+	kfifo_free(ir->raw->kfifo);
- 	kfree(ir->raw);
- 	ir->raw = NULL;
- }
-diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
---- a/drivers/media/video/cx23885/cx23888-ir.c	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/video/cx23885/cx23888-ir.c	Sun Oct 17 20:32:19 2010 -0200
-@@ -138,7 +138,7 @@
+ 	spin_lock_init(&dev->raw->lock);
+ 	dev->raw->thread = kthread_run(ir_raw_event_thread, dev->raw,
+diff --git a/drivers/media/video/cx23885/cx23888-ir.c b/drivers/media/video/cx23885/cx23888-ir.c
+--- a/drivers/media/video/cx23885/cx23888-ir.c
++++ b/drivers/media/video/cx23885/cx23888-ir.c
+@@ -138,7 +138,7 @@ struct cx23888_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
  
@@ -76,7 +59,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  	spinlock_t rx_kfifo_lock;
  
  	struct v4l2_subdev_ir_parameters tx_params;
-@@ -540,7 +540,6 @@
+@@ -540,7 +540,6 @@ static int cx23888_ir_irq_handler(struct
  {
  	struct cx23888_ir_state *state = to_state(sd);
  	struct cx23885_dev *dev = state->dev;
@@ -84,7 +67,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  
  	u32 cntrl = cx23888_ir_read4(dev, CX23888_IR_CNTRL_REG);
  	u32 irqen = cx23888_ir_read4(dev, CX23888_IR_IRQEN_REG);
-@@ -613,10 +612,9 @@
+@@ -613,10 +612,9 @@ static int cx23888_ir_irq_handler(struct
  			}
  			if (i == 0)
  				break;
@@ -98,7 +81,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  			if (k != j)
  				kror++; /* rx_kfifo over run */
  		}
-@@ -653,10 +651,8 @@
+@@ -653,10 +651,8 @@ static int cx23888_ir_irq_handler(struct
  		*handled = true;
  	}
  
@@ -110,7 +93,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  
  	if (events)
  		v4l2_subdev_notify(sd, V4L2_SUBDEV_IR_RX_NOTIFY, &events);
-@@ -682,7 +678,7 @@
+@@ -682,7 +678,7 @@ static int cx23888_ir_rx_read(struct v4l
  		return 0;
  	}
  
@@ -119,7 +102,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  
  	n /= sizeof(union cx23888_ir_fifo_rec);
  	*num = n * sizeof(union cx23888_ir_fifo_rec);
-@@ -816,12 +812,7 @@
+@@ -817,12 +813,7 @@ static int cx23888_ir_rx_s_parameters(st
  	o->interrupt_enable = p->interrupt_enable;
  	o->enable = p->enable;
  	if (p->enable) {
@@ -133,7 +116,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  		if (p->interrupt_enable)
  			irqenable_rx(dev, IRQEN_RSE | IRQEN_RTE | IRQEN_ROE);
  		control_rx_enable(dev, p->enable);
-@@ -1209,7 +1200,9 @@
+@@ -1210,7 +1201,9 @@ int cx23888_ir_probe(struct cx23885_dev 
  		return -ENOMEM;
  
  	spin_lock_init(&state->rx_kfifo_lock);
@@ -144,7 +127,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  		return -ENOMEM;
  
  	state->dev = dev;
-@@ -1242,7 +1235,7 @@
+@@ -1243,7 +1236,7 @@ int cx23888_ir_probe(struct cx23885_dev 
  		       sizeof(struct v4l2_subdev_ir_parameters));
  		v4l2_subdev_call(sd, ir, tx_s_parameters, &default_params);
  	} else {
@@ -153,7 +136,7 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  	}
  	return ret;
  }
-@@ -1261,7 +1254,7 @@
+@@ -1262,7 +1255,7 @@ int cx23888_ir_remove(struct cx23885_dev
  
  	state = to_state(sd);
  	v4l2_device_unregister_subdev(sd);
@@ -162,10 +145,10 @@ diff -r 5254948f88c4 drivers/media/video/cx23885/cx23888-ir.c
  	kfree(state);
  	/* Nothing more to free() as state held the actual v4l2_subdev object */
  	return 0;
-diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
---- a/drivers/media/video/cx25840/cx25840-ir.c	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/video/cx25840/cx25840-ir.c	Sun Oct 17 20:32:19 2010 -0200
-@@ -116,7 +116,7 @@
+diff --git a/drivers/media/video/cx25840/cx25840-ir.c b/drivers/media/video/cx25840/cx25840-ir.c
+--- a/drivers/media/video/cx25840/cx25840-ir.c
++++ b/drivers/media/video/cx25840/cx25840-ir.c
+@@ -116,7 +116,7 @@ struct cx25840_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
  
@@ -174,7 +157,7 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  	spinlock_t rx_kfifo_lock; /* protect Rx data kfifo */
  
  	struct v4l2_subdev_ir_parameters tx_params;
-@@ -525,7 +525,6 @@
+@@ -525,7 +525,6 @@ int cx25840_ir_irq_handler(struct v4l2_s
  	struct cx25840_state *state = to_state(sd);
  	struct cx25840_ir_state *ir_state = to_ir_state(sd);
  	struct i2c_client *c = NULL;
@@ -182,7 +165,7 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  
  	union cx25840_ir_fifo_rec rx_data[FIFO_RX_DEPTH];
  	unsigned int i, j, k;
-@@ -611,9 +610,8 @@
+@@ -611,9 +610,8 @@ int cx25840_ir_irq_handler(struct v4l2_s
  			if (i == 0)
  				break;
  			j = i * sizeof(union cx25840_ir_fifo_rec);
@@ -194,7 +177,7 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  			if (k != j)
  				kror++; /* rx_kfifo over run */
  		}
-@@ -649,10 +647,8 @@
+@@ -649,10 +647,8 @@ int cx25840_ir_irq_handler(struct v4l2_s
  		cx25840_write4(c, CX25840_IR_CNTRL_REG, cntrl);
  		*handled = true;
  	}
@@ -206,7 +189,7 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  
  	if (events)
  		v4l2_subdev_notify(sd, V4L2_SUBDEV_IR_RX_NOTIFY, &events);
-@@ -683,8 +679,7 @@
+@@ -683,8 +679,7 @@ static int cx25840_ir_rx_read(struct v4l
  		return 0;
  	}
  
@@ -216,7 +199,7 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  
  	n /= sizeof(union cx25840_ir_fifo_rec);
  	*num = n * sizeof(union cx25840_ir_fifo_rec);
-@@ -835,11 +830,7 @@
+@@ -836,11 +831,7 @@ static int cx25840_ir_rx_s_parameters(st
  	o->interrupt_enable = p->interrupt_enable;
  	o->enable = p->enable;
  	if (p->enable) {
@@ -229,7 +212,7 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  		if (p->interrupt_enable)
  			irqenable_rx(sd, IRQEN_RSE | IRQEN_RTE | IRQEN_ROE);
  		control_rx_enable(c, p->enable);
-@@ -1233,8 +1224,9 @@
+@@ -1234,8 +1225,9 @@ int cx25840_ir_probe(struct v4l2_subdev 
  		return -ENOMEM;
  
  	spin_lock_init(&ir_state->rx_kfifo_lock);
@@ -241,7 +224,7 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  		kfree(ir_state);
  		return -ENOMEM;
  	}
-@@ -1272,7 +1264,7 @@
+@@ -1273,7 +1265,7 @@ int cx25840_ir_remove(struct v4l2_subdev
  	cx25840_ir_rx_shutdown(sd);
  	cx25840_ir_tx_shutdown(sd);
  
@@ -250,10 +233,10 @@ diff -r 5254948f88c4 drivers/media/video/cx25840/cx25840-ir.c
  	kfree(ir_state);
  	state->ir_state = NULL;
  	return 0;
-diff -r 5254948f88c4 drivers/media/video/meye.c
---- a/drivers/media/video/meye.c	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/video/meye.c	Sun Oct 17 20:32:19 2010 -0200
-@@ -802,8 +802,8 @@
+diff --git a/drivers/media/video/meye.c b/drivers/media/video/meye.c
+--- a/drivers/media/video/meye.c
++++ b/drivers/media/video/meye.c
+@@ -802,8 +802,8 @@ again:
  		return IRQ_HANDLED;
  
  	if (meye.mchip_mode == MCHIP_HIC_MODE_CONT_OUT) {
@@ -264,7 +247,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  			mchip_free_frame();
  			return IRQ_HANDLED;
  		}
-@@ -813,8 +813,7 @@
+@@ -813,8 +813,7 @@ again:
  		meye.grab_buffer[reqnr].state = MEYE_BUF_DONE;
  		do_gettimeofday(&meye.grab_buffer[reqnr].timestamp);
  		meye.grab_buffer[reqnr].sequence = sequence++;
@@ -274,7 +257,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  		wake_up_interruptible(&meye.proc_list);
  	} else {
  		int size;
-@@ -823,8 +822,8 @@
+@@ -823,8 +822,8 @@ again:
  			mchip_free_frame();
  			goto again;
  		}
@@ -285,7 +268,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  			mchip_free_frame();
  			goto again;
  		}
-@@ -834,8 +833,7 @@
+@@ -834,8 +833,7 @@ again:
  		meye.grab_buffer[reqnr].state = MEYE_BUF_DONE;
  		do_gettimeofday(&meye.grab_buffer[reqnr].timestamp);
  		meye.grab_buffer[reqnr].sequence = sequence++;
@@ -295,7 +278,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  		wake_up_interruptible(&meye.proc_list);
  	}
  	mchip_free_frame();
-@@ -863,8 +861,8 @@
+@@ -863,8 +861,8 @@ static int meye_open(struct file *file)
  
  	for (i = 0; i < MEYE_MAX_BUFNBRS; i++)
  		meye.grab_buffer[i].state = MEYE_BUF_UNUSED;
@@ -306,7 +289,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  	return 0;
  }
  
-@@ -937,8 +935,7 @@
+@@ -937,8 +935,7 @@ static int meyeioc_qbuf_capt(int *nb)
  		mchip_cont_compression_start();
  
  	meye.grab_buffer[*nb].state = MEYE_BUF_USING;
@@ -316,7 +299,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  	mutex_unlock(&meye.lock);
  
  	return 0;
-@@ -970,9 +967,7 @@
+@@ -970,9 +967,7 @@ static int meyeioc_sync(struct file *fil
  		/* fall through */
  	case MEYE_BUF_DONE:
  		meye.grab_buffer[*i].state = MEYE_BUF_UNUSED;
@@ -327,7 +310,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  	}
  	*i = meye.grab_buffer[*i].size;
  	mutex_unlock(&meye.lock);
-@@ -1459,8 +1454,7 @@
+@@ -1459,8 +1454,7 @@ static int vidioc_qbuf(struct file *file
  	buf->flags |= V4L2_BUF_FLAG_QUEUED;
  	buf->flags &= ~V4L2_BUF_FLAG_DONE;
  	meye.grab_buffer[buf->index].state = MEYE_BUF_USING;
@@ -337,7 +320,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  	mutex_unlock(&meye.lock);
  
  	return 0;
-@@ -1475,19 +1469,19 @@
+@@ -1475,19 +1469,19 @@ static int vidioc_dqbuf(struct file *fil
  
  	mutex_lock(&meye.lock);
  
@@ -361,7 +344,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  		mutex_unlock(&meye.lock);
  		return -EBUSY;
  	}
-@@ -1537,8 +1531,8 @@
+@@ -1537,8 +1531,8 @@ static int vidioc_streamoff(struct file 
  {
  	mutex_lock(&meye.lock);
  	mchip_hic_stop();
@@ -372,7 +355,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  
  	for (i = 0; i < MEYE_MAX_BUFNBRS; i++)
  		meye.grab_buffer[i].state = MEYE_BUF_UNUSED;
-@@ -1580,7 +1574,7 @@
+@@ -1580,7 +1574,7 @@ static unsigned int meye_poll(struct fil
  
  	mutex_lock(&meye.lock);
  	poll_wait(file, &meye.proc_list, wait);
@@ -381,7 +364,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  		res = POLLIN | POLLRDNORM;
  	mutex_unlock(&meye.lock);
  	return res;
-@@ -1759,14 +1753,16 @@
+@@ -1759,14 +1753,16 @@ static int __devinit meye_probe(struct p
  	}
  
  	spin_lock_init(&meye.grabq_lock);
@@ -402,7 +385,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  		v4l2_err(v4l2_dev, "fifo allocation failed\n");
  		goto outkfifoalloc2;
  	}
-@@ -1877,9 +1873,9 @@
+@@ -1877,9 +1873,9 @@ outregions:
  outenabledev:
  	sony_pic_camera_command(SONY_PIC_COMMAND_SETCAMERA, 0);
  outsonypienable:
@@ -414,7 +397,7 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  outkfifoalloc1:
  	vfree(meye.grab_temp);
  outvmalloc:
-@@ -1910,8 +1906,8 @@
+@@ -1910,8 +1906,8 @@ static void __devexit meye_remove(struct
  
  	sony_pic_camera_command(SONY_PIC_COMMAND_SETCAMERA, 0);
  
@@ -425,10 +408,10 @@ diff -r 5254948f88c4 drivers/media/video/meye.c
  
  	vfree(meye.grab_temp);
  
-diff -r 5254948f88c4 drivers/media/video/meye.h
---- a/drivers/media/video/meye.h	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/video/meye.h	Sun Oct 17 20:32:19 2010 -0200
-@@ -304,9 +304,9 @@
+diff --git a/drivers/media/video/meye.h b/drivers/media/video/meye.h
+--- a/drivers/media/video/meye.h
++++ b/drivers/media/video/meye.h
+@@ -304,9 +304,9 @@ struct meye {
  	struct meye_grab_buffer grab_buffer[MEYE_MAX_BUFNBRS];
  	int vma_use_count[MEYE_MAX_BUFNBRS]; /* mmap count */
  	struct mutex lock;		/* mutex for open/mmap... */
@@ -441,7 +424,6 @@ diff -r 5254948f88c4 drivers/media/video/meye.h
  	wait_queue_head_t proc_list;	/* wait queue */
  	struct video_device *vdev;	/* video device parameters */
 diff --git a/include/media/lirc_dev.h b/include/media/lirc_dev.h
-index 54780a5..87b2ca6 100644
 --- a/include/media/lirc_dev.h
 +++ b/include/media/lirc_dev.h
 @@ -28,19 +28,15 @@ struct lirc_buffer {
@@ -468,7 +450,7 @@ index 54780a5..87b2ca6 100644
  		WARN(1, "calling %s on an uninitialized lirc_buffer\n",
  		     __func__);
  }
-@@ -49,25 +45,23 @@ static inline int lirc_buffer_init(struct lirc_buffer *buf,
+@@ -49,25 +45,23 @@ static inline int lirc_buffer_init(struc
  				    unsigned int chunk_size,
  				    unsigned int size)
  {
@@ -502,7 +484,7 @@ index 54780a5..87b2ca6 100644
  		WARN(1, "calling %s on an uninitialized lirc_buffer\n",
  		     __func__);
  }
-@@ -75,11 +69,8 @@ static inline void lirc_buffer_free(struct lirc_buffer *buf)
+@@ -75,11 +69,8 @@ static inline void lirc_buffer_free(stru
  static inline int lirc_buffer_len(struct lirc_buffer *buf)
  {
  	int len;
@@ -515,18 +497,18 @@ index 54780a5..87b2ca6 100644
  
  	return len;
  }
-@@ -102,24 +93,19 @@ static inline int lirc_buffer_available(struct lirc_buffer *buf)
+@@ -102,24 +93,19 @@ static inline int lirc_buffer_available(
  static inline unsigned int lirc_buffer_read(struct lirc_buffer *buf,
  					    unsigned char *dest)
  {
 -	unsigned int ret = 0;
--
- 	if (lirc_buffer_len(buf) >= buf->chunk_size)
++	if (lirc_buffer_len(buf) >= buf->chunk_size)
++		kfifo_get(buf->fifo, dest, buf->chunk_size);
+ 
+-	if (lirc_buffer_len(buf) >= buf->chunk_size)
 -		ret = kfifo_out_locked(&buf->fifo, dest, buf->chunk_size,
 -				       &buf->fifo_lock);
 -	return ret;
-+		kfifo_get(buf->fifo, dest, buf->chunk_size);
-+
 +	return 0;
  
  }
@@ -535,11 +517,11 @@ index 54780a5..87b2ca6 100644
  					     unsigned char *orig)
  {
 -	unsigned int ret;
--
--	ret = kfifo_in_locked(&buf->fifo, orig, buf->chunk_size,
--			      &buf->fifo_lock);
 +	kfifo_put(buf->fifo, orig, buf->chunk_size);
  
+-	ret = kfifo_in_locked(&buf->fifo, orig, buf->chunk_size,
+-			      &buf->fifo_lock);
+-
 -	return ret;
 +	return 0;
  }
