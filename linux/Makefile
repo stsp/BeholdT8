@@ -137,11 +137,12 @@ apply_patches apply-patches:
 	echo "Applying patches for kernel $$dir"; \
 	touch .patches_applied; \
 	for i in `cat ../backports/$${dir}_series`; do \
-		patch -s -f -N -p1 -i ../backports/$$i || break; \
 		echo patch -s -f -N -p1 -i ../backports/$$i; \
+		patch -s -f -N -p1 -i ../backports/$$i --dry-run || break; \
 		mv .patches_applied .patches_applied.old; \
 		echo $$i > .patches_applied; \
 		cat .patches_applied.old >> .patches_applied; \
+		patch -s -f -N -p1 -i ../backports/$$i || break; \
 	done; \
 	rm .patches_applied.old
 
