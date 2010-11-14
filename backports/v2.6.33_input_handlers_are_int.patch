@@ -1,51 +1,21 @@
-diff -r 22cb011c456d drivers/media/rc/rc-main.c
---- a/drivers/media/rc/rc-main.c	Tue Oct 26 14:18:02 2010 -0200
-+++ b/drivers/media/rc/rc-main.c	Wed Oct 27 21:11:18 2010 -0200
-@@ -86,7 +86,7 @@
-  */
- static int ir_do_setkeycode(struct input_dev *dev,
- 			    struct ir_scancode_table *rc_tab,
--			    unsigned scancode, unsigned keycode,
-+			    int scancode, int keycode,
- 			    bool resize)
- {
- 	unsigned int i;
-@@ -171,7 +171,7 @@
+diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
+--- a/drivers/media/rc/rc-main.c
++++ b/drivers/media/rc/rc-main.c
+@@ -318,7 +318,7 @@ static unsigned int ir_establish_scancod
   * This routine is used to handle evdev EVIOCSKEY ioctl.
   */
- static int ir_setkeycode(struct input_dev *dev,
+ static int ir_setkeycode(struct input_dev *idev,
 -			 unsigned int scancode, unsigned int keycode)
 +			 int scancode, int keycode)
  {
- 	int rc;
- 	unsigned long flags;
-@@ -224,7 +224,7 @@
+ 	struct rc_dev *rdev = input_get_drvdata(idev);
+ 	struct ir_scancode_table *rc_tab = &rdev->rc_tab;
+@@ -423,7 +423,7 @@ static unsigned int ir_lookup_by_scancod
   * This routine is used to handle evdev EVIOCGKEY ioctl.
   */
- static int ir_getkeycode(struct input_dev *dev,
+ static int ir_getkeycode(struct input_dev *idev,
 -			 unsigned int scancode, unsigned int *keycode)
 +			 int scancode, int *keycode)
  {
- 	int start, end, mid;
- 	unsigned long flags;
-diff -r a0ea01e58ec5 drivers/media/dvb/dvb-usb/dvb-usb-remote.c
---- a/drivers/media/dvb/dvb-usb/dvb-usb-remote.c	Wed Oct 27 20:58:38 2010 -0200
-+++ b/drivers/media/dvb/dvb-usb/dvb-usb-remote.c	Wed Oct 27 21:08:43 2010 -0200
-@@ -9,7 +9,7 @@
- #include <linux/usb/input.h>
- 
- static int legacy_dvb_usb_getkeycode(struct input_dev *dev,
--				unsigned int scancode, unsigned int *keycode)
-+				int scancode, int *keycode)
- {
- 	struct dvb_usb_device *d = input_get_drvdata(dev);
- 
-@@ -39,7 +39,7 @@
- }
- 
- static int legacy_dvb_usb_setkeycode(struct input_dev *dev,
--				unsigned int scancode, unsigned int keycode)
-+				int scancode, int keycode)
- {
- 	struct dvb_usb_device *d = input_get_drvdata(dev);
- 
+ 	struct rc_dev *rdev = input_get_drvdata(idev);
+ 	struct ir_scancode_table *rc_tab = &rdev->rc_tab;
