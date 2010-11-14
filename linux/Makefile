@@ -169,5 +169,5 @@ download:
 
 	@if [ "`cat linux-media.tar.bz2.md5.tmp`" != "`cat linux-media.tar.bz2.md5`" ]; then \
 		wget $(LATEST_TAR) -O linux-media.tar.bz2; \
-		mv linux-media.tar.bz2.md5.tmp linux-media.tar.bz2.md5 \
+		mv linux-media.tar.bz2.md5.tmp linux-media.tar.bz2.md5; \
 	fi
