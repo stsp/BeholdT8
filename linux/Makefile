@@ -167,7 +167,7 @@ unapply_patches unapply-patches:
 download:
 	wget $(LATEST_TAR_MD5) -O linux-media.tar.bz2.md5.tmp
 
-	if [ ! -e linux-media.tar.bz2.md5 || ! ( "`cat linux-media.tar.bz2.md5.tmp`" = "`cat linux-media.tar.bz2.md5`" ) ]; then \
-		wget $(LATEST_TAR) -O linux-media.tar.bz2
+	@if [ "`cat linux-media.tar.bz2.md5.tmp`" != "`cat linux-media.tar.bz2.md5`" ]; then \
+		wget $(LATEST_TAR) -O linux-media.tar.bz2; \
+		mv linux-media.tar.bz2.md5.tmp linux-media.tar.bz2.md5 \
 	fi
-
