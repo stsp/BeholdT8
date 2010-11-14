@@ -118,7 +118,7 @@ distclean: clean
 
 apply_patches apply-patches:
 	@if [ "$(KERNELRELEASE)" != "" ]; then \
-		if [ -e ../backports/v$(KERNELRELEASE) ]; then \
+		if [ -e ../backports/v$(KERNELRELEASE)_series ]; then \
 			dir="v$(KERNELRELEASE)"; \
 		else \
 			dir="v$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"; \
@@ -126,29 +126,29 @@ apply_patches apply-patches:
 	fi; \
 	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
 	if [ "$$dir" = "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
-	if [ -e ../backports/$$dir/series ]; then \
+	if [ -e ../backports/$${dir}_series ]; then \
 		if [ "`cat .patches_applied`" = "$$dir" ]; then \
 			echo "Patches for $$dir already applied."; exit; \
 		else \
 			$(MAKE) unapply_patches; \
 		fi; \
 	fi; \
-	if [ ! -e ../backports/$$dir/series ]; then echo "Version $$dir not supported."; exit 1; fi; \
+	if [ ! -e ../backports/$$dir_series ]; then echo "Version $$dir not supported."; exit 1; fi; \
 	echo "Applying patches for kernel $$dir"; \
 	echo $$dir > .patches_applied; \
-	for i in `cat ../backports/$$dir/series`; do \
-		echo patch -s -f -N -p1 -i ../backports/$$dir/$$i; \
-		patch -s -f -N -p1 -i ../backports/$$dir/$$i || break; \
+	for i in `cat ../backports/$${dir}_series`; do \
+		echo patch -s -f -N -p1 -i ../backports/$$i; \
+		patch -s -f -N -p1 -i ../backports/$$i || break; \
 	done
 
 unapply_patches unapply-patches:
 	@if [ -e .patches_applied ]; then \
 	dir="`cat .patches_applied`"; \
 	echo "Unapplying patches for kernel $$dir"; \
-	if [ -e ../backports/$$dir/series ]; then \
-	for i in `cat ../backports/$$dir/series`; do \
-		echo patch -s -f -R -p1 -i ../backports/$$dir/$$i; \
-		patch -s -f -R -p1 -i ../backports/$$dir/$$i || break; \
+	if [ -e ../backports/$${dir}_series ]; then \
+	for i in `cat ../backports/$${dir}_series`; do \
+		echo patch -s -f -R -p1 -i ../backports/$$i; \
+		patch -s -f -R -p1 -i ../backports/$$i || break; \
 	done; fi; \
 	rm .patches_applied; fi
 
