@@ -174,3 +174,33 @@ diff --git a/drivers/staging/lirc/lirc_sasem.c b/drivers/staging/lirc/lirc_sasem
  };
  
  /* USB Device ID for Sasem USB Control Board */
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -158,7 +158,6 @@ static const struct file_operations vfd_
+ 	.open		= &display_open,
+ 	.write		= &vfd_write,
+ 	.release	= &display_close,
+-	.llseek		= noop_llseek,
+ };
+ 
+ /* lcd character device file operations */
+@@ -167,7 +166,6 @@ static const struct file_operations lcd_
+ 	.open		= &display_open,
+ 	.write		= &lcd_write,
+ 	.release	= &display_close,
+-	.llseek		= noop_llseek,
+ };
+ 
+ enum {
+diff --git a/drivers/media/rc/lirc_dev.c b/drivers/media/rc/lirc_dev.c
+--- a/drivers/media/rc/lirc_dev.c
++++ b/drivers/media/rc/lirc_dev.c
+@@ -162,7 +162,6 @@ static struct file_operations lirc_dev_f
+ #endif
+ 	.open		= lirc_dev_fop_open,
+ 	.release	= lirc_dev_fop_close,
+-	.llseek		= noop_llseek,
+ };
+ 
+ static int lirc_cdev_add(struct irctl *ir)
