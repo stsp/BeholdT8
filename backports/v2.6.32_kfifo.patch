@@ -1,6 +1,6 @@
-diff -r 5254948f88c4 drivers/media/IR/ir-core-priv.h
---- a/drivers/media/IR/ir-core-priv.h	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/IR/ir-core-priv.h	Sun Oct 17 20:32:19 2010 -0200
+diff -r 5254948f88c4 drivers/media/rc/ir-core-priv.h
+--- a/drivers/media/rc/ir-core-priv.h	Sun Oct 17 19:59:28 2010 -0200
++++ b/drivers/media/rc/ir-core-priv.h	Sun Oct 17 20:32:19 2010 -0200
 @@ -35,7 +35,7 @@
  	struct list_head		list;		/* to keep track of raw clients */
  	struct task_struct		*thread;
@@ -10,9 +10,9 @@ diff -r 5254948f88c4 drivers/media/IR/ir-core-priv.h
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
  	struct input_dev		*input_dev;	/* pointer to the parent input_dev */
-diff -r a58ca6e6d13a drivers/media/IR/ir-raw-event.c
---- a/drivers/media/IR/ir-raw-event.c	Wed Oct 27 21:16:08 2010 -0200
-+++ b/drivers/media/IR/ir-raw-event.c	Wed Oct 27 21:20:43 2010 -0200
+diff -r a58ca6e6d13a drivers/media/rc/ir-raw-event.c
+--- a/drivers/media/rc/ir-raw-event.c	Wed Oct 27 21:16:08 2010 -0200
++++ b/drivers/media/rc/ir-raw-event.c	Wed Oct 27 21:20:43 2010 -0200
 @@ -44,7 +44,7 @@
  	while (!kthread_should_stop()) {
  

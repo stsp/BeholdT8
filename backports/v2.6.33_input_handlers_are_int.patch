@@ -1,6 +1,6 @@
-diff -r 22cb011c456d drivers/media/IR/ir-keytable.c
---- a/drivers/media/IR/ir-keytable.c	Tue Oct 26 14:18:02 2010 -0200
-+++ b/drivers/media/IR/ir-keytable.c	Wed Oct 27 21:11:18 2010 -0200
+diff -r 22cb011c456d drivers/media/rc/rc-main.c
+--- a/drivers/media/rc/rc-main.c	Tue Oct 26 14:18:02 2010 -0200
++++ b/drivers/media/rc/rc-main.c	Wed Oct 27 21:11:18 2010 -0200
 @@ -86,7 +86,7 @@
   */
  static int ir_do_setkeycode(struct input_dev *dev,

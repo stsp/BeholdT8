@@ -1,6 +1,6 @@
-diff -r a0ea01e58ec5 drivers/media/IR/imon.c
---- a/drivers/media/IR/imon.c	Wed Oct 27 20:58:38 2010 -0200
-+++ b/drivers/media/IR/imon.c	Wed Oct 27 21:07:04 2010 -0200
+diff -r a0ea01e58ec5 drivers/media/rc/imon.c
+--- a/drivers/media/rc/imon.c	Wed Oct 27 20:58:38 2010 -0200
++++ b/drivers/media/rc/imon.c	Wed Oct 27 21:07:04 2010 -0200
 @@ -26,6 +26,7 @@
   *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   */
