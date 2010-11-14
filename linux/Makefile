@@ -127,7 +127,7 @@ apply_patches apply-patches:
 	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
 	if [ "$$dir" = "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
 	if [ -e ../backports/$${dir}_series ]; then \
-		if [ "`cat .patches_applied`" = "$$dir" ]; then \
+		if [ "`cat .patches_applied|grep ^#`" = "#$$dir" ]; then \
 			echo "Patches for $$dir already applied."; exit; \
 		else \
 			$(MAKE) unapply_patches; \
@@ -144,12 +144,14 @@ apply_patches apply-patches:
 		cat .patches_applied.old >> .patches_applied; \
 		patch -s -f -N -p1 -i ../backports/$$i || break; \
 	done; \
+	echo "#$$dir" > .patches_applied; \
+	cat .patches_applied.old >> .patches_applied; \
 	rm .patches_applied.old
 
 unapply_patches unapply-patches:
 	@if [ -e .patches_applied ]; then \
 	echo "Unapplying patches"; \
-	for i in `cat .patches_applied`; do \
+	for i in `cat .patches_applied|grep -v ^#`; do \
 		echo patch -s -f -R -p1 -i ../backports/$$i; \
 		patch -s -f -R -p1 -i ../backports/$$i || break; \
 	done; \
