@@ -50,7 +50,9 @@ TARFILES += firmware/dabusb/firmware.HEX
 TARFILES += firmware/ttusb-budget/dspbootcode.bin.ihex
 
 TODAY_TAR := linux-media-`date "+%Y-%m-%d"`.tar
+TODAY_TAR_MD5 := linux-media-`date "+%Y-%m-%d"`.tar.bz2.md5
 LATEST_TAR := http://linuxtv.org/downloads/drivers/linux-media-LATEST.tar.bz2
+LATEST_TAR_MD5 := http://linuxtv.org/downloads/drivers/linux-media-LATEST.tar.bz2.md5
 
 default:
 	make -C ..
@@ -74,6 +76,7 @@ todaytar:
 		else \
 			tar rvf $(PWD)/$(TODAY_TAR) -C $(DIR) $$i; \
 		fi; done; bzip2 $(PWD)/$(TODAY_TAR)
+	md5sum $(PWD)/$(TODAY_TAR).bz2 > $(PWD)/$(TODAY_TAR_MD5)
 
 tar:
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
@@ -162,5 +165,9 @@ unapply_patches unapply-patches:
 	rm .patches_applied; fi
 
 download:
-	wget $(LATEST_TAR) -O linux-media.tar.bz2
+	wget $(LATEST_TAR_MD5) -O linux-media.tar.bz2.md5.tmp
+
+	if [ ! -e linux-media.tar.bz2.md5 || ! ( "`cat linux-media.tar.bz2.md5.tmp`" = "`cat linux-media.tar.bz2.md5`" ) ]; then \
+		wget $(LATEST_TAR) -O linux-media.tar.bz2
+	fi
 
