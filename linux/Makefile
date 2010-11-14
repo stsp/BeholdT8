@@ -122,7 +122,7 @@ dir: clean
 		fi; done
 
 distclean: clean
-	-rm linux-media.tar.bz2
+	-rm linux-media.tar.bz2 linux-media.tar.bz2.md5
 
 apply_patches apply-patches:
 	@if [ "$(KERNELRELEASE)" != "" ]; then \
