@@ -351,7 +351,7 @@ endif
 $(obj)/.config: $(obj)/.version
 	@echo Updating/Creating .config
 	@if [ -e $(obj)/.config ]; then touch $(obj)/.config ; else \
-		@$(MAKE) -C ../linux apply_patches; \
+		$(MAKE) -C ../linux apply_patches; \
 		./scripts/make_kconfig.pl $(OUTDIR) $(SRCDIR); fi
 
 $(obj)/Kconfig: $(obj)/.version
