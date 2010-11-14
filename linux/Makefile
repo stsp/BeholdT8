@@ -63,6 +63,8 @@ todaytar:
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	-rm $(PWD)/$(TODAY_TAR).bz2
 	tar cf $(PWD)/$(TODAY_TAR) -C $(DIR) $(TARFILES)
+	-git --git-dir $(DIR)/.git log --pretty=oneline HEAD^1^1^1^1^1^1^1^1..HEAD >git_log
+	tar rvf $(PWD)/linux-media.tar git_log
 	for i in $(TARDIR); do \
 		if [ "`echo $$i|grep Documentation`" = "" ]; then \
 			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
@@ -77,6 +79,8 @@ tar:
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	-rm $(PWD)/linux-media.tar.bz2
 	tar cf $(PWD)/linux-media.tar -C $(DIR) $(TARFILES)
+	-git --git-dir $(DIR)/.git log --pretty=oneline HEAD^1^1^1^1^1^1^1^1..HEAD >git_log
+	tar rvf $(PWD)/linux-media.tar git_log
 	for i in $(TARDIR); do \
 		if [ "`echo $$i|grep Documentation`" = "" ]; then \
 			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
