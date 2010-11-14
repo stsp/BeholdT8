@@ -135,21 +135,23 @@ apply_patches apply-patches:
 	fi; \
 	if [ ! -e ../backports/$$dir_series ]; then echo "Version $$dir not supported."; exit 1; fi; \
 	echo "Applying patches for kernel $$dir"; \
-	echo $$dir > .patches_applied; \
+	touch .patches_applied; \
 	for i in `cat ../backports/$${dir}_series`; do \
-		echo patch -s -f -N -p1 -i ../backports/$$i; \
 		patch -s -f -N -p1 -i ../backports/$$i || break; \
-	done
+		echo patch -s -f -N -p1 -i ../backports/$$i; \
+		mv .patches_applied .patches_applied.old; \
+		echo $$i > .patches_applied; \
+		cat .patches_applied.old >> .patches_applied; \
+	done; \
+	rm .patches_applied.old
 
 unapply_patches unapply-patches:
 	@if [ -e .patches_applied ]; then \
-	dir="`cat .patches_applied`"; \
-	echo "Unapplying patches for kernel $$dir"; \
-	if [ -e ../backports/$${dir}_series ]; then \
-	for i in `cat ../backports/$${dir}_series`; do \
+	echo "Unapplying patches"; \
+	for i in `cat .patches_applied`; do \
 		echo patch -s -f -R -p1 -i ../backports/$$i; \
 		patch -s -f -R -p1 -i ../backports/$$i || break; \
-	done; fi; \
+	done; \
 	rm .patches_applied; fi
 
 download:
