@@ -379,6 +379,26 @@ sub check_delayed_work()
 	$out.= "\n#define NEED_DELAYED_WORK 1\n";
 }
 
+sub check_vzalloc()
+{
+	my @files = ( "$kdir/include/linux/vmalloc.h" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or die "File not found: $file";
+		while (<IN>) {
+			if (m/vzalloc/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define NEED_VZALLOC 1\n";
+}
+
 sub check_other_dependencies()
 {
 	check_spin_lock();
@@ -400,6 +420,7 @@ sub check_other_dependencies()
 	check_bitops();
 	check_delayed_work();
 	check_fw_csr_string();
+	check_vzalloc();
 }
 
 # Do the basic rules

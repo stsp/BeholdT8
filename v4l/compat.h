@@ -724,5 +724,18 @@ static inline int fw_csr_string(u32 *directory, int search_key, char *buf, size_
 }
 #endif
 
+#ifdef NEED_VZALLOC
+#include <linux/vmalloc.h>
+
+static inline void *vzalloc(unsigned long size)
+{
+	void *p = vmalloc(size);
+	if (!p)
+		return NULL;
+	memset (p, '\0', size);
+	return p;
+}
+
+#endif
 
 #endif /*  _COMPAT_H */
