@@ -6,6 +6,7 @@
 #define _COMPAT_H
 
 #include <linux/version.h>
+#include <linux/input.h>
 #include "config-compat.h"
 
 /* In v2.6.19-rc6-118-g52bad64 struct work_struct was was changed to be only for
@@ -736,6 +737,11 @@ static inline void *vzalloc(unsigned long size)
 	return p;
 }
 
+#endif
+
+#ifndef KEY_10CHANNELSUP
+#define KEY_10CHANNELSUP        0x1b8   /* 10 channels up (10+) */
+#define KEY_10CHANNELSDOWN      0x1b9   /* 10 channels down (10-) */
 #endif
 
 #endif /*  _COMPAT_H */
