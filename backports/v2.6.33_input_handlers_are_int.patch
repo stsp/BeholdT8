@@ -19,3 +19,24 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
  {
  	struct rc_dev *rdev = input_get_drvdata(idev);
  	struct ir_scancode_table *rc_tab = &rdev->rc_tab;
+diff --git a/drivers/media/dvb/dvb-usb/dvb-usb-remote.c b/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
+--- a/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
++++ b/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
+@@ -9,7 +9,7 @@
+ #include <linux/usb/input.h>
+ 
+ static int legacy_dvb_usb_getkeycode(struct input_dev *dev,
+-				unsigned int scancode, unsigned int *keycode)
++				int scancode, int *keycode)
+ {
+ 	struct dvb_usb_device *d = input_get_drvdata(dev);
+ 
+@@ -39,7 +39,7 @@ static int legacy_dvb_usb_getkeycode(str
+ }
+ 
+ static int legacy_dvb_usb_setkeycode(struct input_dev *dev,
+-				unsigned int scancode, unsigned int keycode)
++				int scancode, int keycode)
+ {
+ 	struct dvb_usb_device *d = input_get_drvdata(dev);
+ 
