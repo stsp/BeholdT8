@@ -10,9 +10,9 @@ diff --git a/drivers/media/rc/rc-core-priv.h b/drivers/media/rc/rc-core-priv.h
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
  	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
-diff --git a/drivers/media/rc/rc-raw.c b/drivers/media/rc/rc-raw.c
---- a/drivers/media/rc/rc-raw.c
-+++ b/drivers/media/rc/rc-raw.c
+diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
+--- a/drivers/media/rc/ir-raw.c
++++ b/drivers/media/rc/ir-raw.c
 @@ -44,7 +44,7 @@ static int ir_raw_event_thread(void *dat
  	while (!kthread_should_stop()) {
  

@@ -10,17 +10,17 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 +			 unsigned int scancode, unsigned int keycode)
  {
  	struct rc_dev *rdev = input_get_drvdata(idev);
- 	struct ir_scancode_table *rc_tab = &rdev->rc_tab;
+ 	struct rc_map *rc_map = &rdev->rc_map;
  	unsigned int index;
 -	unsigned int scancode;
  	int retval;
  	unsigned long flags;
  
- 	spin_lock_irqsave(&rc_tab->lock, flags);
+ 	spin_lock_irqsave(&rc_map->lock, flags);
  
 -	if (ke->flags & INPUT_KEYMAP_BY_INDEX) {
 -		index = ke->index;
--		if (index >= rc_tab->len) {
+-		if (index >= rc_map->len) {
 -			retval = -EINVAL;
 -			goto out;
 -		}
@@ -29,22 +29,22 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 -		if (retval)
 -			goto out;
 -
--		index = ir_establish_scancode(rdev, rc_tab, scancode, true);
--		if (index >= rc_tab->len) {
+-		index = ir_establish_scancode(rdev, rc_map, scancode, true);
+-		if (index >= rc_map->len) {
 -			retval = -ENOMEM;
 -			goto out;
 -		}
-+	index = ir_establish_scancode(rdev, rc_tab, scancode, true);
-+	if (index >= rc_tab->len) {
++	index = ir_establish_scancode(rdev, rc_map, scancode, true);
++	if (index >= rc_map->len) {
 +		retval = -ENOMEM;
 +		goto out;
  	}
  
--	*old_keycode = ir_update_mapping(rdev, rc_tab, index, ke->keycode);
-+	keycode = ir_update_mapping(rdev, rc_tab, index, keycode);
+-	*old_keycode = ir_update_mapping(rdev, rc_map, index, ke->keycode);
++	*keycode = ir_update_mapping(rdev, rc_tab, index, keycode);
  
  out:
- 	spin_unlock_irqrestore(&rc_tab->lock, flags);
+ 	spin_unlock_irqrestore(&rc_map->lock, flags);
 @@ -436,42 +422,24 @@ static unsigned int ir_lookup_by_scancod
   * This routine is used to handle evdev EVIOCGKEY ioctl.
   */
@@ -53,14 +53,14 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 +			 unsigned int scancode, unsigned int *keycode)
  {
  	struct rc_dev *rdev = input_get_drvdata(idev);
- 	struct ir_scancode_table *rc_tab = &rdev->rc_tab;
--	struct ir_scancode *entry;
+ 	struct rc_map *rc_map = &rdev->rc_map;
+-	struct rc_map_table *entry;
  	unsigned long flags;
  	unsigned int index;
 -	unsigned int scancode;
  	int retval;
  
- 	spin_lock_irqsave(&rc_tab->lock, flags);
+ 	spin_lock_irqsave(&rc_map->lock, flags);
  
 -	if (ke->flags & INPUT_KEYMAP_BY_INDEX) {
 -		index = ke->index;
@@ -69,11 +69,11 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 -		if (retval)
 -			goto out;
 -
--		index = ir_lookup_by_scancode(rc_tab, scancode);
+-		index = ir_lookup_by_scancode(rc_map, scancode);
 -	}
-+	index = ir_lookup_by_scancode(rc_tab, scancode);
++	index = ir_lookup_by_scancode(rc_map, scancode);
  
- 	if (index >= rc_tab->len) {
+ 	if (index >= rc_map->len) {
 -		if (!(ke->flags & INPUT_KEYMAP_BY_INDEX))
 -			IR_dprintk(1, "unknown key for scancode 0x%04x\n",
 -				   scancode);
@@ -81,13 +81,13 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
  		goto out;
  	}
  
--	entry = &rc_tab->scan[index];
+-	entry = &rc_map->scan[index];
 -
 -	ke->index = index;
 -	ke->keycode = entry->keycode;
 -	ke->len = sizeof(entry->scancode);
 -	memcpy(ke->scancode, &entry->scancode, sizeof(entry->scancode));
-+	*keycode = rc_tab->scan[index].keycode;
++	*keycode = rc_map->scan[index].keycode;
  
  	retval = 0;
  
@@ -101,4 +101,4 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 +	dev->input_dev->setkeycode = ir_setkeycode;
  	input_set_drvdata(dev->input_dev, dev);
  
- 	spin_lock_init(&dev->rc_tab.lock);
+ 	spin_lock_init(&dev->rc_map.lock);
