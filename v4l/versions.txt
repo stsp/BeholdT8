@@ -30,6 +30,12 @@ V4L2_MEM2MEM_DEV
 VIDEO_SH_MOBILE_CEU
 VIDEO_PXA27x
 VIDEO_TLG2300
+# Relies on some changes at Firewire API
+DVB_FIREDTV
+# Relies on some changes at PnP API
+IR_NUVOTON
+IR_ENE
+IR_WINBOND_CIR
 
 [2.6.31]
 # These rely on arch support that wasn't available until 2.6.31
@@ -49,10 +55,6 @@ DISPLAY_DAVINCI_DM646X_EVM
 VIDEO_VPFE_CAPTURE
 VIDEO_MX1
 VIDEO_MX3
-
-[2.6.30]
-# Needs const id_table pointer in struct hpsb_protocol_driver
-DVB_FIREDTV_IEEE1394
 
 [2.6.26]
 # Requires struct i2c_device_id
@@ -76,8 +78,6 @@ VIDEO_SAA7164
 [2.6.23]
 # Needs field intf_assoc in struct usb_host_config
 VIDEO_CX231XX
-# This driver needs print_hex_dump with a const void * argument
-DVB_FIREDTV
 # writel/readl headers moved
 DVB_MANTIS
 MANTIS_CORE

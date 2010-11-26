@@ -1,0 +1,13 @@
+v2.6.36_enable_bkl.patch
+v2.6.36_remove_noop_llseek.patch
+v2.6.36_input_getkeycode.patch
+v2.6.35_firedtv_handle_fcp.patch
+v2.6.35_i2c_new_probed_device.patch
+v2.6.35_work_handler.patch
+v2.6.34_dvb_net.patch
+v2.6.34_fix_define_warnings.patch
+v2.6.33_input_handlers_are_int.patch
+v2.6.33_pvrusb2_sysfs.patch
+v2.6.32_kfifo.patch
+v2.6.31_nodename.patch
+
