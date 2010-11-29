@@ -1,6 +1,6 @@
-diff --git a/drivers/media/rc/rc-core-priv.h b/drivers/media/rc/rc-core-priv.h
---- a/drivers/media/rc/rc-core-priv.h
-+++ b/drivers/media/rc/rc-core-priv.h
+diff -r c4cd3d2e5902 drivers/media/rc/rc-core-priv.h
+--- a/drivers/media/rc/rc-core-priv.h	Mon Nov 29 08:40:01 2010 -0200
++++ b/drivers/media/rc/rc-core-priv.h	Mon Nov 29 08:42:43 2010 -0200
 @@ -35,7 +35,7 @@ struct ir_raw_event_ctrl {
  	struct list_head		list;		/* to keep track of raw clients */
  	struct task_struct		*thread;
@@ -10,9 +10,9 @@ diff --git a/drivers/media/rc/rc-core-priv.h b/drivers/media/rc/rc-core-priv.h
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
  	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
-diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
---- a/drivers/media/rc/ir-raw.c
-+++ b/drivers/media/rc/ir-raw.c
+diff -r c4cd3d2e5902 drivers/media/rc/ir-raw.c
+--- a/drivers/media/rc/ir-raw.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/drivers/media/rc/ir-raw.c	Mon Nov 29 08:42:43 2010 -0200
 @@ -44,7 +44,7 @@ static int ir_raw_event_thread(void *dat
  	while (!kthread_should_stop()) {
  
@@ -40,8 +40,8 @@ diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
 -			 GFP_KERNEL);
 -	if (rc < 0)
 +	dev->raw->kfifo = kfifo_alloc(sizeof(s64) * MAX_IR_EVENT_SIZE, GFP_KERNEL, NULL);
-+	if (dev->raw->kfifo) {
-+		rc = -ENOMEM;
++	if (IS_ERR(dev->raw->kfifo)) {
++		rc = IS_ERR(dev->raw->kfifo);
  		goto out;
 +	}
  
@@ -56,9 +56,9 @@ diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
  	kfree(dev->raw);
  	dev->raw = NULL;
  }
-diff --git a/drivers/media/video/cx23885/cx23888-ir.c b/drivers/media/video/cx23885/cx23888-ir.c
---- a/drivers/media/video/cx23885/cx23888-ir.c
-+++ b/drivers/media/video/cx23885/cx23888-ir.c
+diff -r c4cd3d2e5902 drivers/media/video/cx23885/cx23888-ir.c
+--- a/drivers/media/video/cx23885/cx23888-ir.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/drivers/media/video/cx23885/cx23888-ir.c	Mon Nov 29 08:42:43 2010 -0200
 @@ -138,7 +138,7 @@ struct cx23888_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
@@ -125,17 +125,19 @@ diff --git a/drivers/media/video/cx23885/cx23888-ir.c b/drivers/media/video/cx23
  		if (p->interrupt_enable)
  			irqenable_rx(dev, IRQEN_RSE | IRQEN_RTE | IRQEN_ROE);
  		control_rx_enable(dev, p->enable);
-@@ -1210,7 +1201,9 @@ int cx23888_ir_probe(struct cx23885_dev 
+@@ -1210,8 +1201,10 @@ int cx23888_ir_probe(struct cx23885_dev 
  		return -ENOMEM;
  
  	spin_lock_init(&state->rx_kfifo_lock);
 -	if (kfifo_alloc(&state->rx_kfifo, CX23888_IR_RX_KFIFO_SIZE, GFP_KERNEL))
+-		return -ENOMEM;
 +	state->rx_kfifo = kfifo_alloc(CX23888_IR_RX_KFIFO_SIZE, GFP_KERNEL,
 +				      &state->rx_kfifo_lock);
-+	if (state->rx_kfifo == NULL)
- 		return -ENOMEM;
++	if (IS_ERR(state->rx_kfifo))
++		return IS_ERR(state->rx_kfifo);
  
  	state->dev = dev;
+ 	state->id = V4L2_IDENT_CX23888_IR;
 @@ -1243,7 +1236,7 @@ int cx23888_ir_probe(struct cx23885_dev 
  		       sizeof(struct v4l2_subdev_ir_parameters));
  		v4l2_subdev_call(sd, ir, tx_s_parameters, &default_params);
@@ -154,9 +156,9 @@ diff --git a/drivers/media/video/cx23885/cx23888-ir.c b/drivers/media/video/cx23
  	kfree(state);
  	/* Nothing more to free() as state held the actual v4l2_subdev object */
  	return 0;
-diff --git a/drivers/media/video/cx25840/cx25840-ir.c b/drivers/media/video/cx25840/cx25840-ir.c
---- a/drivers/media/video/cx25840/cx25840-ir.c
-+++ b/drivers/media/video/cx25840/cx25840-ir.c
+diff -r c4cd3d2e5902 drivers/media/video/cx25840/cx25840-ir.c
+--- a/drivers/media/video/cx25840/cx25840-ir.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/drivers/media/video/cx25840/cx25840-ir.c	Mon Nov 29 08:42:43 2010 -0200
 @@ -116,7 +116,7 @@ struct cx25840_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
@@ -229,7 +231,7 @@ diff --git a/drivers/media/video/cx25840/cx25840-ir.c b/drivers/media/video/cx25
 -			CX25840_IR_RX_KFIFO_SIZE, GFP_KERNEL)) {
 +	ir_state->rx_kfifo = kfifo_alloc(CX25840_IR_RX_KFIFO_SIZE, GFP_KERNEL,
 +				      &ir_state->rx_kfifo_lock);
-+	if (!ir_state->rx_kfifo) {
++	if (IS_ERR(ir_state->rx_kfifo)) {
  		kfree(ir_state);
  		return -ENOMEM;
  	}
@@ -242,9 +244,9 @@ diff --git a/drivers/media/video/cx25840/cx25840-ir.c b/drivers/media/video/cx25
  	kfree(ir_state);
  	state->ir_state = NULL;
  	return 0;
-diff --git a/drivers/media/video/meye.c b/drivers/media/video/meye.c
---- a/drivers/media/video/meye.c
-+++ b/drivers/media/video/meye.c
+diff -r c4cd3d2e5902 drivers/media/video/meye.c
+--- a/drivers/media/video/meye.c	Mon Nov 29 08:40:01 2010 -0200
++++ b/drivers/media/video/meye.c	Mon Nov 29 08:42:43 2010 -0200
 @@ -802,8 +802,8 @@ again:
  		return IRQ_HANDLED;
  
@@ -417,9 +419,9 @@ diff --git a/drivers/media/video/meye.c b/drivers/media/video/meye.c
  
  	vfree(meye.grab_temp);
  
-diff --git a/drivers/media/video/meye.h b/drivers/media/video/meye.h
---- a/drivers/media/video/meye.h
-+++ b/drivers/media/video/meye.h
+diff -r c4cd3d2e5902 drivers/media/video/meye.h
+--- a/drivers/media/video/meye.h	Mon Nov 29 08:40:01 2010 -0200
++++ b/drivers/media/video/meye.h	Mon Nov 29 08:42:43 2010 -0200
 @@ -304,9 +304,9 @@ struct meye {
  	struct meye_grab_buffer grab_buffer[MEYE_MAX_BUFNBRS];
  	int vma_use_count[MEYE_MAX_BUFNBRS]; /* mmap count */
@@ -432,9 +434,9 @@ diff --git a/drivers/media/video/meye.h b/drivers/media/video/meye.h
  	spinlock_t doneq_lock;		/* lock protecting the queue */
  	wait_queue_head_t proc_list;	/* wait queue */
  	struct video_device *vdev;	/* video device parameters */
-diff --git a/include/media/lirc_dev.h b/include/media/lirc_dev.h
---- a/include/media/lirc_dev.h
-+++ b/include/media/lirc_dev.h
+diff -r c4cd3d2e5902 include/media/lirc_dev.h
+--- a/include/media/lirc_dev.h	Mon Nov 29 08:40:01 2010 -0200
++++ b/include/media/lirc_dev.h	Mon Nov 29 08:42:43 2010 -0200
 @@ -28,19 +28,15 @@ struct lirc_buffer {
  	unsigned int size; /* in chunks */
  	/* Using chunks instead of bytes pretends to simplify boundary checking
@@ -474,8 +476,8 @@ diff --git a/include/media/lirc_dev.h b/include/media/lirc_dev.h
 -		buf->fifo_initialized = 1;
 +	buf->fifo = kfifo_alloc(size * chunk_size, GFP_KERNEL,
 +				&buf->fifo_lock);
-+	if (!buf->fifo)
-+		return -ENOMEM;
++	if (IS_ERR(buf->fifo))
++		return IS_ERR(buf->fifo);
  
 -	return ret;
 +	return 0;
