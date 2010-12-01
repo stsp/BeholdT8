@@ -296,6 +296,11 @@ do {									\
 	printk(KERN_ERR fmt, ##arg)
 #endif
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35)
+#define pr_warn(fmt, arg...) \
+	printk(KERN_WARNING fmt, ##arg)
+#endif
+
 #ifndef BIT_MASK
 # define BIT_MASK(nr)            (1UL << ((nr) % BITS_PER_LONG))
 # define BIT_WORD(nr)            ((nr) / BITS_PER_LONG)
