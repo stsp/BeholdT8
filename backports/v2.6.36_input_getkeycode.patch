@@ -13,7 +13,7 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
  	struct rc_map *rc_map = &rdev->rc_map;
  	unsigned int index;
 -	unsigned int scancode;
- 	int retval;
+ 	int retval = 0;
  	unsigned long flags;
  
  	spin_lock_irqsave(&rc_map->lock, flags);
