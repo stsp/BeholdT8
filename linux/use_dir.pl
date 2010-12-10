@@ -104,7 +104,7 @@ sub hash_calc($)
 
 	my $rc = open IN, $file;
 	if (!$rc) {
-		print "Couldn't open file $file\n" if ($debug || $recheck);
+		print "Couldn't open file $file\n" if ($debug);
 		return 0;
 	}
 	$ctx->addfile(*IN);
@@ -131,7 +131,7 @@ sub sync_files($)
 	}
 
 	if (!exists($fhash{$file}) || ($filehash ne $fhash{$file})) {
-		printf "Re-syncying file $file (orig = %s, copy = %s)\n", $filehash, $fhash{$file} if ($recheck);
+		printf "Re-syncying file $file (orig = %s, copy = %s)\n", $filehash, $fhash{$file} if ($debug);
 		print "install -D $dir/$file $file\n" if ($debug);
 
 		$fhash{$file} = $filehash;
