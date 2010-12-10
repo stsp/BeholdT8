@@ -4,7 +4,7 @@
 
 -include ../v4l/.version
 
-MAINDIRS += Documentation drivers firmware include sound
+MAINDIRS += drivers firmware include sound
 
 # Media drivers
 TARDIR += drivers/media/
@@ -28,16 +28,6 @@ TARFILES += include/linux/videodev2.h
 TARFILES += include/linux/meye.h
 TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
-
-# Documentation
-TARDIR += Documentation/dvb/
-TARDIR += Documentation/video4linux/
-TARDIR += Documentation/DocBook/dvb/
-TARDIR += Documentation/DocBook/v4l/
-TARFILES += Documentation/DocBook/media.tmpl
-TARFILES += Documentation/DocBook/media-entities.tmpl
-TARFILES += Documentation/DocBook/media-indices.tmpl
-TARFILES += Documentation/DocBook/Makefile
 
 # Firmware
 TARFILES += firmware/av7110/bootcode.bin.ihex
@@ -99,32 +89,18 @@ untar: linux-media.tar.bz2
 	-rm .patches_applied
 
 clean:
-	-rm -rf $(MAINDIRS) .patches_applied
+	-rm -rf $(MAINDIRS) .patches_applied .linked_dir
 
 dir: clean
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	@echo "Searching in $(DIR)/Makefile for kernel version."
-
-	for i in $(TARFILES); do \
-		install -D $(DIR)/$$i $$i; \
-	done
-	for i in $(TARDIR); do \
-		if [ "`echo $$i|grep Documentation`" = "" ]; then \
-			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
-			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
-			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
-			for j in $$dir; do \
-				install -D $(DIR)/$$j $$j; \
-			done; \
-		else \
-			install -d $$i; \
-			cp -ar $(DIR)/$$i $$i; \
-		fi; done
+	./use_dir.pl $(DIR)
 
 distclean: clean
 	-rm linux-media.tar.bz2 linux-media.tar.bz2.md5
 
 apply_patches apply-patches:
+	@if [ -e .linked_dir ]; then $(MAKE) unapply_patches; ./use_dir.pl --silent; fi
 	@if [ "$(KERNELRELEASE)" != "" ]; then \
 		if [ -e ../backports/v$(KERNELRELEASE)_series ]; then \
 			dir="v$(KERNELRELEASE)"; \
