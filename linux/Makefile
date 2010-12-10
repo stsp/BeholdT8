@@ -110,7 +110,7 @@ apply_patches apply-patches:
 	fi; \
 	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
 	if [ "$$dir" = "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
-	if [ -e ../backports/$${dir}_series ]; then \
+	if [ -e .patches_applied ]; then \
 		if [ "`cat .patches_applied|grep ^#`" = "#$$dir" ]; then \
 			echo "Patches for $$dir already applied."; exit; \
 		else \
