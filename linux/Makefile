@@ -100,7 +100,7 @@ distclean: clean
 	-rm linux-media.tar.bz2 linux-media.tar.bz2.md5
 
 apply_patches apply-patches:
-	@if [ -e .linked_dir ]; then $(MAKE) unapply_patches; ./use_dir.pl --silent; fi
+	@if [ -e .linked_dir ]; then ./use_dir.pl --recheck; fi
 	@if [ "$(KERNELRELEASE)" != "" ]; then \
 		if [ -e ../backports/v$(KERNELRELEASE)_series ]; then \
 			dir="v$(KERNELRELEASE)"; \
