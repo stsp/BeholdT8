@@ -1,6 +1,6 @@
 linux-media.tar.bz2
 .patches_applied
-Documentation/
+.linked_dir
 drivers/
 firmware/
 include/
