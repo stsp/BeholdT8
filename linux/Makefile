@@ -122,12 +122,13 @@ apply_patches apply-patches:
 	touch .patches_applied; \
 	for i in `cat ../backports/$${dir}_series`; do \
 		echo patch -s -f -N -p1 -i ../backports/$$i; \
-		patch -s -f -N -p1 -i ../backports/$$i --dry-run || break; \
+		patch -s -f -N -p1 -i ../backports/$$i --dry-run || exit 1; \
+		patch -s -f -N -p1 -i ../backports/$$i; \
 		mv .patches_applied .patches_applied.old; \
 		echo $$i > .patches_applied; \
 		cat .patches_applied.old >> .patches_applied; \
-		patch -s -f -N -p1 -i ../backports/$$i || break; \
 	done; \
+	mv .patches_applied .patches_applied.old; \
 	echo "#$$dir" > .patches_applied; \
 	cat .patches_applied.old >> .patches_applied; \
 	rm .patches_applied.old
