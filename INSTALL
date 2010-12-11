@@ -31,8 +31,6 @@ default		- Continues building the latest module selection
 install		- Installs all modules at kernel's default dir
 		  for V4L/DVB. Requires root access.
 
-man_install	- Install V4L2 API man pages.
-
 rminstall	- cleans previous installations of V4L/DVB modules
 
 sound-install	- installs the sound modules related to V4L/DVB
@@ -46,12 +44,6 @@ firmware	- Create the firmware files that are enclosed at the
 		  Notice: Only a very few firmwares are currently here
 
 firmware_install- Install firmware files under /lib/firmware
-
-======================
-Documentation rules:
-spec		- Creates both V4L and DVB API specification
-
-man		- Creates V4L2 API man pages
 
 =======================
 Module selection rules:

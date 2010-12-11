@@ -220,9 +220,6 @@ remove rminstall:: media-rminstall
 firmware_install::
 	make -C firmware install
 
-man_install::
-	$(MAKE) -C  man_install
-
 #################################################
 # Compiling preparation rules
 
