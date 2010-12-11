@@ -95,12 +95,13 @@ dir: clean
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	@echo "Searching in $(DIR)/Makefile for kernel version."
 	./use_dir.pl $(DIR)
+	$(MAKE) apply_patches
 
 distclean: clean
 	-rm linux-media.tar.bz2 linux-media.tar.bz2.md5
 
 apply_patches apply-patches:
-	@if [ -e .linked_dir ]; then ./use_dir.pl --recheck; fi
+	@if [ -e .linked_dir ]; then ./use_dir.pl --recheck --silent; fi
 	@if [ "$(KERNELRELEASE)" != "" ]; then \
 		if [ -e ../backports/v$(KERNELRELEASE)_series ]; then \
 			dir="v$(KERNELRELEASE)"; \
@@ -132,6 +133,7 @@ apply_patches apply-patches:
 	echo "#$$dir" > .patches_applied; \
 	cat .patches_applied.old >> .patches_applied; \
 	rm .patches_applied.old
+	./use_dir.pl --get_patched
 
 unapply_patches unapply-patches:
 	@if [ -e .patches_applied ]; then \

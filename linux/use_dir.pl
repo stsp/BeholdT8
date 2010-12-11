@@ -7,29 +7,31 @@ use Fcntl ':mode';
 use Getopt::Long;
 use Digest::SHA1;
 
-#######################################
-# FIXME: need to handle applied patches
-#######################################
-
 my $silent = 0;
 my $debug = 0;
 my $recheck = 0;
+my $get_patched = 0;
 GetOptions( "--debug" => \$debug,
 	    "--silent" => \$silent,
 	    "--recheck" => \$recheck,
+	    "--get_patched" => \$get_patched,
 	  );
 
 my $dir = shift;
 
 my $ctlfile = ".linked_dir";
+my $patchfile = ".patches_applied";
 
+my $sync_patched = 0;
 my %dirs;
 my %files;
+my $patches_applied;
 
 #########################################
 # Control info stored at the control file
 my $path;
 my %fhash;
+my %fhash_patched;
 #########################################
 
 sub read_ctlfile()
@@ -44,6 +46,8 @@ sub read_ctlfile()
 			$path = $1;
 		} elsif (m/^hash\:\s*([^\s]+)\s*=\s*([^\s]+)/) {
 			$fhash{$1} = $2;
+		} elsif (m/^hash_patched\:\s*([^\s]+)\s*=\s*([^\s]+)/) {
+			$fhash_patched{$1} = $2;
 		} else {
 			printf("Parse error on this line of $ctlfile:\n\t$_");
 			die;
@@ -58,6 +62,9 @@ sub write_ctlfile()
 	print OUT "path: $path\n";
 	foreach my $file (keys %fhash) {
 		printf OUT "hash: %s=%s\n", $file, $fhash{$file};
+	}
+	foreach my $file (keys %fhash_patched) {
+		printf OUT "hash_patched: %s=%s\n", $file, $fhash_patched{$file};
 	}
 	close OUT;
 }
@@ -102,14 +109,14 @@ sub hash_calc($)
 
 	my $ctx = Digest::SHA1->new;
 
-	my $rc = open IN, $file;
+	my $rc = open INHASH, $file;
 	if (!$rc) {
 		print "Couldn't open file $file\n" if ($debug);
 		return 0;
 	}
-	$ctx->addfile(*IN);
+	$ctx->addfile(*INHASH);
 	my $digest = $ctx->hexdigest;
-	close IN;
+	close INHASH;
 
 	return $digest;
 }
@@ -119,27 +126,68 @@ sub sync_files($)
 {
 	my $file = shift;
 	my $path = $file;
+	my $check_hash;
+	my $need_sync;
 	my $filehash;
+	my $cpfilehash;
+	my $patched_file;
 
 	$path =~ s,/[^/]+$,,;
 
-
 	$filehash = hash_calc("$dir/$file");
+	$need_sync = 1 if ($filehash ne $fhash{$file});
 
-	if ($recheck) {
-		$fhash{$file} = hash_calc("$file");
+	if (!$need_sync && $recheck) {
+		$cpfilehash = hash_calc("$file");
+		if ($patches_applied && exists($fhash_patched{$file})) {
+			$patched_file = 1;
+			$need_sync = 1 if ($cpfilehash ne $fhash_patched{$file});
+		} else {
+			$need_sync = 1 if ($cpfilehash ne $fhash{$file});
+		}
 	}
 
-	if (!exists($fhash{$file}) || ($filehash ne $fhash{$file})) {
-		printf "Re-syncying file $file (orig = %s, copy = %s)\n", $filehash, $fhash{$file} if ($debug);
-		print "install -D $dir/$file $file\n" if ($debug);
+	if ($need_sync) {
+		printf "Sync'ing file $file (orig = %s, copy = %s, patched = %s)\n",
+			$filehash, $cpfilehash, $fhash_patched{$file} if ($debug || $recheck);
 
-		$fhash{$file} = $filehash;
-		mkpath($path);
-		copy("$dir/$file", $file);
+		if (exists($fhash_patched{$file})) {
+			$sync_patched = 1;
+		} else {
+			$fhash{$file} = $filehash;
+			mkpath($path);
+			copy("$dir/$file", $file);
+		}
 	} else {
 		print "Skipping file $file, as is already synchronized\n" if ($debug);
 	}
+}
+
+sub sync_patched_files()
+{
+	open IN, "lsdiff --strip 1 `for i in \$(cat .patches_applied|grep -v ^#); do echo ../backports/\$i; done` -h|";
+	while (<IN>) {
+		if (m/^(.*)\n$/) {
+			my $file = $1;
+			$fhash{$file} = hash_calc("$dir/$file");
+			mkpath($path);
+			copy("$dir/$file", $file);
+		}
+	}
+	close IN;
+}
+
+
+sub get_patched_hashes()
+{
+	open IN, "lsdiff --strip 1 `for i in \$(cat .patches_applied|grep -v ^#); do echo ../backports/\$i; done` -h|";
+	while (<IN>) {
+		if (m/^(.*)\n$/) {
+			$fhash_patched{$1} = hash_calc("$1");
+			printf "Hash for patched file $1 = %s\n", $fhash_patched{$1} if ($debug);
+		}
+	}
+	close IN;
 }
 
 sub parse_dir()
@@ -199,8 +247,18 @@ if ($path ne $dir) {
 	%fhash = ();
 }
 
-get_file_dir_names();
-sync_all();
-write_ctlfile();
+$patches_applied = 1 if (-e $patchfile);
 
-unlink ".patches_applied" if ($recheck);
+if ($get_patched && $patches_applied) {
+	get_patched_hashes();
+} else {
+	get_file_dir_names();
+	sync_all();
+
+	if ($sync_patched) {
+		sync_patched_files();
+		unlink $patchfile;
+	}
+}
+
+write_ctlfile();
