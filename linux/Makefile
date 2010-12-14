@@ -132,8 +132,8 @@ apply_patches apply-patches:
 	mv .patches_applied .patches_applied.old; \
 	echo "#$$dir" > .patches_applied; \
 	cat .patches_applied.old >> .patches_applied; \
-	rm .patches_applied.old
-	./use_dir.pl --get_patched
+	rm .patches_applied.old; \
+	if [ -e .linked_dir ]; then ./use_dir.pl --get_patched; fi
 
 unapply_patches unapply-patches:
 	@if [ -e .patches_applied ]; then \
