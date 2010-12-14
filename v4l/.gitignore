@@ -115,6 +115,7 @@ cinergyT2.h
 coarse_expo_autogain.h
 conex.c
 config-compat.h
+cpia_usb.c
 cpia1.c
 cpia2.h
 cpia2_core.c
@@ -467,6 +468,7 @@ ir-raw-event.c
 ir-rc5-decoder.c
 ir-rc5-sz-decoder.c
 ir-rc6-decoder.c
+ir-raw.c
 ir-sony-decoder.c
 ir-sysfs.c
 isif.c
@@ -838,6 +840,7 @@ rc-kworld-plus-tv-analog.c
 rc-leadtek-y04g0051.c
 rc-lirc.c
 rc-lme2510.c
+rc-loopback.c
 rc-manli.c
 rc-map.c
 rc-msi-digivox-ii.c
@@ -1106,6 +1109,7 @@ tea6420.c
 tea6420.h
 tef6862.c
 ths7303.c
+timblogiw.c
 tlv320aic23b.c
 tm6000-alsa.c
 tm6000-cards.c
