@@ -86,7 +86,7 @@ tar:
 
 untar: linux-media.tar.bz2
 	tar xfj linux-media.tar.bz2
-	-rm .patches_applied
+	-rm -f .patches_applied
 
 clean:
 	-rm -rf $(MAINDIRS) .patches_applied .linked_dir
