@@ -165,7 +165,10 @@ sub sync_files($)
 
 sub sync_patched_files()
 {
-	open IN, "lsdiff --strip 1 `for i in \$(cat .patches_applied|grep -v ^#); do echo ../backports/\$i; done` -h|";
+	my $patches = "for i in \$(cat .patches_applied|grep -v ^#); do echo ../backports/\$i; done";
+	return if ($patches eq "");
+
+	open IN,"lsdiff --strip 1 $patches -l |";
 	while (<IN>) {
 		if (m/^(.*)\n$/) {
 			my $file = $1;
