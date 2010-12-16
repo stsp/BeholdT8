@@ -121,7 +121,6 @@ sub hash_calc($)
 	return $digest;
 }
 
-
 sub sync_files($)
 {
 	my $file = shift;
@@ -163,32 +162,52 @@ sub sync_files($)
 	}
 }
 
+sub get_patched_files()
+{
+	my %files;
+
+	open IN, $patchfile;
+	while (<IN>) {
+		next if (/^\s*#/);
+
+		if (m/(.*)\n/) {
+			print ("Backport ../backports/$1 touch(es) file(s):\n") if ($debug);
+			open IN2, "lsdiff -h --strip 1 ../backports/$1 |";
+			while (<IN2>) {
+				my $f = $_;
+				$f =~ s/\n//;
+				$files{$f} = 1;
+				print ("\t$f\n") if ($debug);
+			}
+			close IN2;
+		}
+	}
+	close IN;
+
+	return %files;
+}
+
 sub sync_patched_files()
 {
-	my $patches = "for i in \$(cat .patches_applied|grep -v ^#); do echo ../backports/\$i; done";
-	return if ($patches eq "");
+	my %patches = get_patched_files();
+	return if (!%patches);
 
-	open IN,"lsdiff --strip 1 $patches -l |";
-	while (<IN>) {
-		if (m/^(.*)\n$/) {
-			my $file = $1;
-			$fhash{$file} = hash_calc("$dir/$file");
-			mkpath($path);
-			copy("$dir/$file", $file);
-		}
+	foreach my $file (keys %patches) {
+		$fhash{$file} = hash_calc("$dir/$file");
+		mkpath($path);
+		copy("$dir/$file", $file);
 	}
 	close IN;
 }
 
-
 sub get_patched_hashes()
 {
-	open IN, "lsdiff --strip 1 `for i in \$(cat .patches_applied|grep -v ^#); do echo ../backports/\$i; done` -h|";
-	while (<IN>) {
-		if (m/^(.*)\n$/) {
-			$fhash_patched{$1} = hash_calc("$1");
-			printf "Hash for patched file $1 = %s\n", $fhash_patched{$1} if ($debug);
-		}
+	my %patches = get_patched_files();
+	return if (!%patches);
+
+	foreach my $file (keys %patches) {
+		$fhash_patched{$file} = hash_calc("$file");
+		printf "Hash for patched file $file = %s\n", $fhash_patched{$file} if ($debug);
 	}
 	close IN;
 }
