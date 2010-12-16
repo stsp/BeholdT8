@@ -95,7 +95,6 @@ dir: clean
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	@echo "Searching in $(DIR)/Makefile for kernel version."
 	./use_dir.pl $(DIR)
-	$(MAKE) apply_patches
 
 distclean: clean
 	-rm linux-media.tar.bz2 linux-media.tar.bz2.md5
