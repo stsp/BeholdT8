@@ -1,5 +1,4 @@
 v2.6.36_enable_bkl.patch
-v2.6.36_remove_noop_llseek.patch
 v2.6.36_input_getkeycode.patch
 v2.6.35_firedtv_handle_fcp.patch
 v2.6.35_i2c_new_probed_device.patch

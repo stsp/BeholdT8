@@ -296,6 +296,11 @@ do {									\
 	printk(KERN_ERR fmt, ##arg)
 #endif
 
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37)
+#define noop_llseek NULL
+#endif
+
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35)
 #define pr_warn(fmt, arg...) \
 	printk(KERN_WARNING fmt, ##arg)
