@@ -213,7 +213,7 @@ all:: default
 #################################################
 # installation invocation rules
 
-install:: media-install firmware_install
+modules_install install:: media-install firmware_install
 
 remove rminstall:: media-rminstall
 
@@ -268,10 +268,6 @@ links::
 	@find ../linux/drivers/media -name '*.[ch]' -type f -print0 | xargs -0n 255 ln -sf --target-directory=.
 	@find ../linux/sound -name '*.[ch]' -type f -print0 | xargs -0n 255 ln -sf --target-directory=.
 	@find ../linux/drivers/staging -name '*.[ch]' -type f -print0 | xargs -0n 255 ln -sf --target-directory=.
-
-# This link is so code with #include "oss/*.h" will find its header files
-oss:
-	ln -sf . oss
 
 config-compat.h:: $(obj)/.version .myconfig scripts/make_config_compat.pl
 	perl scripts/make_config_compat.pl $(SRCDIR) $(obj)/.myconfig $(obj)/config-compat.h
