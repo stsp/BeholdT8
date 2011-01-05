@@ -465,7 +465,13 @@ sub open_kconfig($$) {
 			print "Skipping $file:$. $_" if $debug;
 		}
 	} continue {
-		print OUT $line;
+		if ($kernver le "2.6.36" && $line =~ m/visible\sif\s.*/) {
+			$line =~ s/visible\sif\s(.*)//;
+			print OUT $line;
+			print OUT "\tdepends on $1\n";
+		} else {
+			print OUT $line;
+		}
 	}
 	close $in;
 }
