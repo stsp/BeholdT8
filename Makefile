@@ -49,3 +49,7 @@ whitespace whitespaces:
 	@echo "Cleaning bad whitespaces"
 	@v4l/scripts/strip-trailing-whitespaces.sh $(Q)fast | \
 		tee $(TMP)/v4l_hg_whitespace | patch -p0
+
+dir download untar::
+	$(MAKE) -C linux/ $(MAKECMDGOALS)
+
