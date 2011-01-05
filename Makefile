@@ -37,14 +37,6 @@ qrefresh:: whitespace
 	$(EDITOR) $(TMP)/v4l_hg_commit.msg
 	grep -v '^#' $(TMP)/v4l_hg_commit.msg | hg qrefresh -g -l -
 
-pull update v4l-update::
-	@echo "Pulling changes from master repository $(REPO_PULL)"
-	-hg pull -u $(REPO_PULL)
-
-push::
-	@echo "Pushing changes to master repository"
-	-hg push
-
 whitespace whitespaces:
 	@echo "Cleaning bad whitespaces"
 	@v4l/scripts/strip-trailing-whitespaces.sh $(Q)fast | \
