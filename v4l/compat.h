@@ -749,6 +749,10 @@ static inline void *vzalloc(unsigned long size)
 
 #endif
 
+#if NEED_FLUSH_WORK_SYNC
+#define flush_work_sync(dev)
+#endif
+
 #ifndef KEY_10CHANNELSUP
 #define KEY_10CHANNELSUP        0x1b8   /* 10 channels up (10+) */
 #define KEY_10CHANNELSDOWN      0x1b9   /* 10 channels down (10-) */

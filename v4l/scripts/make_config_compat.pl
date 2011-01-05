@@ -399,6 +399,26 @@ sub check_vzalloc()
 	$out.= "\n#define NEED_VZALLOC 1\n";
 }
 
+sub check_flush_work_sync()
+{
+	my @files = ( "$kdir/include/linux/workqueue.h" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or die "File not found: $file";
+		while (<IN>) {
+			if (m/flush_work_sync/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define NEED_FLUSH_WORK_SYNC 1\n";
+}
+
 sub check_other_dependencies()
 {
 	check_spin_lock();
@@ -421,6 +441,7 @@ sub check_other_dependencies()
 	check_delayed_work();
 	check_fw_csr_string();
 	check_vzalloc();
+	check_flush_work_sync();
 }
 
 # Do the basic rules
