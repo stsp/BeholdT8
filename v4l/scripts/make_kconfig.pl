@@ -465,7 +465,7 @@ sub open_kconfig($$) {
 			print "Skipping $file:$. $_" if $debug;
 		}
 	} continue {
-		if ($kernver le "2.6.36" && $line =~ m/visible\sif\s.*/) {
+		if (cmp_ver($kernver, '2.6.37') < 0 && $line =~ m/visible\sif\s.*/) {
 			$line =~ s/visible\sif\s(.*)//;
 			print OUT $line;
 			print OUT "\tdepends on $1\n";
@@ -558,6 +558,11 @@ if (!defined $kernopts{HAS_DMA} && cmp_ver($kernver, '2.6.22') < 0) {
 if (!defined $kernopts{VIRT_TO_BUS} && cmp_ver($kernver, '2.6.23') < 0) {
 	# VIRT_TO_BUS -> !PPC64
 	$kernopts{VIRT_TO_BUS} = 2 - $kernopts{PPC64};
+}
+
+# Kernel < 2.6.37 is missing the BKL option
+if (!defined $kernopts{BKL} && cmp_ver($kernver, '2.6.37') < 0) {
+    $kernopts{BKL} = 2;
 }
 
 # Get minimum kernel version for our variables
