@@ -753,6 +753,13 @@ static inline void *vzalloc(unsigned long size)
 #define flush_work_sync(dev)
 #endif
 
+#if NEED_AUTOSUSPEND_DELAY
+#define pm_runtime_set_autosuspend_delay(dev, delay) {	\
+	struct usb_device *udev = to_usb_device(dev);	\
+	udev->autosuspend_delay = delay;		\
+}
+#endif
+
 #ifndef KEY_10CHANNELSUP
 #define KEY_10CHANNELSUP        0x1b8   /* 10 channels up (10+) */
 #define KEY_10CHANNELSDOWN      0x1b9   /* 10 channels down (10-) */

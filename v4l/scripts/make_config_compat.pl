@@ -419,6 +419,26 @@ sub check_flush_work_sync()
 	$out.= "\n#define NEED_FLUSH_WORK_SYNC 1\n";
 }
 
+sub check_autosuspend_delay()
+{
+	my @files = ( "$kdir/include/linux/pm_runtime.h" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or die "File not found: $file";
+		while (<IN>) {
+			if (m/pm_runtime_set_autosuspend_delay/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define NEED_AUTOSUSPEND_DELAY 1\n";
+}
+
 sub check_other_dependencies()
 {
 	check_spin_lock();
@@ -442,6 +462,7 @@ sub check_other_dependencies()
 	check_fw_csr_string();
 	check_vzalloc();
 	check_flush_work_sync();
+	check_autosuspend_delay();
 }
 
 # Do the basic rules
