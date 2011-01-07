@@ -20,7 +20,6 @@ TARDIR += include/media/
 TARDIR += include/linux/dvb/
 TARFILES += include/linux/usb/video.h
 TARFILES += include/linux/i2c-id.h
-TARFILES += include/linux/videodev.h
 TARFILES += include/linux/ivtv.h
 TARFILES += include/linux/mmc/sdio_ids.h
 TARFILES += include/linux/ivtvfb.h
