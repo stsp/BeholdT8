@@ -52,7 +52,7 @@ help:
 
 todaytar:
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
-	-rm $(PWD)/$(TODAY_TAR).bz2
+	-rm -f $(PWD)/$(TODAY_TAR).bz2
 	tar cf $(PWD)/$(TODAY_TAR) -C $(DIR) $(TARFILES)
 	-git --git-dir $(DIR)/.git log --pretty=oneline HEAD^1^1^1^1^1^1^1^1..HEAD >git_log
 	tar rvf $(PWD)/linux-media.tar git_log
@@ -69,7 +69,7 @@ todaytar:
 
 tar:
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
-	-rm $(PWD)/linux-media.tar.bz2
+	-rm -f $(PWD)/linux-media.tar.bz2
 	tar cf $(PWD)/linux-media.tar -C $(DIR) $(TARFILES)
 	-git --git-dir $(DIR)/.git log --pretty=oneline HEAD^1^1^1^1^1^1^1^1..HEAD >git_log
 	tar rvf $(PWD)/linux-media.tar git_log
@@ -96,7 +96,7 @@ dir: clean
 	./use_dir.pl $(DIR)
 
 distclean: clean
-	-rm linux-media.tar.bz2 linux-media.tar.bz2.md5
+	-rm -f linux-media.tar.bz2 linux-media.tar.bz2.md5
 
 apply_patches apply-patches:
 	@if [ -e .linked_dir ]; then ./use_dir.pl --recheck --silent; fi
@@ -130,7 +130,7 @@ apply_patches apply-patches:
 	mv .patches_applied .patches_applied.old; \
 	echo "#$$dir" > .patches_applied; \
 	cat .patches_applied.old >> .patches_applied; \
-	rm .patches_applied.old; \
+	rm -f .patches_applied.old; \
 	if [ -e .linked_dir ]; then ./use_dir.pl --get_patched; fi
 
 unapply_patches unapply-patches:
@@ -140,7 +140,7 @@ unapply_patches unapply-patches:
 		echo patch -s -f -R -p1 -i ../backports/$$i; \
 		patch -s -f -R -p1 -i ../backports/$$i || break; \
 	done; \
-	rm .patches_applied; fi
+	rm -f .patches_applied; fi
 
 download:
 	wget $(LATEST_TAR_MD5) -O linux-media.tar.bz2.md5.tmp
