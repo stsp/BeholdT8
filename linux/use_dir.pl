@@ -212,6 +212,27 @@ sub get_patched_hashes()
 	close IN;
 }
 
+sub remove_deleted()
+{
+	my $file = $File::Find::name;
+	my $mode = (stat($file))[2];
+
+	return if ($mode & S_IFDIR);
+
+	return if ($file =~ /^\./);
+	return if ($file =~ /\.mod\.c/);
+
+	if ($file =~ /Makefile$/ || $file =~ /Kconfig$/ || $file =~ /\.[ch]$/ ) {
+		if (! -e "$dir/$file") {
+			printf "Removing file $file\n" if (!$silent);
+			delete $fhash{$file} if exists($fhash{$file});
+			delete $fhash_patched{$file} if exists($fhash_patched{$file});
+			unlink $file;
+			return;
+		}
+	}
+}
+
 sub parse_dir()
 {
 	my $file = $File::Find::name;
@@ -237,8 +258,8 @@ sub sync_dirs($)
 	my $subdir = shift;
 
 	print "sync dir: $subdir\n" if (!$silent);
-
 	find({wanted => \&parse_dir, no_chdir => 1}, "$dir/$subdir");
+	find({wanted => \&remove_deleted, no_chdir => 1}, "$subdir");
 }
 
 sub sync_all()
