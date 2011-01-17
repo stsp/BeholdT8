@@ -58,7 +58,7 @@ todaytar:
 	tar rvf $(PWD)/linux-media.tar git_log
 	for i in $(TARDIR); do \
 		if [ "`echo $$i|grep Documentation`" = "" ]; then \
-			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
+			dir="`(cd $(DIR); find $$i -type f -name '*.[ch]')`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
 			tar rvf $(PWD)/$(TODAY_TAR) -C $(DIR) $$dir; \
@@ -75,7 +75,7 @@ tar:
 	tar rvf $(PWD)/linux-media.tar git_log
 	for i in $(TARDIR); do \
 		if [ "`echo $$i|grep Documentation`" = "" ]; then \
-			dir="`(cd $(DIR); find $$i -type f -name *.[ch])`"; \
+			dir="`(cd $(DIR); find $$i -type f -name '*.[ch]')`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Makefile)`"; \
 			dir="$$dir `(cd $(DIR); find $$i -type f -name Kconfig)`"; \
 			tar rvf $(PWD)/linux-media.tar -C $(DIR) $$dir; \
