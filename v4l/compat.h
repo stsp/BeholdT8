@@ -39,7 +39,7 @@
 #include <linux/i2c-dev.h>
 #endif
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 35)
+#ifdef NEED_HEX_TO_BIN
 #include <linux/ctype.h>
 static inline int hex_to_bin(char ch)
 {

@@ -439,6 +439,28 @@ sub check_autosuspend_delay()
 	$out.= "\n#define NEED_AUTOSUSPEND_DELAY 1\n";
 }
 
+
+sub check_hex_to_bin()
+{
+	my @files = ( "$kdir/include/linux/kernel.h" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or die "File not found: $file";
+		while (<IN>) {
+			if (m/hex_to_bin/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define NEED_HEX_TO_BIN 1\n";
+}
+
+
 sub check_other_dependencies()
 {
 	check_spin_lock();
