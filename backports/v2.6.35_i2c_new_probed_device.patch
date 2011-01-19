@@ -56,18 +56,6 @@ diff --git a/drivers/media/video/em28xx/em28xx-cards.c b/drivers/media/video/em2
  }
  
  void em28xx_card_setup(struct em28xx *dev)
-diff --git a/drivers/media/video/hdpvr/hdpvr-i2c.c b/drivers/media/video/hdpvr/hdpvr-i2c.c
---- a/drivers/media/video/hdpvr/hdpvr-i2c.c
-+++ b/drivers/media/video/hdpvr/hdpvr-i2c.c
-@@ -59,7 +59,7 @@ static int hdpvr_new_i2c_ir(struct hdpvr
- 		break;
- 	}
- 
--	return i2c_new_probed_device(adap, &info, addr_list, NULL) == NULL ?
-+	return i2c_new_probed_device(adap, &info, addr_list) == NULL ?
- 	       -1 : 0;
- }
- 
 diff --git a/drivers/media/video/ivtv/ivtv-i2c.c b/drivers/media/video/ivtv/ivtv-i2c.c
 --- a/drivers/media/video/ivtv/ivtv-i2c.c
 +++ b/drivers/media/video/ivtv/ivtv-i2c.c
