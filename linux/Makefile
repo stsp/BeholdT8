@@ -12,6 +12,7 @@ TARDIR += drivers/staging/cx25821/
 TARDIR += drivers/staging/go7007/
 TARDIR += drivers/staging/tm6000/
 TARDIR += drivers/staging/lirc/
+TARDIR += drivers/staging/cxd2099/
 TARFILES += sound/pci/bt87x.c
 TARFILES += sound/i2c/other/tea575x-tuner.c
 
