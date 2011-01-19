@@ -52,6 +52,12 @@ Module selection rules:
 allmodconfig	- Called by make all. Selects all modules that are known
 		  to compile against the kernel version used.
 
+stagingconfig	- Select all modules, plus all staging modules. The
+		  staging drivers are there because they may have
+		  bad userspace API's, serious bugs and/or not fill
+		  into Kernel required level of quality. So, be
+		  careful with those drivers.
+
 xconfig		- Generate a xconfig menu. Requires full
 		  kernel source, since it depends on kernel's
 		  qconf stript;
