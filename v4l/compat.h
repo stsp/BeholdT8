@@ -765,4 +765,21 @@ static inline void *vzalloc(unsigned long size)
 #define KEY_10CHANNELSDOWN      0x1b9   /* 10 channels down (10-) */
 #endif
 
+#ifdef NEED_SND_CTL_ENUM_INFO
+#include <sound/asound.h>
+static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int channels,
+		      unsigned int items, const char *const names[])
+{
+	info->type = SNDRV_CTL_ELEM_TYPE_ENUMERATED;
+	info->count = channels;
+	info->value.enumerated.items = items;
+	if (info->value.enumerated.item >= items)
+		info->value.enumerated.item = items - 1;
+	strlcpy(info->value.enumerated.name,
+		names[info->value.enumerated.item],
+		sizeof(info->value.enumerated.name));
+	return 0;
+}
+#endif
+
 #endif /*  _COMPAT_H */
