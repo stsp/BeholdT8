@@ -45,7 +45,7 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
  
  out:
  	spin_unlock_irqrestore(&rc_map->lock, flags);
-@@ -436,42 +422,24 @@ static unsigned int ir_lookup_by_scancod
+@@ -436,42 +422,25 @@ static unsigned int ir_lookup_by_scancod
   * This routine is used to handle evdev EVIOCGKEY ioctl.
   */
  static int ir_getkeycode(struct input_dev *idev,
@@ -77,7 +77,9 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 -		if (!(ke->flags & INPUT_KEYMAP_BY_INDEX))
 -			IR_dprintk(1, "unknown key for scancode 0x%04x\n",
 -				   scancode);
- 		retval = -EINVAL;
+-		retval = -EINVAL;
++		*keycode = KEY_RESERVED;
++		retval = 0;
  		goto out;
  	}
  
@@ -91,7 +93,7 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
  
  	retval = 0;
  
-@@ -960,8 +928,8 @@ struct rc_dev *rc_allocate_device(void)
+@@ -960,8 +929,8 @@ struct rc_dev *rc_allocate_device(void)
  		return NULL;
  	}
  
