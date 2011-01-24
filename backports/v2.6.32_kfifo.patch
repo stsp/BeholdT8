@@ -41,7 +41,7 @@ diff -r c4cd3d2e5902 drivers/media/rc/ir-raw.c
 -	if (rc < 0)
 +	dev->raw->kfifo = kfifo_alloc(sizeof(s64) * MAX_IR_EVENT_SIZE, GFP_KERNEL, NULL);
 +	if (IS_ERR(dev->raw->kfifo)) {
-+		rc = IS_ERR(dev->raw->kfifo);
++		rc = PTR_ERR(dev->raw->kfifo);
  		goto out;
 +	}
  
