@@ -17,7 +17,7 @@ echo "* It will also update this tree to be sure that all compat *"
 echo "* bits are there, to avoid compilation failures            *"
 echo "************************************************************"
 sleep 5
-run git pull ssh://linuxtv.org/git/media_build master
+run git pull git://linuxtv.org/media_build.git master
 
 run make -C linux/ download
 run make -C linux/ untar
