@@ -749,11 +749,11 @@ static inline void *vzalloc(unsigned long size)
 
 #endif
 
-#if NEED_FLUSH_WORK_SYNC
+#ifdef NEED_FLUSH_WORK_SYNC
 #define flush_work_sync(dev)
 #endif
 
-#if NEED_AUTOSUSPEND_DELAY
+#ifdef NEED_AUTOSUSPEND_DELAY
 #define pm_runtime_set_autosuspend_delay(dev, delay) {	\
 	struct usb_device *udev = to_usb_device(dev);	\
 	udev->autosuspend_delay = delay;		\
