@@ -440,26 +440,6 @@ sub check_autosuspend_delay()
 }
 
 
-sub check_hex_to_bin()
-{
-	my @files = ( "$kdir/include/linux/kernel.h" );
-
-	foreach my $file ( @files ) {
-		open IN, "<$file" or die "File not found: $file";
-		while (<IN>) {
-			if (m/hex_to_bin/) {
-				close IN;
-				# definition found. No need for compat
-				return;
-			}
-		}
-		close IN;
-	}
-
-	# definition not found. This means that we need compat
-	$out.= "\n#define NEED_HEX_TO_BIN 1\n";
-}
-
 sub check_file_for_func($$$)
 {
 	my $incfile = shift;
@@ -508,6 +488,7 @@ sub check_other_dependencies()
 	check_vzalloc();
 	check_flush_work_sync();
 	check_autosuspend_delay();
+	check_file_for_func("include/linux/kernel.h", "hex_to_bin", "NEED_HEX_TO_BIN");
 	check_file_for_func("include/sound/control.h", "snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO");
 }
 
