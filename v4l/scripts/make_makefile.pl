@@ -120,6 +120,8 @@ sub open_makefile($) {
 			remove_includes($1, $orig);	# will print line for us
 			next;
 		}
+		# Any flags should be added to already existing flags
+		$orig =~ s/ccflags-y\s*:=/ccflags-y +=/;
 		print OUT $orig;
 	}
 	close $in;
