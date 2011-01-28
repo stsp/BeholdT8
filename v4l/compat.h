@@ -753,11 +753,13 @@ static inline void *vzalloc(unsigned long size)
 #define flush_work_sync(dev)
 #endif
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 32)
 #ifdef NEED_AUTOSUSPEND_DELAY
 #define pm_runtime_set_autosuspend_delay(dev, delay) {	\
 	struct usb_device *udev = to_usb_device(dev);	\
 	udev->autosuspend_delay = delay;		\
 }
+#endif
 #endif
 
 #ifndef KEY_10CHANNELSUP

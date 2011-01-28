@@ -424,7 +424,7 @@ sub check_autosuspend_delay()
 	my @files = ( "$kdir/include/linux/pm_runtime.h" );
 
 	foreach my $file ( @files ) {
-		open IN, "<$file" or die "File not found: $file";
+		open IN, "<$file" or next;
 		while (<IN>) {
 			if (m/pm_runtime_set_autosuspend_delay/) {
 				close IN;
