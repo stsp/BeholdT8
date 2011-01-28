@@ -47,17 +47,20 @@ endif	# TOPDIR
 #################################################
 # default compilation rule
 
-default:: config-compat.h Makefile.media links firmware
+default:: prepare firmware
 	@echo Kernel build directory is $(OUTDIR)
 	$(MAKE) -C ../linux apply_patches
 	$(MAKE) -C $(OUTDIR) SUBDIRS=$(PWD) $(MYCFLAGS) modules
 	./scripts/rmmod.pl check
 #	$(MAKE) checkpatch
 
-mismatch:: config-compat.h Makefile.media links firmware
+mismatch:: prepare firmware
 	@echo Kernel build directory is $(OUTDIR)
 	$(MAKE) -Wfatal-errors -C $(OUTDIR) SUBDIRS=$(PWD) $(MYCFLAGS) CONFIG_DEBUG_SECTION_MISMATCH=y modules
 	./scripts/rmmod.pl check
+
+# Anything in this target shouldn't be build in parallel.
+prepare:: config-compat.h Makefile.media links
 
 firmware::
 	$(MAKE) -C firmware prep
