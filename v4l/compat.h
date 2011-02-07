@@ -754,11 +754,15 @@ static inline void *vzalloc(unsigned long size)
 #endif
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 32)
+
 #ifdef NEED_AUTOSUSPEND_DELAY
 #define pm_runtime_set_autosuspend_delay(dev, delay) {	\
 	struct usb_device *udev = to_usb_device(dev);	\
 	udev->autosuspend_delay = delay;		\
 }
+#elif LINUX_VERSION_CODE == KERNEL_VERSION(2, 6, 37)
+/* usb.h includes this from 2.6.38 onwards */
+#include <linux/pm_runtime.h>
 #endif
 #endif
 
