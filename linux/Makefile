@@ -94,6 +94,7 @@ clean:
 dir: clean
 	@lsdiff --version >/dev/null # Make 'make dir' fail if lsdiff is not installed
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
+	@if [ ! -f "$(DIR)/include/linux/videodev2.h" ]; then echo "$(DIR) does not contain kernel sources"; exit -1; fi
 	@echo "Searching in $(DIR)/Makefile for kernel version."
 	./use_dir.pl $(DIR)
 

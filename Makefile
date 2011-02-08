@@ -42,6 +42,8 @@ whitespace whitespaces:
 	@v4l/scripts/strip-trailing-whitespaces.sh $(Q)fast | \
 		tee $(TMP)/v4l_hg_whitespace | patch -p0
 
-dir download untar::
+download untar::
 	$(MAKE) -C linux/ $(MAKECMDGOALS)
 
+dir::
+	$(MAKE) -C linux/ $(MAKECMDGOALS) DIR="../$(DIR)"
