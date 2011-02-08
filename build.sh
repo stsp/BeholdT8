@@ -17,7 +17,7 @@ echo "* It will also update this tree to be sure that all compat *"
 echo "* bits are there, to avoid compilation failures            *"
 echo "************************************************************"
 echo
-echo "Note: requires git/perl/make/gcc/patch/perl-Digest-SHA1 packages to work"
+echo "Note: requires git/perl/make/gcc/patch/perl-Digest-SHA1/patchutils packages to work"
 sleep 5
 run git pull git://linuxtv.org/media_build.git master
 
