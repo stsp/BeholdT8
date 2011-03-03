@@ -788,4 +788,8 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 }
 #endif
 
+#ifdef NEED_SYSFS_ATTR_INIT
+#define sysfs_attr_init(a) 0
+#endif
+
 #endif /*  _COMPAT_H */

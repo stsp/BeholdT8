@@ -490,6 +490,7 @@ sub check_other_dependencies()
 	check_autosuspend_delay();
 	check_file_for_func("include/linux/kernel.h", "hex_to_bin", "NEED_HEX_TO_BIN");
 	check_file_for_func("include/sound/control.h", "snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO");
+	check_file_for_func("include/linux/sysfs.h", "sysfs_attr_init", "NEED_SYSFS_ATTR_INIT");
 }
 
 # Do the basic rules
