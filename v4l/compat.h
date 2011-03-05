@@ -792,4 +792,8 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 #define sysfs_attr_init(a) 0
 #endif
 
+#ifdef NEED_USLEEP_RANGE
+#define usleep_range(min, max) msleep(min/1000)
+#endif
+
 #endif /*  _COMPAT_H */
