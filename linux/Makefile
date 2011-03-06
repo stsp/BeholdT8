@@ -29,6 +29,7 @@ TARFILES += include/linux/meye.h
 TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
 TARFILES += include/staging/altera.h
+TARFILES += include/linux/via-core.h
 
 # Firmware
 TARFILES += firmware/av7110/bootcode.bin.ihex
