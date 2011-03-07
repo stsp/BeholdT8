@@ -42,13 +42,6 @@ close IN;
 
 exists $allconfig{0} and die "Unable to correctly parse Kconfig file";
 
-# Temporary fix to disable the IEEE1394 part of the firedtv driver, allowing it
-# to be compiled under ubuntu.
-# This config setting will be removed soon in the main repository, and
-# then this workaround can be removed here as well.
-delete $config{"CONFIG_DVB_FIREDTV_IEEE1394"};
-$allconfig{"CONFIG_DVB_FIREDTV_IEEE1394"} = "tristate";
-
 # Produce output for including in a Makefile
 # Explicitly set bool/tri options that didn't appear in .config to n
 # 'data' options are only output if they appeared in .config
