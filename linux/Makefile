@@ -31,6 +31,9 @@ TARFILES += include/sound/aci.h
 TARFILES += include/staging/altera.h
 TARFILES += include/linux/via-core.h
 TARFILES += include/linux/ti_wilink_st.h
+TARFILES += include/linux/media.h
+TARFILES += include/linux/v4l2-subdev.h
+TARFILES += include/linux/v4l2-mediabus.h
 
 # Firmware
 TARFILES += firmware/av7110/bootcode.bin.ihex
