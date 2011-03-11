@@ -1,6 +1,10 @@
 # Use this for stuff for drivers that don't compile
 [2.6.99]
 
+[2.6.39]
+# mfd header changes for 2.6.39 prevents compilation on 2.6.38.
+RADIO_WL1273
+
 [2.6.37]
 # Some stuff at viafb struct
 VIDEO_VIA_CAMERA
