@@ -11,3 +11,4 @@ v2.6.33_pvrusb2_sysfs.patch
 v2.6.32_kfifo.patch
 v2.6.31_nodename.patch
 v2.6.31_vm_ops.patch
+v2.6.31_device_type.patch
