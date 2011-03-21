@@ -8,6 +8,11 @@ run ()
 	fi
 }
 
+echo "Checking if the needed tools are present"
+run ./check_needs.pl
+echo "Checking for Digest::SHA1 (package perl-Digest-SHA1)"
+run perl -MDigest::SHA1 -e 1
+echo
 echo "************************************************************"
 echo "* This script will download the latest tarball and build it*"
 echo "* Assuming that your kernel is compatible with the latest  *"
@@ -17,7 +22,6 @@ echo "* It will also update this tree to be sure that all compat *"
 echo "* bits are there, to avoid compilation failures            *"
 echo "************************************************************"
 echo
-echo "Note: requires git/perl/make/gcc/patch/perl-Digest-SHA1/patchutils packages to work"
 sleep 5
 run git pull git://linuxtv.org/media_build.git master
 
