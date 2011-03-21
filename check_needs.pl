@@ -5,7 +5,6 @@ sub findprog($)
 	foreach(split(/:/, $ENV{PATH})) {
 		return "$_/$_[0]" if(-x "$_/$_[0]");
 	}
-	die "Can't find needed utility '$_[0]'";
 }
 
 sub need_program
