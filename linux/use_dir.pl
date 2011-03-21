@@ -166,7 +166,13 @@ sub get_patched_files()
 {
 	my %files;
 
-	open IN, $patchfile;
+	open IN, $patchfile or return %files;
+
+	# Those files are always patched to add warnings about the usage of experimental version
+	$files{"drivers/media/dvb/dvb-core/dvbdev.c"} = 1;
+	$files{"drivers/media/video/v4l2-dev.c"} = 1;
+	$files{"drivers/media/rc/rc-main.c"} = 1;
+
 	while (<IN>) {
 		next if (/^\s*#/);
 
@@ -193,6 +199,7 @@ sub sync_patched_files()
 	return if (!%patches);
 
 	foreach my $file (keys %patches) {
+printf "sync patched file $file\n";
 		$fhash{$file} = hash_calc("$dir/$file");
 		mkpath($path);
 		copy("$dir/$file", $file);

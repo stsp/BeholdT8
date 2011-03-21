@@ -95,7 +95,7 @@ untar: linux-media.tar.bz2
 	-rm -f .patches_applied
 
 clean:
-	-rm -rf $(MAINDIRS) .patches_applied .linked_dir
+	-rm -rf $(MAINDIRS) .patches_applied .linked_dir .git_log.md5
 
 dir: clean
 	@lsdiff --version >/dev/null # Make 'make dir' fail if lsdiff is not installed
@@ -140,6 +140,7 @@ apply_patches apply-patches:
 	echo "#$$dir" > .patches_applied; \
 	cat .patches_applied.old >> .patches_applied; \
 	rm -f .patches_applied.old; \
+	./version_patch.pl; \
 	if [ -e .linked_dir ]; then ./use_dir.pl --get_patched; fi
 
 unapply_patches unapply-patches:
