@@ -32,9 +32,9 @@ sub patch_file($$$$)
 		};
 		if ($is_function && m/($after_line)/) {
 			$file .= "\tprintk(KERN_ERR \"$warning\\n" .
-				 "\\t\\tAs the driver is backported to an older kernel, it doesn't offer enough\\n" .
-				 "\\t\\tquality for its usage in production.\\n" .
-				 "\\t\\tUse it with care.\\n$media_build_version\\n\");\n";
+				 "\\tAs the driver is backported to an older kernel, it doesn't offer\\n" .
+				 "\\tenough quality for its usage in production.\\n" .
+				 "\\tUse it with care.\\n$media_build_version\\n\");\n";
 			$is_function = 0;
 			$patched++;
 			next;
@@ -65,7 +65,7 @@ $logs.=$_ while (<IN>);
 close IN;
 $logs =~ s/\s+$//;
 $logs =~ s,\n,\\n\\t,g;
-$logs = "Latest git patches:\\n\\t$logs";
+$logs = "Latest git patches (needed if you report a bug to linux-media\@vger.kernel.org):\\n\\t$logs";
 
 my $need_patch;
 open IN, "md5sum git_log|" or die "can't find git_log";
