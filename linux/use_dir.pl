@@ -305,3 +305,4 @@ if ($get_patched && $patches_applied) {
 }
 
 write_ctlfile();
+system "git --git-dir $dir/.git log --pretty=oneline HEAD^1^1^1^1^1^1^1^1..HEAD >git_log"
