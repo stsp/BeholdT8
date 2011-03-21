@@ -65,6 +65,7 @@ $logs.=$_ while (<IN>);
 close IN;
 $logs =~ s/\s+$//;
 $logs =~ s,\n,\\n\\t,g;
+$logs =~ s,\",\\\",g;
 $logs = "Latest git patches (needed if you report a bug to linux-media\@vger.kernel.org):\\n\\t$logs";
 
 my $need_patch;
