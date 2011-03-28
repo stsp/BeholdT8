@@ -161,11 +161,12 @@ sub removeobsolete()
 }
 
 #
-# Special hack for Ubuntu with their non-standard dir
+# Special hack for Ubuntu with their non-standard dirs
 #
-sub removeubuntu()
+sub removeubuntu($)
 {
-	my $dest = "/lib/modules/\$(KERNELRELEASE)/ubuntu/media";
+	my $udir = shift;
+	my $dest = "/lib/modules/\$(KERNELRELEASE)/$udir";
 	my $filelist;
 
 	while ( my ($dir, $files) = each(%instdir) ) {
@@ -209,7 +210,8 @@ find({wanted => \&parse_dir, no_chdir => 1}, '../linux/drivers/staging');
 print OUT "media-install::\n";
 
 removeobsolete();
-removeubuntu();
+removeubuntu("/ubuntu/media");
+removeubuntu("/updates/dkms");
 
 print OUT "\t\@echo \"Installing kernel modules under \$(DESTDIR)\$(KDIR26)/:\"\n";
 
@@ -234,7 +236,8 @@ print OUT "\t/sbin/depmod -a \$(KERNELRELEASE) \$(if \$(DESTDIR),-b \$(DESTDIR))
 print OUT "media-rminstall::\n";
 
 removeobsolete();
-removeubuntu();
+removeubuntu("/ubuntu/media");
+removeubuntu("/updates/dkms");
 
 while ( my ($dir, $files) = each(%instdir) ) {
 	print OUT "\t\@echo -e \"\\nRemoving old \$(KDIR26)/$dir files:\"\n";
