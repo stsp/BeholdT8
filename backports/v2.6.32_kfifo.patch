@@ -1,6 +1,15 @@
-diff -r c4cd3d2e5902 drivers/media/rc/rc-core-priv.h
---- a/drivers/media/rc/rc-core-priv.h	Mon Nov 29 08:40:01 2010 -0200
-+++ b/drivers/media/rc/rc-core-priv.h	Mon Nov 29 08:42:43 2010 -0200
+---
+ drivers/media/rc/ir-raw.c                |   14 +++----
+ drivers/media/rc/rc-core-priv.h          |    2 -
+ drivers/media/video/cx23885/cx23888-ir.c |   33 ++++++-----------
+ drivers/media/video/cx25840/cx25840-ir.c |   28 +++++---------
+ drivers/media/video/meye.c               |   60 ++++++++++++++-----------------
+ drivers/media/video/meye.h               |    4 +-
+ include/media/lirc_dev.h                 |   50 +++++++++----------------
+ 7 files changed, 79 insertions(+), 112 deletions(-)
+
+--- linux.orig/drivers/media/rc/rc-core-priv.h
++++ linux/drivers/media/rc/rc-core-priv.h
 @@ -35,7 +35,7 @@ struct ir_raw_event_ctrl {
  	struct list_head		list;		/* to keep track of raw clients */
  	struct task_struct		*thread;
@@ -10,9 +19,8 @@ diff -r c4cd3d2e5902 drivers/media/rc/rc-core-priv.h
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
  	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
-diff -r c4cd3d2e5902 drivers/media/rc/ir-raw.c
---- a/drivers/media/rc/ir-raw.c	Mon Nov 29 08:40:01 2010 -0200
-+++ b/drivers/media/rc/ir-raw.c	Mon Nov 29 08:42:43 2010 -0200
+--- linux.orig/drivers/media/rc/ir-raw.c
++++ linux/drivers/media/rc/ir-raw.c
 @@ -44,7 +44,7 @@ static int ir_raw_event_thread(void *dat
  	while (!kthread_should_stop()) {
  
@@ -31,7 +39,7 @@ diff -r c4cd3d2e5902 drivers/media/rc/ir-raw.c
  		return -ENOMEM;
  
  	return 0;
-@@ -259,11 +259,11 @@ int ir_raw_event_register(struct rc_dev 
+@@ -258,11 +258,11 @@ int ir_raw_event_register(struct rc_dev 
  
  	dev->raw->dev = dev;
  	dev->raw->enabled_protocols = ~0;
@@ -47,7 +55,7 @@ diff -r c4cd3d2e5902 drivers/media/rc/ir-raw.c
  
  	spin_lock_init(&dev->raw->lock);
  	dev->raw->thread = kthread_run(ir_raw_event_thread, dev->raw,
-@@ -305,7 +305,7 @@ void ir_raw_event_unregister(struct rc_d
+@@ -304,7 +304,7 @@ void ir_raw_event_unregister(struct rc_d
  			handler->raw_unregister(dev);
  	mutex_unlock(&ir_raw_handler_lock);
  
@@ -56,9 +64,8 @@ diff -r c4cd3d2e5902 drivers/media/rc/ir-raw.c
  	kfree(dev->raw);
  	dev->raw = NULL;
  }
-diff -r c4cd3d2e5902 drivers/media/video/cx23885/cx23888-ir.c
---- a/drivers/media/video/cx23885/cx23888-ir.c	Mon Nov 29 08:40:01 2010 -0200
-+++ b/drivers/media/video/cx23885/cx23888-ir.c	Mon Nov 29 08:42:43 2010 -0200
+--- linux.orig/drivers/media/video/cx23885/cx23888-ir.c
++++ linux/drivers/media/video/cx23885/cx23888-ir.c
 @@ -138,7 +138,7 @@ struct cx23888_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
@@ -156,9 +163,8 @@ diff -r c4cd3d2e5902 drivers/media/video/cx23885/cx23888-ir.c
  	kfree(state);
  	/* Nothing more to free() as state held the actual v4l2_subdev object */
  	return 0;
-diff -r c4cd3d2e5902 drivers/media/video/cx25840/cx25840-ir.c
---- a/drivers/media/video/cx25840/cx25840-ir.c	Mon Nov 29 08:40:01 2010 -0200
-+++ b/drivers/media/video/cx25840/cx25840-ir.c	Mon Nov 29 08:42:43 2010 -0200
+--- linux.orig/drivers/media/video/cx25840/cx25840-ir.c
++++ linux/drivers/media/video/cx25840/cx25840-ir.c
 @@ -116,7 +116,7 @@ struct cx25840_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
@@ -244,9 +250,8 @@ diff -r c4cd3d2e5902 drivers/media/video/cx25840/cx25840-ir.c
  	kfree(ir_state);
  	state->ir_state = NULL;
  	return 0;
-diff -r c4cd3d2e5902 drivers/media/video/meye.c
---- a/drivers/media/video/meye.c	Mon Nov 29 08:40:01 2010 -0200
-+++ b/drivers/media/video/meye.c	Mon Nov 29 08:42:43 2010 -0200
+--- linux.orig/drivers/media/video/meye.c
++++ linux/drivers/media/video/meye.c
 @@ -802,8 +802,8 @@ again:
  		return IRQ_HANDLED;
  
@@ -366,7 +371,7 @@ diff -r c4cd3d2e5902 drivers/media/video/meye.c
  
  	for (i = 0; i < MEYE_MAX_BUFNBRS; i++)
  		meye.grab_buffer[i].state = MEYE_BUF_UNUSED;
-@@ -1580,7 +1574,7 @@ static unsigned int meye_poll(struct fil
+@@ -1581,7 +1575,7 @@ static unsigned int meye_poll(struct fil
  
  	mutex_lock(&meye.lock);
  	poll_wait(file, &meye.proc_list, wait);
@@ -375,7 +380,7 @@ diff -r c4cd3d2e5902 drivers/media/video/meye.c
  		res = POLLIN | POLLRDNORM;
  	mutex_unlock(&meye.lock);
  	return res;
-@@ -1759,14 +1753,16 @@ static int __devinit meye_probe(struct p
+@@ -1760,14 +1754,16 @@ static int __devinit meye_probe(struct p
  	}
  
  	spin_lock_init(&meye.grabq_lock);
@@ -396,7 +401,7 @@ diff -r c4cd3d2e5902 drivers/media/video/meye.c
  		v4l2_err(v4l2_dev, "fifo allocation failed\n");
  		goto outkfifoalloc2;
  	}
-@@ -1877,9 +1873,9 @@ outregions:
+@@ -1878,9 +1874,9 @@ outregions:
  outenabledev:
  	sony_pic_camera_command(SONY_PIC_COMMAND_SETCAMERA, 0);
  outsonypienable:
@@ -408,7 +413,7 @@ diff -r c4cd3d2e5902 drivers/media/video/meye.c
  outkfifoalloc1:
  	vfree(meye.grab_temp);
  outvmalloc:
-@@ -1910,8 +1906,8 @@ static void __devexit meye_remove(struct
+@@ -1911,8 +1907,8 @@ static void __devexit meye_remove(struct
  
  	sony_pic_camera_command(SONY_PIC_COMMAND_SETCAMERA, 0);
  
@@ -419,9 +424,8 @@ diff -r c4cd3d2e5902 drivers/media/video/meye.c
  
  	vfree(meye.grab_temp);
  
-diff -r c4cd3d2e5902 drivers/media/video/meye.h
---- a/drivers/media/video/meye.h	Mon Nov 29 08:40:01 2010 -0200
-+++ b/drivers/media/video/meye.h	Mon Nov 29 08:42:43 2010 -0200
+--- linux.orig/drivers/media/video/meye.h
++++ linux/drivers/media/video/meye.h
 @@ -304,9 +304,9 @@ struct meye {
  	struct meye_grab_buffer grab_buffer[MEYE_MAX_BUFNBRS];
  	int vma_use_count[MEYE_MAX_BUFNBRS]; /* mmap count */
@@ -434,9 +438,8 @@ diff -r c4cd3d2e5902 drivers/media/video/meye.h
  	spinlock_t doneq_lock;		/* lock protecting the queue */
  	wait_queue_head_t proc_list;	/* wait queue */
  	struct video_device *vdev;	/* video device parameters */
-diff -r c4cd3d2e5902 include/media/lirc_dev.h
---- a/include/media/lirc_dev.h	Mon Nov 29 08:40:01 2010 -0200
-+++ b/include/media/lirc_dev.h	Mon Nov 29 08:42:43 2010 -0200
+--- linux.orig/include/media/lirc_dev.h
++++ linux/include/media/lirc_dev.h
 @@ -28,19 +28,15 @@ struct lirc_buffer {
  	unsigned int size; /* in chunks */
  	/* Using chunks instead of bytes pretends to simplify boundary checking
@@ -513,13 +516,13 @@ diff -r c4cd3d2e5902 include/media/lirc_dev.h
  					    unsigned char *dest)
  {
 -	unsigned int ret = 0;
-+	if (lirc_buffer_len(buf) >= buf->chunk_size)
-+		kfifo_get(buf->fifo, dest, buf->chunk_size);
- 
--	if (lirc_buffer_len(buf) >= buf->chunk_size)
+-
+ 	if (lirc_buffer_len(buf) >= buf->chunk_size)
 -		ret = kfifo_out_locked(&buf->fifo, dest, buf->chunk_size,
 -				       &buf->fifo_lock);
 -	return ret;
++		kfifo_get(buf->fifo, dest, buf->chunk_size);
++
 +	return 0;
  
  }
@@ -528,11 +531,11 @@ diff -r c4cd3d2e5902 include/media/lirc_dev.h
  					     unsigned char *orig)
  {
 -	unsigned int ret;
-+	kfifo_put(buf->fifo, orig, buf->chunk_size);
- 
+-
 -	ret = kfifo_in_locked(&buf->fifo, orig, buf->chunk_size,
 -			      &buf->fifo_lock);
--
++	kfifo_put(buf->fifo, orig, buf->chunk_size);
+ 
 -	return ret;
 +	return 0;
  }

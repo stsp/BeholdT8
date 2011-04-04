@@ -1,6 +1,10 @@
-diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
+---
+ drivers/media/dvb/dvb-usb/dvb-usb-remote.c |    5 ++---
+ drivers/media/rc/rc-main.c                 |    4 ++--
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+--- linux.orig/drivers/media/rc/rc-main.c
++++ linux/drivers/media/rc/rc-main.c
 @@ -318,7 +318,7 @@ static unsigned int ir_establish_scancod
   * This routine is used to handle evdev EVIOCSKEY ioctl.
   */
@@ -9,8 +13,8 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 +			 int scancode, int keycode)
  {
  	struct rc_dev *rdev = input_get_drvdata(idev);
- 	struct ir_scancode_table *rc_tab = &rdev->rc_tab;
-@@ -423,7 +423,7 @@ static unsigned int ir_lookup_by_scancod
+ 	struct rc_map *rc_map = &rdev->rc_map;
+@@ -422,7 +422,7 @@ static unsigned int ir_lookup_by_scancod
   * This routine is used to handle evdev EVIOCGKEY ioctl.
   */
  static int ir_getkeycode(struct input_dev *idev,
@@ -18,25 +22,25 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
 +			 int scancode, int *keycode)
  {
  	struct rc_dev *rdev = input_get_drvdata(idev);
- 	struct ir_scancode_table *rc_tab = &rdev->rc_tab;
-diff --git a/drivers/media/dvb/dvb-usb/dvb-usb-remote.c b/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
---- a/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
-+++ b/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
-@@ -9,7 +9,7 @@
- #include <linux/usb/input.h>
+ 	struct rc_map *rc_map = &rdev->rc_map;
+--- linux.orig/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
++++ linux/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
+@@ -42,7 +42,7 @@ legacy_dvb_usb_get_keymap_index(const st
+ }
  
  static int legacy_dvb_usb_getkeycode(struct input_dev *dev,
--				unsigned int scancode, unsigned int *keycode)
+-				     struct input_keymap_entry *ke)
 +				int scancode, int *keycode)
  {
  	struct dvb_usb_device *d = input_get_drvdata(dev);
- 
-@@ -39,7 +39,7 @@ static int legacy_dvb_usb_getkeycode(str
+ 	struct rc_map_table *keymap = d->props.rc.legacy.rc_map_table;
+@@ -64,8 +64,7 @@ static int legacy_dvb_usb_getkeycode(str
  }
  
  static int legacy_dvb_usb_setkeycode(struct input_dev *dev,
--				unsigned int scancode, unsigned int keycode)
+-				     const struct input_keymap_entry *ke,
+-				     unsigned int *old_keycode)
 +				int scancode, int keycode)
  {
  	struct dvb_usb_device *d = input_get_drvdata(dev);
- 
+ 	struct rc_map_table *keymap = d->props.rc.legacy.rc_map_table;

@@ -1,7 +1,10 @@
-diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
---- a/drivers/media/rc/rc-main.c
-+++ b/drivers/media/rc/rc-main.c
-@@ -318,37 +318,23 @@
+---
+ drivers/media/rc/rc-main.c |   69 ++++++++++-----------------------------------
+ 1 file changed, 16 insertions(+), 53 deletions(-)
+
+--- linux.orig/drivers/media/rc/rc-main.c
++++ linux/drivers/media/rc/rc-main.c
+@@ -318,37 +318,23 @@ static unsigned int ir_establish_scancod
   * This routine is used to handle evdev EVIOCSKEY ioctl.
   */
  static int ir_setkeycode(struct input_dev *idev,
@@ -45,7 +48,7 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
  
  out:
  	spin_unlock_irqrestore(&rc_map->lock, flags);
-@@ -436,48 +422,25 @@
+@@ -436,48 +422,25 @@ static unsigned int ir_lookup_by_scancod
   * This routine is used to handle evdev EVIOCGKEY ioctl.
   */
  static int ir_getkeycode(struct input_dev *idev,
@@ -104,14 +107,3 @@ diff --git a/drivers/media/rc/rc-main.c b/drivers/media/rc/rc-main.c
  
  	retval = 0;
  
-@@ -966,8 +929,8 @@
- 		return NULL;
- 	}
- 
--	dev->input_dev->getkeycode_new = ir_getkeycode;
--	dev->input_dev->setkeycode_new = ir_setkeycode;
-+	dev->input_dev->getkeycode = ir_getkeycode;
-+	dev->input_dev->setkeycode = ir_setkeycode;
- 	input_set_drvdata(dev->input_dev, dev);
- 
- 	spin_lock_init(&dev->rc_map.lock);

@@ -1,8 +1,11 @@
-diff -r 22cb011c456d drivers/media/dvb/firewire/firedtv-fw.c
---- a/drivers/media/dvb/firewire/firedtv-fw.c	Tue Oct 26 14:18:02 2010 -0200
-+++ b/drivers/media/dvb/firewire/firedtv-fw.c	Wed Oct 27 21:35:30 2010 -0200
-@@ -193,9 +193,9 @@
- };
+---
+ drivers/media/dvb/firewire/firedtv-fw.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+--- linux.orig/drivers/media/dvb/firewire/firedtv-fw.c
++++ linux/drivers/media/dvb/firewire/firedtv-fw.c
+@@ -192,9 +192,9 @@ void fdtv_stop_iso(struct firedtv *fdtv)
+ }
  
  static void handle_fcp(struct fw_card *card, struct fw_request *request,
 -		       int tcode, int destination, int source, int generation,
