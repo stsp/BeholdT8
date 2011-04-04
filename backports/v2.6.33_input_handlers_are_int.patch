@@ -1,7 +1,7 @@
 ---
- drivers/media/dvb/dvb-usb/dvb-usb-remote.c |    5 ++---
+ drivers/media/dvb/dvb-usb/dvb-usb-remote.c |    4 ++--
  drivers/media/rc/rc-main.c                 |    4 ++--
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 --- linux.orig/drivers/media/rc/rc-main.c
 +++ linux/drivers/media/rc/rc-main.c
@@ -25,22 +25,21 @@
  	struct rc_map *rc_map = &rdev->rc_map;
 --- linux.orig/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
 +++ linux/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
-@@ -42,7 +42,7 @@ legacy_dvb_usb_get_keymap_index(const st
- }
+@@ -9,7 +9,7 @@
+ #include <linux/usb/input.h>
  
  static int legacy_dvb_usb_getkeycode(struct input_dev *dev,
--				     struct input_keymap_entry *ke)
+-				unsigned int scancode, unsigned int *keycode)
 +				int scancode, int *keycode)
  {
  	struct dvb_usb_device *d = input_get_drvdata(dev);
- 	struct rc_map_table *keymap = d->props.rc.legacy.rc_map_table;
-@@ -64,8 +64,7 @@ static int legacy_dvb_usb_getkeycode(str
+ 
+@@ -39,7 +39,7 @@ static int legacy_dvb_usb_getkeycode(str
  }
  
  static int legacy_dvb_usb_setkeycode(struct input_dev *dev,
--				     const struct input_keymap_entry *ke,
--				     unsigned int *old_keycode)
+-				unsigned int scancode, unsigned int keycode)
 +				int scancode, int keycode)
  {
  	struct dvb_usb_device *d = input_get_drvdata(dev);
- 	struct rc_map_table *keymap = d->props.rc.legacy.rc_map_table;
+ 
