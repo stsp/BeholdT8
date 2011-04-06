@@ -129,7 +129,7 @@ apply_patches apply-patches:
 	if [ ! -e ../backports/$$dir_series ]; then echo "Version $$dir not supported."; exit 1; fi; \
 	echo "Applying patches for kernel $$dir"; \
 	touch .patches_applied; \
-	for i in `cat ../backports/$${dir}_series`; do \
+	for i in `cat ../backports/$${dir}_series|grep -v '^#'`; do \
 		echo patch -s -f -N -p1 -i ../backports/$$i; \
 		patch -s -f -N -p1 -i ../backports/$$i --dry-run || exit 1; \
 		patch -s -f -N -p1 -i ../backports/$$i; \
@@ -147,7 +147,7 @@ apply_patches apply-patches:
 unapply_patches unapply-patches:
 	@if [ -e .patches_applied ]; then \
 	echo "Unapplying patches"; \
-	for i in `cat .patches_applied|grep -v ^#`; do \
+	for i in `cat .patches_applied|grep -v '^#'`; do \
 		echo patch -s -f -R -p1 -i ../backports/$$i; \
 		patch -s -f -R -p1 -i ../backports/$$i || break; \
 	done; \
