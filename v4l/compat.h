@@ -20,6 +20,21 @@
 
 #define EXPERIMENTAL_TREE
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 39)
+#include <asm/bitops.h>
+static inline unsigned long find_next_zero_bit_le(const void *addr,
+		unsigned long size, unsigned long offset)
+{
+	return find_next_zero_bit(addr, size, offset);
+}
+
+static inline unsigned long find_next_bit_le(const void *addr,
+		unsigned long size, unsigned long offset)
+{
+	return find_next_bit(addr, size, offset);
+}
+#endif
+
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 34)
 #define usb_alloc_coherent(dev, size, mem_flags, dma) usb_buffer_alloc(dev, size, mem_flags, dma)
 #define usb_free_coherent(dev, size, addr, dma) usb_buffer_free(dev, size, addr, dma)
