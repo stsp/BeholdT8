@@ -34,11 +34,7 @@ sub patch_file($$$$)
 			$file .= "\tprintk(KERN_ERR \"$warning\\n" .
 				 "\\tAs the driver is backported to an older kernel, it doesn't offer\\n" .
 				 "\\tenough quality for its usage in production.\\n" .
-				 "\\tUse it with care.\\n\");\n";
-# This was:
-#				 "\\tUse it with care.\\n$media_build_version\\n\");\n";
-# but $media_build_version can be huge and full of weird characters.
-# We need a better solution for this, but for now just comment it out.
+				 "\\tUse it with care.\\n$media_build_version\\n\");\n";
 			$is_function = 0;
 			$patched++;
 			next;
