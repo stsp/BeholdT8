@@ -210,7 +210,8 @@ find({wanted => \&parse_dir, no_chdir => 1}, '../linux/drivers/staging');
 print OUT "media-install::\n";
 
 removeobsolete();
-removeubuntu("/ubuntu/media");
+removeubuntu("kernel/ubuntu/media");
+removeubuntu("kernel/ubuntu/lirc");
 removeubuntu("/updates/dkms");
 
 print OUT "\t\@echo \"Installing kernel modules under \$(DESTDIR)\$(KDIR26)/:\"\n";
