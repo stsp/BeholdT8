@@ -492,6 +492,7 @@ sub check_other_dependencies()
 	check_file_for_func("include/sound/control.h", "snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO");
 	check_file_for_func("include/linux/sysfs.h", "sysfs_attr_init", "NEED_SYSFS_ATTR_INIT");
 	check_file_for_func("include/linux/delay.h", "usleep_range", "NEED_USLEEP_RANGE");
+	check_file_for_func("include/linux/err.h", "IS_ERR_OR_NULL", "NEED_IS_ERR_OR_NULL");
 }
 
 # Do the basic rules

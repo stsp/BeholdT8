@@ -815,4 +815,8 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 #define usleep_range(min, max) msleep(min/1000)
 #endif
 
+#ifdef NEED_IS_ERR_OR_NULL
+#define IS_ERR_OR_NULL(ptr) (!(ptr) || IS_ERR_VALUE((unsigned long)(ptr)))
+#endif
+
 #endif /*  _COMPAT_H */
