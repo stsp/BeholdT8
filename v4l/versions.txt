@@ -4,6 +4,8 @@
 [2.6.39]
 # mfd header changes for 2.6.39 prevents compilation on 2.6.38.
 RADIO_WL1273
+RADIO_TIMBERDALE
+VIDEO_TIMBERDALE
 
 [2.6.37]
 # Some stuff at viafb struct
