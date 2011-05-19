@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+my $need = 0;
 sub findprog($)
 {
 	foreach(split(/:/, $ENV{PATH})) {
@@ -13,11 +14,11 @@ sub need_program
 	my $pkgname = shift;
 
 	return if findprog($prog);
-	print "please install \"$prog\", otherwise, build won't work.";
+	print "ERROR: please install \"$prog\", otherwise, build won't work.";
 	print " This program is generally found at \"$pkgname\" package." if ($pkgname);
 	print "\n";
 
-	die "need $prog";
+	$need++;
 }
 
 need_program "git";
@@ -25,3 +26,6 @@ need_program "make";
 need_program "gcc";
 need_program "patch";
 need_program "lsdiff", "patchutils";
+
+die "Build can't procceed as $need dependency is missing" if ($need == 1);
+die "Build can't procceed as $need dependencies are missing" if ($need);
