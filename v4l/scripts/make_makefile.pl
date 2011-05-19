@@ -147,14 +147,14 @@ sub getobsolete()
 sub removeobsolete()
 {
 	while ( my ($dir, $files) = each(%obsolete) ) {
-		print OUT "\t\@echo -e \"\\nRemoving obsolete files from \$(KDIR26)/$dir:\"\n";
+		print OUT "\t\@echo \"\\nRemoving obsolete files from \$(KDIR26)/$dir:\"\n";
 		print OUT "\t\@files='", join(' ', keys %$files), "'; ";
 
-		print OUT "for i in \$\$files;do if [ -e \$(DESTDIR)\$(KDIR26)/$dir/\$\$i ]; then ";
+		print OUT "for i in \$\$files;do if [ -f \"\$(DESTDIR)\$(KDIR26)/$dir/\$\$i\" ]; then ";
 		print OUT "echo -n \"\$\$i \";";
 		print OUT " rm \$(DESTDIR)\$(KDIR26)/$dir/\$\$i; fi; done; ";
 
-		print OUT "for i in \$\$files;do if [ -e \$(DESTDIR)\$(KDIR26)/$dir/\$\$i.gz ]; then ";
+		print OUT "for i in \$\$files;do if [ -f \"\$(DESTDIR)\$(KDIR26)/$dir/\$\$i.gz\" ]; then ";
 		print OUT "echo -n \"\$\$i.gz \";";
 		print OUT " rm \$(DESTDIR)\$(KDIR26)/$dir/\$\$i.gz; fi; done; echo;\n\n";
 	}
@@ -218,7 +218,7 @@ print OUT "\t\@echo \"Installing kernel modules under \$(DESTDIR)\$(KDIR26)/:\"\
 
 while (my ($dir, $files) = each %instdir) {
 	print OUT "\t\@n=0;for i in ", join(' ', keys %$files), ";do ";
-	print OUT "if [ -e \"\$\$i\" ]; then ";
+	print OUT "if [ -f \"\$\$i\" ]; then ";
 	print OUT "if [ \$\$n -eq 0 ]; then ";
 	print OUT "echo -n \"\t$dir/: \"; ";
 	print OUT "install -d \$(DESTDIR)\$(KDIR26)/$dir; fi; ";
@@ -241,14 +241,14 @@ removeubuntu("/ubuntu/media");
 removeubuntu("/updates/dkms");
 
 while ( my ($dir, $files) = each(%instdir) ) {
-	print OUT "\t\@echo -e \"\\nRemoving old \$(KDIR26)/$dir files:\"\n";
+	print OUT "\t\@echo \"\\nRemoving old \$(KDIR26)/$dir files:\"\n";
 	print OUT "\t\@files='", join(' ', keys %$files), "'; ";
 
-	print OUT "for i in \$\$files;do if [ -e \$(DESTDIR)\$(KDIR26)/$dir/\$\$i ]; then ";
+	print OUT "for i in \$\$files;do if [ -f \"\$(DESTDIR)\$(KDIR26)/$dir/\$\$i\" ]; then ";
 	print OUT "echo -n \"\$\$i \";";
 	print OUT " rm \$(DESTDIR)\$(KDIR26)/$dir/\$\$i; fi; done; ";
 
-	print OUT "for i in \$\$files;do if [ -e \$(DESTDIR)\$(KDIR26)/$dir/\$\$i.gz ]; then ";
+	print OUT "for i in \$\$files;do if [ -f \"\$(DESTDIR)\$(KDIR26)/$dir/\$\$i.gz\" ]; then ";
 	print OUT "echo -n \"\$\$i.gz \";";
 	print OUT " rm \$(DESTDIR)\$(KDIR26)/$dir/\$\$i.gz; fi; done; echo;\n\n";
 }
