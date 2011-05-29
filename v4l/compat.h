@@ -310,17 +310,18 @@ do {									\
 	p->length = sz;							\
 	p->offset = off;						\
 } while (0)
+#endif
 
+#ifndef pr_err
 #define pr_err(fmt, arg...) \
 	printk(KERN_ERR fmt, ##arg)
 #endif
-
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,37)
 #define noop_llseek NULL
 #endif
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,35)
+#ifndef pr_warn
 #define pr_warn(fmt, arg...) \
 	printk(KERN_WARNING fmt, ##arg)
 #endif
