@@ -312,4 +312,4 @@ if ($get_patched && $patches_applied) {
 }
 
 write_ctlfile();
-system "git --git-dir $dir/.git log --pretty=oneline HEAD^1^1^1..HEAD | head -3 | sed -r s,'([\x22\x25\x5c])','\x5c\\1',g  >git_log"
+system "git --git-dir $(DIR)/.git log --pretty=oneline -n3 |sed -r 's,([\x22]),,g; s,([\x25\x5c]),\x5c\\1,g' >git_log"

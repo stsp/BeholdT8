@@ -62,7 +62,7 @@ todaytar:
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	-rm -f $(PWD)/$(TODAY_TAR).bz2
 	tar cf $(PWD)/$(TODAY_TAR) -C $(DIR) $(TARFILES)
-	git --git-dir $(DIR)/.git log --pretty=oneline HEAD^1^1^1..HEAD | head -3 |sed -r s,'([\x22\x25\x5c])','\x5c\\1',g >git_log
+	git --git-dir $(DIR)/.git log --pretty=oneline -n3 |sed -r 's,([\x22]),,g; s,([\x25\x5c]),\x5c\\1,g' >git_log
 	tar rvf $(PWD)/$(TODAY_TAR) git_log
 	for i in $(TARDIR); do \
 		if [ "`echo $$i|grep Documentation`" = "" ]; then \
@@ -79,7 +79,7 @@ tar:
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
 	-rm -f $(PWD)/linux-media.tar.bz2
 	tar cf $(PWD)/linux-media.tar -C $(DIR) $(TARFILES)
-	git --git-dir $(DIR)/.git log --pretty=oneline HEAD^1^1^1..HEAD | head -3 |sed -r s,'([\x22\x25\x5c])','\x5c\\1',g >git_log
+	git --git-dir $(DIR)/.git log --pretty=oneline -n3 |sed -r 's,([\x22]),,g; s,([\x25\x5c]),\x5c\\1,g' >git_log
 	tar rvf $(PWD)/linux-media.tar git_log
 	for i in $(TARDIR); do \
 		if [ "`echo $$i|grep Documentation`" = "" ]; then \
