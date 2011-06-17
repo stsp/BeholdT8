@@ -12,6 +12,8 @@ echo "Checking if the needed tools are present"
 run ./check_needs.pl
 echo "Checking for Digest::SHA1 (package perl-Digest-SHA1)"
 run perl -MDigest::SHA1 -e 1
+echo "Checking for Proc::ProcessTable (package perl-Proc-ProcessTable)"
+run perl -MProc::ProcessTable -e 1
 echo
 echo "************************************************************"
 echo "* This script will download the latest tarball and build it*"

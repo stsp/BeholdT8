@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 use strict;
 use File::Find;
+use Proc::ProcessTable;
+
 
 my %depend = ();
 my %depend2 = ();
@@ -166,6 +168,69 @@ sub insmod ($)
 	}
 }
 
+my @pulse;
+my $try_pulseaudio = 1;
+
+sub check_pulseaudio()
+{
+	my $t = new Proc::ProcessTable;
+	foreach my $p ( @{$t->table} ) {
+		push @pulse, $p->uid if ($p->cmndline =~m,/pulseaudio ,);
+	}
+	$try_pulseaudio = 0 if (!@pulse);
+
+	print "Pulseaudio is running with UUID(s): @pulse\n";
+}
+
+sub unload_pulseaudio($)
+{
+	my $driver_name = shift;
+	my $cur_module;
+
+	return if (!$try_pulseaudio);
+
+	check_pulseaudio() if (!@pulse);
+	return if (!$try_pulseaudio);
+
+	for my $pid (@pulse) {
+#		printf "LANG=C sudo -u \\\#$pid pacmd list-sources |\n";
+		open IN, "LANG=C sudo -u \\\#$pid pacmd list-sources |";
+		while (<IN>) {
+			$cur_module = $1 if (/^\s*module:\s*(\d+)/);
+
+			if (/^\s*alsa.driver_name\s*=\s*"(.*)"/) {
+				if ($1 eq $driver_name) {
+					print "LANG=C sudo -u \\#$pid pactl unload-module $cur_module\n";
+					system ("LANG=C sudo -u \\#$pid pactl unload-module $cur_module");
+				}
+				next;
+			}
+
+			# Special case: em28xx sometimes use a Vendor Class at
+			# the same interface as the video node. Pulseaudio can't
+			# get the driver name in this case
+			if (/^\s*alsa.card_name\s*=\s*"Em28xx/) {
+				print "LANG=C sudo -u \\#$pid pactl unload-module $cur_module\n";
+				system ("LANG=C sudo -u \\#$pid pactl unload-module $cur_module");
+			}
+		}
+		close IN;
+
+#		printf "LANG=C sudo -u \\\#$pid pacmd list-sinks |\n";
+		open IN, "LANG=C sudo -u \\#$pid pacmd list-sinks |" or return;
+		while (<IN>) {
+			$cur_module = $1 if (/^\s*module:\s*(\d+)/);
+			if (/^\s*alsa.driver_name\s*=\s*"(.*)"/) {
+				if ($1 eq $driver_name) {
+					print "LANG=C sudo -u \\#$pid pactl unload-module $1\n";
+					system ("LANG=C sudo -u \\#$pid pactl unload-module $1");
+				}
+			}
+		}
+	}
+	close IN;
+}
+
 sub rmmod(@)
 {
 	my $rmmod = findprog('rmmod');
@@ -173,8 +238,10 @@ sub rmmod(@)
 	foreach (reverse @_) {
 		s/-/_/g;
 		if (exists ($loaded{$_})) {
-			print "$rmmod $_\n";
-			unshift @not, $_ if (system "$rmmod $_");
+			my $module = $_;
+			print "$rmmod $module\n";
+			unload_pulseaudio($module);
+			unshift @not, $module if (system "$rmmod $module");
 		}
 	}
 	return @not;
