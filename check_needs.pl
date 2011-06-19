@@ -1,5 +1,54 @@
 #!/usr/bin/perl
 
+my @missing;
+
+my $system_release = qx(cat /etc/system-release);
+$system_release = qx(cat /etc/redhat-release) if !$system_release;
+
+sub give_redhat_hints
+{
+	my $install;
+
+	my %map = (
+		"lsdiff"		=> "patchutils",
+		"Digest::SHA1"		=> "perl-Digest-SHA1",
+		"Proc::ProcessTable"	=> "perl-Proc-ProcessTable",
+	);
+
+	foreach my $prog (@missing) {
+		print "ERROR: please install \"$prog\", otherwise, build won't work.\n";
+		if (defined($map{$prog})) {
+			$install .= " " . $map{$prog};
+		} else {
+			$install .= " " . $prog;
+		}
+	}
+
+	printf("You should run:\n\tyum install -y $install\n");
+}
+
+sub give_hints
+{
+
+	# Distro-specific hints
+	if ($system_release =~ /Red Hat Enterprise Linux Workstation/) {
+		give_redhat_hints;
+		return;
+	}
+	if ($system_release =~ /Fedora/) {
+		give_redhat_hints;
+		return;
+	}
+
+	# Fall-back to generic hint code
+	foreach my $prog (@missing) {
+		print "ERROR: please install \"$prog\", otherwise, build won't work.\n";
+	}
+	print "I don't know distro $system_release. So, I can't provide you a hint with the package names.\n";
+	print "Be welcome to contribute with a patch for media-build, by submitting a distro-specific hint\n";
+	print "to linux-media\@vger.kernel.org\n";
+}
+
 my $need = 0;
 sub findprog($)
 {
@@ -14,9 +63,8 @@ sub need_program
 	my $pkgname = shift;
 
 	return if findprog($prog);
-	print "ERROR: please install \"$prog\", otherwise, build won't work.";
-	print " This program is generally found at \"$pkgname\" package." if ($pkgname);
-	print "\n";
+
+	push @missing, $prog;
 
 	$need++;
 }
@@ -28,9 +76,8 @@ sub need_perl_module
 
 	my $err = system("perl -M$prog -e 1 2>/dev/null /dev/null");
 	return if ($err == 0);
-	print "ERROR: please install \"$prog\", otherwise, build won't work.";
-	print " This program is generally found at \"$pkgname\" package." if ($pkgname);
-	print "\n";
+
+	push @missing, $prog;
 
 	$need++;
 }
@@ -40,11 +87,13 @@ need_program "git";
 need_program "make";
 need_program "gcc";
 need_program "patch";
-need_program "lsdiff", "patchutils";
+need_program "lsdiff";
 
 # Check for needed perl modules
-need_perl_module "Digest::SHA1", "perl-Digest-SHA1";
-need_perl_module "Proc::ProcessTable", "perl-Proc-ProcessTable";
+need_perl_module "Digest::SHA1";
+need_perl_module "Proc::ProcessTable";
+
+give_hints if ($need);
 
 die "Build can't procceed as $need dependency is missing" if ($need == 1);
 die "Build can't procceed as $need dependencies are missing" if ($need);
