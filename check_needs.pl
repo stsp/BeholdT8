@@ -2,8 +2,16 @@
 
 my @missing;
 
-my $system_release = qx(cat /etc/system-release);
-$system_release = qx(cat /etc/redhat-release) if !$system_release;
+sub catcheck($)
+{
+  my $res = "";
+  $res = qx(cat $_[0]) if (-r $_[0]);
+  return $res;
+}
+
+my $system_release = catcheck("/etc/system-release");
+$system_release = catcheck("/etc/redhat-release") if !$system_release;
+$system_release = catcheck("/etc/lsb-release") if !$system_release;
 
 sub give_redhat_hints
 {
@@ -27,6 +35,28 @@ sub give_redhat_hints
 	printf("You should run:\n\tyum install -y $install\n");
 }
 
+sub give_ubuntu_hints
+{
+	my $install;
+
+	my %map = (
+		"lsdiff"		=> "patchutils",
+		"Digest::SHA1"		=> "libdigest-sha1-perl",
+		"Proc::ProcessTable"	=> "libproc-processtable-perl",
+	);
+
+	foreach my $prog (@missing) {
+		print "ERROR: please install \"$prog\", otherwise, build won't work.\n";
+		if (defined($map{$prog})) {
+			$install .= " " . $map{$prog};
+		} else {
+			$install .= " " . $prog;
+		}
+	}
+
+	printf("You should run:\n\tsudo apt-get install $install\n");
+}
+
 sub give_hints
 {
 
@@ -37,6 +67,10 @@ sub give_hints
 	}
 	if ($system_release =~ /Fedora/) {
 		give_redhat_hints;
+		return;
+	}
+	if ($system_release =~ /Ubuntu/) {
+		give_ubuntu_hints;
 		return;
 	}
 
