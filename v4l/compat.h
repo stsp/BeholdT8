@@ -8,6 +8,7 @@
 #include <linux/version.h>
 #include <linux/input.h>
 #include "config-compat.h"
+#include "../linux/kernel_version.h"
 
 /* In v2.6.19-rc6-118-g52bad64 struct work_struct was was changed to be only for
  * non-delayed work and struct delayed_work was created for delayed work.  This

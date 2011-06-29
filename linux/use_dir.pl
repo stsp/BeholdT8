@@ -284,7 +284,7 @@ sub sync_kernel_version()
 {
 	my ($source_v4l_version, $a, $b, $c, $ver);
 
-	open IN, "$dir/Makefile";
+	open IN, "$dir/Makefile" or die "Can't find $dir/Makefile";
 	while (<IN>) {
 		$a=$1 if (m/^\s*VERSION\s*=\s*(\d+)/);
 		$b=$1 if (m/^\s*PATCHLEVEL\s*=\s*(\d+)/);
@@ -295,21 +295,20 @@ sub sync_kernel_version()
 
 	if (open IN, "kernel_version.h") {
 		while (<IN>) {
-			$ver=$1 if (m/^\s*V4L2_VERSION*=\s*(\d+)/);
+			$ver=$1 if (m/^#define\s*V4L2_VERSION* \s*(\d+)/);
 		}
 		close IN;
 	}
 
 	if ($ver ne $source_v4l_version) {
 		open OUT,">kernel_version.h";
-		print OUT "V4L2_VERSION=%d\n", $source_v4l_version;
+		printf OUT "#define V4L2_VERSION %d\n", $source_v4l_version;
 		close OUT;
 	}
 }
 
 # Main
 
-sync_kernel_version();
 if (!$dir) {
 	read_ctlfile();
 	die "Please provide a directory to use" if !($path);
@@ -319,6 +318,7 @@ if (!$dir) {
 } else {
 	read_ctlfile();
 }
+sync_kernel_version();
 
 if ($path ne $dir) {
 	$path = $dir;
