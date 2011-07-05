@@ -1,5 +1,4 @@
 ---
- drivers/media/video/cafe_ccic.c              |    2 +-
  drivers/media/video/et61x251/et61x251_core.c |    2 +-
  drivers/media/video/gspca/gspca.c            |    2 +-
  drivers/media/video/meye.c                   |    2 +-
@@ -14,17 +13,6 @@
  include/media/videobuf2-memops.h             |    4 ++--
  13 files changed, 15 insertions(+), 15 deletions(-)
 
---- linux.orig/drivers/media/video/cafe_ccic.c
-+++ linux/drivers/media/video/cafe_ccic.c
-@@ -1368,7 +1368,7 @@ static void cafe_v4l_vm_close(struct vm_
- 	mutex_unlock(&sbuf->cam->s_mutex);
- }
- 
--static const struct vm_operations_struct cafe_v4l_vm_ops = {
-+static struct vm_operations_struct cafe_v4l_vm_ops = {
- 	.open = cafe_v4l_vm_open,
- 	.close = cafe_v4l_vm_close
- };
 --- linux.orig/drivers/media/video/et61x251/et61x251_core.c
 +++ linux/drivers/media/video/et61x251/et61x251_core.c
 @@ -1499,7 +1499,7 @@ static void et61x251_vm_close(struct vm_
