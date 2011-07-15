@@ -28,7 +28,6 @@ TARFILES += include/linux/videodev2.h
 TARFILES += include/linux/meye.h
 TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
-TARFILES += include/staging/altera.h
 TARFILES += include/linux/via-core.h
 TARFILES += include/linux/ti_wilink_st.h
 TARFILES += include/linux/media.h
