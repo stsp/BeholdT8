@@ -112,15 +112,13 @@ distclean: clean
 
 apply_patches apply-patches:
 	@if [ -e .linked_dir ]; then ./use_dir.pl --recheck --silent; fi
-	@if [ "$(KERNELRELEASE)" != "" ]; then \
-		if [ -e ../backports/v$(KERNELRELEASE)_series ]; then \
-			dir="v$(KERNELRELEASE)"; \
-		else \
-			dir="v$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"; \
-		fi; \
+	@if [ "$(VER)" != "" ]; then \
+		PATCHES="`./patches_for_kernel.pl $(VER)`"; \
+		if [ "$$PATCHES" = "" ]; then echo "Version $(VER) not supported"; exit -1; fi \
+	elif [ "$(KERNELRELEASE)" != "" ]; then \
+		PATCHES="`./patches_for_kernel.pl $(KERNELRELEASE)`"; \
+		if [ "$$PATCHES" = "" ]; then echo "Version $(KERNELRELEASE) not supported"; exit -1; fi \
 	fi; \
-	if [ "$(VER)" != "" ]; then dir="v$(VER)"; fi; \
-	if [ "$$dir" = "" ]; then echo "make $@ VER=<version>"; exit -1; fi; \
 	if [ -e .patches_applied ]; then \
 		if [ "`cat .patches_applied|grep ^#`" = "#$$dir" ]; then \
 			echo "Patches for $$dir already applied."; exit; \
@@ -128,10 +126,9 @@ apply_patches apply-patches:
 			$(MAKE) unapply_patches; \
 		fi; \
 	fi; \
-	if [ ! -e ../backports/$$dir_series ]; then echo "Version $$dir not supported."; exit 1; fi; \
 	echo "Applying patches for kernel $$dir"; \
 	touch .patches_applied; \
-	for i in `cat ../backports/$${dir}_series|grep -v '^#'`; do \
+	for i in $$PATCHES; do \
 		echo patch -s -f -N -p1 -i ../backports/$$i; \
 		patch -s -f -N -p1 -i ../backports/$$i --dry-run || exit 1; \
 		patch -s -f -N -p1 -i ../backports/$$i; \
