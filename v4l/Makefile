@@ -135,21 +135,11 @@ EXTRA_CFLAGS += $(if $(wildcard $(srctree)/.mm), -DMM_KERNEL)
 EXTRA_CFLAGS += -include $(obj)/compat.h
 
 #################################################
-# Kernel 2.4/2.6 specific rules
+# Kernel 2.6/3.x specific rules
 
 ifneq ($(KERNELRELEASE),)
-
-ifeq ($(VERSION).$(PATCHLEVEL),2.6)
  export-objs	:=
  list-multi	:=
-else
-include $(obj)/Makefile.kern24
-
- multi-m	:= $(filter $(list-multi), $(obj-m))
- int-m		:= $(sort $(foreach m, $(multi-m), $($(basename $(m))-objs)))
- export-objs	:= $(filter $(int-m) $(obj-m),$(export-objs))
-endif
-
 endif
 
 #################################################
@@ -171,19 +161,15 @@ KDIR26		:= /lib/modules/$(KERNELRELEASE)/kernel/drivers/media
 HOSTCC:=$(CC)
 CC += -I$(obj)
 
-ifeq ($(VERSION).$(PATCHLEVEL),2.6)
- CPPFLAGS := -I$(SUBDIRS)/../linux/include $(CPPFLAGS) -I$(SUBDIRS)/
+CPPFLAGS := -I$(SUBDIRS)/../linux/include $(CPPFLAGS) -I$(SUBDIRS)/
 
- # Needed for kernel 2.6.24 or up
- KBUILD_CPPFLAGS := -I$(SUBDIRS)/../linux/include $(KBUILD_CPPFLAGS) -I$(SUBDIRS)/
+# Needed for kernel 2.6.24 or up
+KBUILD_CPPFLAGS := -I$(SUBDIRS)/../linux/include $(KBUILD_CPPFLAGS) -I$(SUBDIRS)/
 
- # Needed for kernel 2.6.29 or up
- LINUXINCLUDE    := -I$(SUBDIRS)/../linux/include $(LINUXINCLUDE) -I$(SUBDIRS)/
+# Needed for kernel 2.6.29 or up
+LINUXINCLUDE    := -I$(SUBDIRS)/../linux/include $(LINUXINCLUDE) -I$(SUBDIRS)/
 
- MYCFLAGS :=
-else
- MYCFLAGS := CFLAGS="-I../linux/include -D__KERNEL__ -I$(KDIR)/include -DEXPORT_SYMTAB"
-endif
+MYCFLAGS :=
 
 
 #################################################
