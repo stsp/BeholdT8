@@ -201,6 +201,21 @@ sub check_git($$)
 	return 0;
 }
 
+####################
+# Other aux routines
+####################
+sub license ()
+{
+	print "************************************************************\n";
+	print "* All drivers and build system are under GPLv2 License     *\n";
+	print "* Firmware files are under the license terms found at:     *\n";
+	printf "* %-56s *\n", $firmware_url;
+	print "* Please abort if you don't agree with the license         *\n";
+	print "************************************************************\n";
+	print "\n";
+	sleep 5;
+}
+
 ######
 # Main
 ######
@@ -219,21 +234,20 @@ if (@git == 2) {
 
 	if ($git[0] ne $main_git_url) {
 		print "\n";
-		print "**************************************************************\n";
-		print "* WARNING: This script will use a git tree as the reference  *\n";
-		print "* for the media drivers. This build system takes into accont *\n";
-		print "* only the main repository, and the latest staging branch.   *\n";
-		print "* Trying to compile an old experimental tree will likely     *\n";
-		print "* fail, as the backport patches may not fit on the needs     *\n";
-		print "**************************************************************\n";
+		print "************************************************************\n";
+		print "* WARNING: This script will use a git tree as reference for*\n";
+		print "* the media drivers. This build system takes into accont   *\n";
+		print "* only the main repository, and the latest staging branch. *\n";
+		print "* Trying to compile an old experimental tree will likely   *\n";
+		print "* fail, as the backport patches may not fit on the needs   *\n";
+		print "************************************************************\n";
 		print "\n";
 	} else {
-		print "**************************************************************\n";
-		printf "* building %-40s git tree *\n", $git[0];
-		print "**************************************************************\n";
+		print "************************************************************\n";
+		printf "* building %-38s git tree *\n", $git[0];
+		print "************************************************************\n";
 	}
-
-	sleep 3;
+	license;
 
 	if (!stat "./media/.git/config") {
 		print "Getting the latest Kernel tree. This will take some time\n";
@@ -278,9 +292,7 @@ if (@git == 2) {
 	print "* It will also update this tree to be sure that all compat *\n";
 	print "* bits are there, to avoid compilation failures            *\n";
 	print "************************************************************\n";
-	print "\n";
-
-	sleep 5;
+	license;
 
 	print "****************************\n";
 	print "Updating the building system\n";
@@ -292,15 +304,13 @@ if (@git == 2) {
 }
 
 print "**********************************************************\n";
-print "* Downloading firmwares from linuxtv.org. Those firmwares*\n";
-print "* are provided under the license terms found at:         *\n";
-printf "* %-54s *\n", $firmware_url;
+print "* Downloading firmwares from linuxtv.org.                *\n";
 print "**********************************************************\n";
 
 if (!stat $firmware_tarball) {
 	system ("wget $firmware_url/$firmware_tarball -O $firmware_tarball") == 0 or die "Can't download $firmware_tarball";
 }
-system ("(cd linux/firmware/; tar xvfj ../../$firmware_tarball)") == 0 or die "Can't extract $firmware_tarball";
+system ("(cd v4l/firmware/; tar xvfj ../../$firmware_tarball)") == 0 or die "Can't extract $firmware_tarball";
 
 
 print "******************\n";

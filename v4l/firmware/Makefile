@@ -22,7 +22,7 @@ distclean: clean
 install: default
 	@echo -n "Installing firmwares at $(FW_DIR): "
 	-@for i in $(DIRS); do if [ ! -d $(FW_DIR)/$$i ]; then mkdir -p $(FW_DIR)/$$i; fi; done
-	-@for i in $(TARGETS); do echo -n "$$i "; cp $$i $(FW_DIR)/$$i; done
+	-@for i in $(TARGETS) *.fw*; do echo -n "$$i "; cp $$i $(FW_DIR)/$$i; done
 	@echo
 
 rminstall:
