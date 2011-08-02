@@ -1,5 +1,24 @@
 #!/usr/bin/perl
 use strict;
+use Getopt::Long;
+use Pod::Usage;
+
+#####################
+# Parameters handling
+#####################
+
+my $level = 0;
+my $help = 0;
+my $man = 0;
+my $check_only = 0;
+
+GetOptions('v|verbose' => \$level,
+	   'help|?' => \$help,
+	    man => \$man,
+	   'check_only|check-only' => \$check_only,
+	  ) or pod2usage(2);
+pod2usage(1) if $help;
+pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 
 ########################
 # Check for missing deps
@@ -121,7 +140,7 @@ sub need_perl_module($)
 
 sub check_needs()
 {
-	print "Checking if the needed tools are present";
+	print "Checking if the needed tools are present:\n";
 
 	# Check for needed programs/tools
 	need_program "git";
@@ -138,6 +157,8 @@ sub check_needs()
 
 	die "Build can't procceed as $need dependency is missing" if ($need == 1);
 	die "Build can't procceed as $need dependencies are missing" if ($need);
+
+	print "Needed package dependencies are met.\n";
 }
 
 ######
@@ -145,6 +166,8 @@ sub check_needs()
 ######
 
 check_needs;
+
+exit (0) if ($check_only);
 
 print "\n";
 print "************************************************************\n";
@@ -171,3 +194,73 @@ system ("make") == 0 or die "build failed";
 print "**********************************************************\n";
 print "* Compilation finished. Use 'make install' to install them\n";
 print "**********************************************************\n";
+
+
+__END__
+
+=head1 NAME
+
+build - Builds the media drivers without needing to compile a new kernel
+
+=head1 SYNOPSIS
+
+build [options]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--help>
+
+Print a brief help message and exits.
+
+=item B<--man>
+
+Prints the manual page and exits.
+
+=item B<--verbose>
+
+Be more verbose.
+
+=item B<--check_only>
+
+Don't do anything, except for checking if the needed dependencies are there.
+
+=back
+
+=head1 DESCRIPTION
+
+B<build> will download and compile the latest drivers from linuxtv.org,
+allowing testing them before reaching the upstream kernels.
+
+This is an experimental build system for media drivers.
+All files on this tree are covered by GPLv2, as stated at COPYING file.
+
+Usage:
+
+Just call the build utility:
+	$ ./build
+
+Then, install the drivers as root, with:
+	# make install
+
+In order to test, unload old drivers with:
+	# make rmmod
+
+Then modprobe the driver you want to test. For example:
+	# modprobe bttv
+
+=head1 BUGS
+
+Report bugs to Mauro Carvalho Chehab <mchehab@redhat.com>
+
+=head1 COPYRIGHT
+
+Copyright (c) 2011 by Mauro Carvalho Chehab <mchehab@redhat.com>.
+
+License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>.
+
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+=cut
