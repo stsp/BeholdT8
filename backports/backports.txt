@@ -24,6 +24,9 @@
 add api_version.patch
 add fix_altera_include.patch
 
+[3.0.0]
+add no_atomic_include.patch
+
 [2.6.38]
 add v4l2-compat-timespec.patch
 add v2.6.38_use_getkeycode_new_setkeycode_new.patch

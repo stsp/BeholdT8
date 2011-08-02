@@ -1,0 +1,36 @@
+diff --git a/drivers/media/video/hdpvr/hdpvr-core.c b/drivers/media/video/hdpvr/hdpvr-core.c
+index 441dacf..5b59b61 100644
+--- a/drivers/media/video/hdpvr/hdpvr-core.c
++++ b/drivers/media/video/hdpvr/hdpvr-core.c
+@@ -20 +19,0 @@
+-#include <linux/atomic.h>
+diff --git a/drivers/media/video/tlg2300/pd-dvb.c b/drivers/media/video/tlg2300/pd-dvb.c
+index d0da11a..6b5e19f 100644
+--- a/drivers/media/video/tlg2300/pd-dvb.c
++++ b/drivers/media/video/tlg2300/pd-dvb.c
+@@ -10 +9,0 @@
+-#include <linux/atomic.h>
+diff --git a/drivers/media/video/uvc/uvc_ctrl.c b/drivers/media/video/uvc/uvc_ctrl.c
+index 10c2364..74587fa 100644
+--- a/drivers/media/video/uvc/uvc_ctrl.c
++++ b/drivers/media/video/uvc/uvc_ctrl.c
+@@ -23 +22,0 @@
+-#include <linux/atomic.h>
+diff --git a/drivers/media/video/uvc/uvc_queue.c b/drivers/media/video/uvc/uvc_queue.c
+index 677691c..a123a2f 100644
+--- a/drivers/media/video/uvc/uvc_queue.c
++++ b/drivers/media/video/uvc/uvc_queue.c
+@@ -22 +21,0 @@
+-#include <linux/atomic.h>
+diff --git a/drivers/media/video/uvc/uvc_v4l2.c b/drivers/media/video/uvc/uvc_v4l2.c
+index ea71d5f..1d72c96 100644
+--- a/drivers/media/video/uvc/uvc_v4l2.c
++++ b/drivers/media/video/uvc/uvc_v4l2.c
+@@ -24 +23,0 @@
+-#include <linux/atomic.h>
+diff --git a/drivers/media/video/uvc/uvc_video.c b/drivers/media/video/uvc/uvc_video.c
+index 8244167..aa607c8 100644
+--- a/drivers/media/video/uvc/uvc_video.c
++++ b/drivers/media/video/uvc/uvc_video.c
+@@ -22 +21,0 @@
+-#include <linux/atomic.h>
