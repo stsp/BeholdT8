@@ -11,12 +11,17 @@ my $level = 0;
 my $help = 0;
 my $man = 0;
 my $check_only = 0;
+my $main_git = 0;
 my @git;
+
+my $main_git_url = "git://linuxtv.org/media_tree.git";
+my $main_branch = "staging/for_v3.2";
 
 GetOptions('v|verbose' => \$level,
 	   'help|?' => \$help,
 	    man => \$man,
 	   'check_only|check-only' => \$check_only,
+	   'main_git|main-git' => \$main_git,
 	   'git=s{2}' => \@git,
 	  ) or pod2usage(2);
 pod2usage(1) if $help;
@@ -202,18 +207,29 @@ check_needs;
 
 exit (0) if ($check_only);
 
+if ($main_git) {
+	$git[0] = $main_git_url;
+	$git[1] = $main_branch;
+}
+
 if (@git == 2) {
 	my $rname = get_remote_name();
 
-	print "\n";
-	print "************************************************************\n";
-	print "* This script will use a git tree as the reference for the *\n";
-	print "* media drivers. This build system takes into accont only  *\n";
-	print "* the main repository, and the latest staging branch.      *\n";
-	print "* Trying to compile an old experimental tree will likely   *\n";
-	print "* fail, as the backport patches may not fit on the needs   *\n";
-	print "************************************************************\n";
-	print "\n";
+	if ($git[0] ne $main_git_url) {
+		print "\n";
+		print "**************************************************************\n";
+		print "* WARNING: This script will use a git tree as the reference  *\n";
+		print "* for the media drivers. This build system takes into accont *\n";
+		print "* only the main repository, and the latest staging branch.   *\n";
+		print "* Trying to compile an old experimental tree will likely     *\n";
+		print "* fail, as the backport patches may not fit on the needs     *\n";
+		print "**************************************************************\n";
+		print "\n";
+	} else {
+		print "**************************************************************\n";
+		printf "* building %-40s git tree *\n", $git[0];
+		print "**************************************************************\n";
+	}
 
 	sleep 3;
 
@@ -290,7 +306,8 @@ build - Builds the media drivers without needing to compile a new kernel
 
 =head1 SYNOPSIS
 
-build [--help] [--man] [--verbose] [--check_only] [<--git> [URL] [BRANCH]]
+build [--help] [--man] [--verbose] [--check-only] [<--git> [URL] [BRANCH]]
+ [--main-git]
 
 =head1 OPTIONS
 
@@ -308,7 +325,7 @@ Prints the manual page and exits.
 
 Be more verbose.
 
-=item B<--check_only>
+=item B<--check-only>
 
 Don't do anything, except for checking if the needed dependencies are there.
 
@@ -317,6 +334,11 @@ Don't do anything, except for checking if the needed dependencies are there.
 Allows specifying a URL and a git branch, instead of the default ones.
 Currently, only linuxtv.org git URL's are supported, as the build needs to
 warrant an unique namespace for git remotes.
+
+=item B<--main-git>
+
+Use the main development git tree, as found at
+L<http://git.linuxtv.org/media_tree.git>.
 
 =back
 
@@ -331,26 +353,103 @@ All files on this tree are covered by GPLv2, as stated at COPYING file.
 Usage:
 
 Just call the build utility:
-	$ ./build
+
+=over 8
+
+~/media_build $ B<./build>
+
+=back
 
 Then, install the drivers as root, with:
-	# make install
+
+=over 8
+
+~/media_build # B<make install>
+
+=back
 
 In order to test, unload old drivers with:
-	# make rmmod
 
-Then modprobe the driver you want to test. For example:
-	# modprobe bttv
+=over 8
+
+~/media_build # B<make rmmod>
+
+=back
+
+Then modprobe the driver you want to test. For example, to load driver B<foo>:
+
+=over 8
+
+~/media_build # B<modprobe foo>
+
+=back
+
+If you're developing a new driver or patch, it is better to use:
+
+=over 8
+
+~/media_build $ B<./build --main-git>
+
+=back
+
+Then, install the drivers as root, with:
+
+=over 8
+
+~/media_build # B<make install>
+
+=back
+
+In order to test, unload old drivers with:
+
+=over 8
+
+~/media_build # B<make rmmod>
+
+=back
+
+Then modprobe the driver you want to test:
+
+=over 8
+
+~/media_build # B<modprobe foo>
+
+=back
+
+In this case, in order to modify something, you should edit the file at
+the media/ subdir.
+
+For example, a typical procedure to develop a new patch would be:
+
+=over 8
+
+~/media_build $ B<cd media>
+
+~/media $ B<gedit drivers/media/video/foo.c>
+
+~/media $ B<make -C ../v4l>
+
+~/media $ B<make -C .. rmmod>
+
+~/media $ B<modprobe foo>
+
+(some procedure to test the "foo" driver)
+
+~/media $ B<git diff >/tmp/my_changes.patch>
+
+(email /tmp/my_changes.patch inlined to <linux-media@vger.kernel.org>)
+
+=back
 
 =head1 BUGS
 
-Report bugs to Mauro Carvalho Chehab <mchehab@redhat.com>
+Report bugs to <linux-media@vger.kernel.org>
 
 =head1 COPYRIGHT
 
 Copyright (c) 2011 by Mauro Carvalho Chehab <mchehab@redhat.com>.
 
-License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>.
+License GPLv2: GNU GPL version 2 L<http://gnu.org/licenses/gpl.html>.
 
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
