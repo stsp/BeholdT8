@@ -16,6 +16,8 @@ my @git;
 
 my $main_git_url = "git://linuxtv.org/media_tree.git";
 my $main_branch = "staging/for_v3.2";
+my $firmware_url = "http://www.linuxtv.org/downloads/firmware/";
+my $firmware_tarball = "dvb-firmwares.tar.bz2";
 
 GetOptions('v|verbose' => \$level,
 	   'help|?' => \$help,
@@ -289,8 +291,23 @@ if (@git == 2) {
 	system ("make -C linux/ untar") == 0 or die "Untar failed";
 }
 
-system ("make allyesconfig") == 0 or die "can't select all drivers";
+print "**********************************************************\n";
+print "* Downloading firmwares from linuxtv.org. Those firmwares*\n";
+print "* are provided under the license terms found at:         *\n";
+printf "* %-54s *\n", $firmware_url;
+print "**********************************************************\n";
 
+if (!stat $firmware_tarball) {
+	system ("wget $firmware_url/$firmware_tarball -O $firmware_tarball") == 0 or die "Can't download $firmware_tarball";
+}
+system ("(cd linux/firmware/; tar xvfj ../../$firmware_tarball)") == 0 or die "Can't extract $firmware_tarball";
+
+
+print "******************\n";
+print "* Start building *\n";
+print "******************\n";
+
+system ("make allyesconfig") == 0 or die "can't select all drivers";
 system ("make") == 0 or die "build failed";
 
 print "**********************************************************\n";
