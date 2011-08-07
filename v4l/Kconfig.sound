@@ -1,5 +1,11 @@
-menu "Audio devices for multimedia"
+menuconfig AUDIO_SUPPORT
+bool "Sound card support"
+	help
+	  Allow to select the Kconfig options found at Kernel's
+	  sound/pci/Kconfig file.
+	  Currently, only snd-bt87x is available on this backport tree.
 
+if AUDIO_SUPPORT
 # This is part of sound/pci/Kconfig
 comment "ALSA sound"
 
@@ -35,5 +41,4 @@ config SND_FM801_TEA575X
 	  Forte SF256-PCS-02) into the snd-fm801 driver.
 
 	  This will enable support for the old V4L1 API.
-
-endmenu
+endif
