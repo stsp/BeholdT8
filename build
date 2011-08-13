@@ -29,15 +29,16 @@ GetOptions('v|verbose' => \$level,
 pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 
-########################
-# Check for missing deps
-########################
+#############
+# Static vars
+#############
 
 my @missing;
+my $system_release;
 
-my $system_release = catcheck("/etc/system-release");
-$system_release = catcheck("/etc/redhat-release") if !$system_release;
-$system_release = catcheck("/etc/lsb-release") if !$system_release;
+##################################################
+# Subroutines used at the check missing deps logic
+##################################################
 
 sub catcheck($)
 {
@@ -149,7 +150,11 @@ sub need_perl_module($)
 
 sub check_needs()
 {
-	print "Checking if the needed tools are present:\n";
+	if ($system_release) {
+		print "Checking if the needed tools for $system_release are available\n";
+	} else {
+		print "Checking if the needed tools are present\n";
+	}
 
 	# Check for needed programs/tools
 	need_program "git";
@@ -216,9 +221,36 @@ sub license ()
 	sleep 5;
 }
 
+sub which($)
+{
+	my $file = shift;
+	my @path = split ":", $ENV{PATH};
+
+	foreach my $dir(@path) {
+		my $name = $dir.'/'.$file;
+		return $name if (-x $name );
+	}
+	return undef;
+}
+
 ######
 # Main
 ######
+
+# Determine the system type. There's no standard unique way that would
+# work with all distros with a minimal package install. So, several
+# methods are used here.
+#
+# By default, it will use lsb_release function. If not available, it will
+# fail back to reading the known different places where the distro name
+# is stored
+#
+$system_release = qx(lsb_release -d) if which("lsb_release");
+$system_release =~ s/Description:\s*// if ($system_release);
+$system_release = catcheck("/etc/system-release") if !$system_release;
+$system_release = catcheck("/etc/redhat-release") if !$system_release;
+$system_release = catcheck("/etc/lsb-release") if !$system_release;
+$system_release =~ s/\s+$//;
 
 check_needs;
 
