@@ -1,0 +1,60 @@
+diff -r 4f23f0dc68fb drivers/media/common/tuners/tda18271-common.c
+--- a/drivers/media/common/tuners/tda18271-common.c	Fri Sep 16 12:13:36 2011 -0300
++++ b/drivers/media/common/tuners/tda18271-common.c	Fri Sep 16 12:16:50 2011 -0300
+@@ -675,29 +675,3 @@
+ fail:
+ 	return ret;
+ }
+-
+-int _tda_printk(struct tda18271_priv *state, const char *level,
+-		const char *func, const char *fmt, ...)
+-{
+-	struct va_format vaf;
+-	va_list args;
+-	int rtn;
+-
+-	va_start(args, fmt);
+-
+-	vaf.fmt = fmt;
+-	vaf.va = &args;
+-
+-	if (state)
+-		rtn = printk("%s%s: [%d-%04x|%c] %pV",
+-			     level, func, i2c_adapter_id(state->i2c_props.adap),
+-			     state->i2c_props.addr,
+-			     (state->role == TDA18271_MASTER) ? 'M' : 'S',
+-			     &vaf);
+-	else
+-		rtn = printk("%s%s: %pV", level, func, &vaf);
+-
+-	va_end(args);
+-
+-	return rtn;
+-}
+diff -r 4f23f0dc68fb drivers/media/common/tuners/tda18271-priv.h
+--- a/drivers/media/common/tuners/tda18271-priv.h	Fri Sep 16 12:13:36 2011 -0300
++++ b/drivers/media/common/tuners/tda18271-priv.h	Fri Sep 16 12:16:50 2011 -0300
+@@ -136,12 +136,17 @@
+ #define DBG_ADV  8
+ #define DBG_CAL  16
+ 
+-__attribute__((format(printf, 4, 5)))
+-int _tda_printk(struct tda18271_priv *state, const char *level,
+-		const char *func, const char *fmt, ...);
+-
+-#define tda_printk(st, lvl, fmt, arg...)			\
+-	_tda_printk(st, lvl, __func__, fmt, ##arg)
++#define tda_printk(st, kern, fmt, arg...) do {\
++	if (st) { \
++		struct tda18271_priv *state = st; \
++		printk(kern "%s: [%d-%04x|%s] " fmt, __func__, \
++		i2c_adapter_id(state->i2c_props.adap), \
++		state->i2c_props.addr, \
++		(state->role == TDA18271_MASTER) \
++			? "M" : "S", ##arg); \
++	} else \
++		printk(kern "%s: " fmt, __func__, ##arg); \
++} while (0)
+ 
+ #define tda_dprintk(st, lvl, fmt, arg...)			\
+ do {								\

@@ -821,4 +821,13 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 #define IS_ERR_OR_NULL(ptr) (!(ptr) || IS_ERR_VALUE((unsigned long)(ptr)))
 #endif
 
+#ifndef pr_err_ratelimited
+#if defined(DEBUG)
+#define pr_err_ratelimited(fmt, ...)					\
+	printk_ratelimited(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
+#else
+#define pr_err_ratelimited(fmt, ...)
+#endif
+#endif /*pr_debug_ratelimited */
+
 #endif /*  _COMPAT_H */
