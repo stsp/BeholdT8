@@ -22,7 +22,6 @@
 # All supported versions need those patches
 [3.255.255]
 add api_version.patch
-add fix_altera_include.patch
 
 [3.0.0]
 add no_atomic_include.patch

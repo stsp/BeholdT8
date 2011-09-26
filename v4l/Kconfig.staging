@@ -33,9 +33,7 @@ config STAGING_BROKEN
 
 source "../linux/drivers/staging/go7007/Kconfig"
 source "../linux/drivers/staging/cx25821/Kconfig"
-source "../linux/drivers/staging/tm6000/Kconfig"
 source "../linux/drivers/staging/lirc/Kconfig"
-source "../linux/drivers/staging/altera-stapl/Kconfig"
 source "../linux/drivers/staging/cxd2099/Kconfig"
 # Currently, there are no broken staging drivers with Kernel 2.6.31
 # if STAGING_BROKEN
