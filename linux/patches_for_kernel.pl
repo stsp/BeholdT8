@@ -13,11 +13,18 @@ my $file = "../backports/backports.txt";
 open IN, $file or die "can't find $file\n";
 
 sub kernel_version($) {
-	my $sublevel;
+	my ($version, $patchlevel, $sublevel) = $_[0] =~ m/^(\d+)\.(\d+)\.?(\d*)/;
 
-	$_[0] =~ m/^(\d+)\.(\d+)\.?(\d*)/;
-	$sublevel = $3 == "" ? 0 : $3;
-	return ($1*65536 + $2*256 + $sublevel);
+	# fix kernel version for distros that 'translated' 3.0 to 2.40
+	$version += 0;
+	$patchlevel += 0;
+	if ($version == 2 && $patchlevel == 6 && $sublevel >= 40) {
+		$version = 3;
+		$patchlevel = $sublevel - 40;
+		$sublevel = 0;
+	}
+	$sublevel = 0 if ($sublevel == "");
+	return ($version * 65536 + $patchlevel * 256 + $sublevel);
 }
 
 my $kernel = kernel_version($version);
