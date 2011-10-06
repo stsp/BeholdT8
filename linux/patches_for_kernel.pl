@@ -15,9 +15,7 @@ open IN, $file or die "can't find $file\n";
 sub kernel_version($) {
 	my ($version, $patchlevel, $sublevel) = $_[0] =~ m/^(\d+)\.(\d+)\.?(\d*)/;
 
-	# fix kernel version for distros that 'translated' 3.0 to 2.40
-	$version += 0;
-	$patchlevel += 0;
+	# fix kernel version for distros that 'translated' 3.0 to 2.6.40
 	if ($version == 2 && $patchlevel == 6 && $sublevel >= 40) {
 		$version = 3;
 		$patchlevel = $sublevel - 40;
