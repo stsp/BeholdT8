@@ -113,12 +113,12 @@ distclean: clean
 apply_patches apply-patches:
 	@if [ -e .linked_dir ]; then ./use_dir.pl --recheck --silent; fi
 	@if [ "$(VER)" != "" ]; then \
-		PATCHES="`./patches_for_kernel.pl $(VER)`"; \
-		if [ "$$PATCHES" = "" ]; then echo "Version $(VER) not supported"; exit -1; fi \
+		dir=$(VER); \
 	elif [ "$(KERNELRELEASE)" != "" ]; then \
-		PATCHES="`./patches_for_kernel.pl $(KERNELRELEASE)`"; \
-		if [ "$$PATCHES" = "" ]; then echo "Version $(KERNELRELEASE) not supported"; exit -1; fi \
+		dir=$(KERNELRELEASE); \
 	fi; \
+	PATCHES="`./patches_for_kernel.pl $$dir`"; \
+	if [ "$$PATCHES" = "" ]; then echo "Version $$dir not supported"; exit -1; fi; \
 	if [ -e .patches_applied ]; then \
 		if [ "`cat .patches_applied|grep ^#`" = "#$$dir" ]; then \
 			echo "Patches for $$dir already applied."; exit; \
