@@ -13,8 +13,11 @@ my $file = "../backports/backports.txt";
 open IN, $file or die "can't find $file\n";
 
 sub kernel_version($) {
-	$_[0] =~ m/^(\d+)\.(\d+)\.(\d+)/;
-	return ($1*65536 + $2*256 + $3);
+	my $sublevel;
+
+	$_[0] =~ m/^(\d+)\.(\d+)\.?(\d*)/;
+	$sublevel = $3 == "" ? 0 : $3;
+	return ($1*65536 + $2*256 + $sublevel);
 }
 
 my $kernel = kernel_version($version);
