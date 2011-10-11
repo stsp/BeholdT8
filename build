@@ -91,6 +91,29 @@ sub give_ubuntu_hints()
 	printf("You should run:\n\tsudo apt-get install $install\n");
 }
 
+
+sub give_arch_linux_hints()
+{
+	my $install;
+
+	my %map = (
+		"lsdiff"		=> "community/patchutils",
+		"Digest::SHA1"		=> "extra/perl-digest-sha1",
+		"Proc::ProcessTable"	=> "aur/perl-proc-processtable",
+	);
+
+	foreach my $prog (@missing) {
+		print "ERROR: please install \"$prog\", otherwise, build won't work.\n";
+		if (defined($map{$prog})) {
+			$install .= " " . $map{$prog};
+		} else {
+			$install .= " " . $prog;
+		}
+	}
+
+	printf("You should install those package(s) (repository/package): $install\n");
+}
+
 sub give_hints()
 {
 
@@ -105,6 +128,10 @@ sub give_hints()
 	}
 	if ($system_release =~ /Ubuntu/) {
 		give_ubuntu_hints;
+		return;
+	}
+	if ($system_release =~ /Arch Linux/) {
+		give_arch_linux_hints;
 		return;
 	}
 
