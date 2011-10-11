@@ -205,6 +205,7 @@ open OUT, '>Makefile.media' or die 'Unable to write Makefile.media';
 open_makefile('../linux/drivers/media/Makefile');
 
 find({wanted => \&parse_dir, no_chdir => 1}, '../linux/drivers/staging');
+find({wanted => \&parse_dir, no_chdir => 1}, '../linux/drivers/misc');
 
 # Creating Install rule
 print OUT "media-install::\n";
