@@ -8,10 +8,7 @@ MAINDIRS += drivers firmware include sound
 
 # Media drivers
 TARDIR += drivers/media/
-TARDIR += drivers/staging/cx25821/
-TARDIR += drivers/staging/go7007/
-TARDIR += drivers/staging/lirc/
-TARDIR += drivers/staging/cxd2099/
+TARDIR += drivers/staging/media/
 TARDIR += drivers/misc/altera-stapl/
 TARFILES += include/misc/altera.h
 TARFILES += sound/pci/bt87x.c

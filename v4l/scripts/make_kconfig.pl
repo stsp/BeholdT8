@@ -598,7 +598,7 @@ EOF
 open_kconfig('../linux', '../linux/drivers/media/Kconfig');
 open_kconfig('.', './Kconfig.sound');
 open_kconfig('.', './Kconfig.misc');
-open_kconfig('.', './Kconfig.staging');
+open_kconfig('../linux', './Kconfig.staging');
 close OUT;
 
 # These options should default to off
