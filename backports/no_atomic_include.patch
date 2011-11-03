@@ -34,3 +34,15 @@ index 8244167..aa607c8 100644
 +++ b/drivers/media/video/uvc/uvc_video.c
 @@ -22 +21,0 @@
 -#include <linux/atomic.h>
+diff --git a/drivers/staging/media/solo6x10/solo6x10.h b/drivers/staging/media/solo6x10/solo6x10.h
+index abee721..a45f12d 100644
+--- a/drivers/staging/media/solo6x10/solo6x10.h
++++ b/drivers/staging/media/solo6x10/solo6x10.h
+@@ -30,7 +30,6 @@
+ #include <linux/delay.h>
+ #include <linux/slab.h>
+ #include <asm/io.h>
+-#include <linux/atomic.h>
+ #include <linux/videodev2.h>
+ #include <media/v4l2-dev.h>
+ #include <media/videobuf-core.h>
