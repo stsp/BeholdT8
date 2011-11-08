@@ -23,6 +23,21 @@
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 2, 0)
 #include <linux/i2c.h>
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 38)
+static inline s32
+i2c_smbus_read_word_swapped(struct i2c_client *client, u8 command)
+{
+	s32 value = i2c_smbus_read_word_data(client, command);
+
+	return (value < 0) ? value : swab16(value);
+}
+
+static inline s32
+i2c_smbus_write_word_swapped(struct i2c_client *client, u8 command, u16 value)
+{
+	return i2c_smbus_write_word_data(client, command, swab16(value));
+}
+#else
 static inline s32
 i2c_smbus_read_word_swapped(const struct i2c_client *client, u8 command)
 {
@@ -37,6 +52,7 @@ i2c_smbus_write_word_swapped(const struct i2c_client *client,
 {
 	return i2c_smbus_write_word_data(client, command, swab16(value));
 }
+#endif
 #endif
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 39)
