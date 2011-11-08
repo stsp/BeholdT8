@@ -1,0 +1,42 @@
+diff --git a/drivers/media/video/via-camera.c b/drivers/media/video/via-camera.c
+index 6a82875..afab027 100644
+--- a/drivers/media/video/via-camera.c
++++ b/drivers/media/video/via-camera.c
+@@ -21,7 +21,6 @@
+ #include <media/videobuf-dma-sg.h>
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
+-#include <linux/pm_qos.h>
+ #include <linux/via-core.h>
+ #include <linux/via-gpio.h>
+ #include <linux/via_i2c.h>
+@@ -69,7 +68,6 @@ struct via_camera {
+ 	struct mutex lock;
+ 	enum viacam_opstate opstate;
+ 	unsigned long flags;
+-	struct pm_qos_request qos_request;
+ 	/*
+ 	 * GPIO info for power/reset management
+ 	 */
+@@ -1111,13 +1109,6 @@ static int viacam_streamon(struct file *filp, void *priv, enum v4l2_buf_type t)
+ 			goto out;
+ 	}
+ 	/*
+-	 * If the CPU goes into C3, the DMA transfer gets corrupted and
+-	 * users start filing unsightly bug reports.  Put in a "latency"
+-	 * requirement which will keep the CPU out of the deeper sleep
+-	 * states.
+-	 */
+-	pm_qos_add_request(&cam->qos_request, PM_QOS_CPU_DMA_LATENCY, 50);
+-	/*
+ 	 * Fire things up.
+ 	 */
+ 	INIT_LIST_HEAD(&cam->buffer_queue);
+@@ -1141,7 +1132,6 @@ static int viacam_streamoff(struct file *filp, void *priv, enum v4l2_buf_type t)
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+-	pm_qos_remove_request(&cam->qos_request);
+ 	viacam_stop_engine(cam);
+ 	/*
+ 	 * Videobuf will recycle all of the outstanding buffers, but
