@@ -21,7 +21,7 @@
 
 #define EXPERIMENTAL_TREE
 
-#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 2, 0)
+#ifdef NEED_I2C_SMBUS_WORD_SWAPPED
 #include <linux/i2c.h>
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 38)
 static inline s32

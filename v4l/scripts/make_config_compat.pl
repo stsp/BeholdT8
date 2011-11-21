@@ -439,6 +439,26 @@ sub check_autosuspend_delay()
 	$out.= "\n#define NEED_AUTOSUSPEND_DELAY 1\n";
 }
 
+sub check_i2c_smbus_read_word_swapped()
+{
+	my @files = ( "$kdir/include/linux/i2c.h" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or next;
+		while (<IN>) {
+			if (m/i2c_smbus_read_word_swapped/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define NEED_I2C_SMBUS_WORD_SWAPPED 1\n";
+}
+
 
 sub check_file_for_func($$$)
 {
@@ -488,6 +508,7 @@ sub check_other_dependencies()
 	check_vzalloc();
 	check_flush_work_sync();
 	check_autosuspend_delay();
+	check_i2c_smbus_read_word_swapped();
 	check_file_for_func("include/linux/kernel.h", "hex_to_bin", "NEED_HEX_TO_BIN");
 	check_file_for_func("include/sound/control.h", "snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO");
 	check_file_for_func("include/linux/sysfs.h", "sysfs_attr_init", "NEED_SYSFS_ATTR_INIT");
