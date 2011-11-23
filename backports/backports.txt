@@ -23,10 +23,11 @@
 [3.255.255]
 add api_version.patch
 
-[3.1.0]
+[3.1.255]
+add v3.1_no_export_h.patch
 add v3.1_no_pm_qos.patch
 
-[3.0.0]
+[3.0.255]
 add no_atomic_include.patch
 add v4l2-compat-timespec.patch
 

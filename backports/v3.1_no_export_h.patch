@@ -1,0 +1,121 @@
+diff -r b3c7edceaba9 drivers/media/common/saa7146_hlp.c
+--- a/drivers/media/common/saa7146_hlp.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/common/saa7146_hlp.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -1,7 +1,6 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/kernel.h>
+-#include <linux/export.h>
+ #include <media/saa7146_vv.h>
+ 
+ static void calculate_output_format_register(struct saa7146_dev* saa, u32 palette, u32* clip_format)
+diff -r b3c7edceaba9 drivers/media/dvb/siano/smsendian.c
+--- a/drivers/media/dvb/siano/smsendian.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/dvb/siano/smsendian.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -19,7 +19,6 @@
+ 
+  ****************************************************************/
+ 
+-#include <linux/export.h>
+ #include <asm/byteorder.h>
+ 
+ #include "smsendian.h"
+diff -r b3c7edceaba9 drivers/media/media-device.c
+--- a/drivers/media/media-device.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/media-device.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -23,7 +23,6 @@
+ #include <linux/types.h>
+ #include <linux/ioctl.h>
+ #include <linux/media.h>
+-#include <linux/export.h>
+ 
+ #include <media/media-device.h>
+ #include <media/media-devnode.h>
+diff -r b3c7edceaba9 drivers/media/radio/wl128x/fmdrv_v4l2.c
+--- a/drivers/media/radio/wl128x/fmdrv_v4l2.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/radio/wl128x/fmdrv_v4l2.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -28,7 +28,6 @@
+  *
+  */
+ 
+-#include <linux/export.h>
+ 
+ #include "fmdrv.h"
+ #include "fmdrv_v4l2.h"
+diff -r b3c7edceaba9 drivers/media/rc/ir-raw.c
+--- a/drivers/media/rc/ir-raw.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/rc/ir-raw.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -12,7 +12,6 @@
+  *  GNU General Public License for more details.
+  */
+ 
+-#include <linux/export.h>
+ #include <linux/kthread.h>
+ #include <linux/mutex.h>
+ #include <linux/kmod.h>
+diff -r b3c7edceaba9 drivers/media/video/hdpvr/hdpvr-i2c.c
+--- a/drivers/media/video/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/video/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -17,7 +17,6 @@
+ 
+ #include <linux/i2c.h>
+ #include <linux/slab.h>
+-#include <linux/export.h>
+ 
+ #include "hdpvr.h"
+ 
+diff -r b3c7edceaba9 drivers/media/video/v4l2-ctrls.c
+--- a/drivers/media/video/v4l2-ctrls.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/video/v4l2-ctrls.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -20,7 +20,6 @@
+ 
+ #include <linux/ctype.h>
+ #include <linux/slab.h>
+-#include <linux/export.h>
+ #include <media/v4l2-ioctl.h>
+ #include <media/v4l2-device.h>
+ #include <media/v4l2-ctrls.h>
+diff -r b3c7edceaba9 drivers/media/video/v4l2-event.c
+--- a/drivers/media/video/v4l2-event.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/video/v4l2-event.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -29,7 +29,6 @@
+ 
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+-#include <linux/export.h>
+ 
+ static unsigned sev_pos(const struct v4l2_subscribed_event *sev, unsigned idx)
+ {
+diff -r b3c7edceaba9 drivers/media/video/v4l2-fh.c
+--- a/drivers/media/video/v4l2-fh.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/video/v4l2-fh.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -24,7 +24,6 @@
+ 
+ #include <linux/bitops.h>
+ #include <linux/slab.h>
+-#include <linux/export.h>
+ #include <media/v4l2-dev.h>
+ #include <media/v4l2-fh.h>
+ #include <media/v4l2-event.h>
+diff -r b3c7edceaba9 drivers/media/video/v4l2-subdev.c
+--- a/drivers/media/video/v4l2-subdev.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/video/v4l2-subdev.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -24,7 +24,6 @@
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/videodev2.h>
+-#include <linux/export.h>
+ 
+ #include <media/v4l2-ctrls.h>
+ #include <media/v4l2-device.h>
+diff -r b3c7edceaba9 drivers/staging/media/solo6x10/g723.c
+--- a/drivers/staging/media/solo6x10/g723.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/staging/media/solo6x10/g723.c	Wed Nov 23 19:57:12 2011 -0200
+@@ -23,7 +23,6 @@
+ #include <linux/kthread.h>
+ #include <linux/slab.h>
+ #include <linux/freezer.h>
+-#include <linux/export.h>
+ #include <sound/core.h>
+ #include <sound/initval.h>
+ #include <sound/pcm.h>
