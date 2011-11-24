@@ -53,7 +53,7 @@ sub give_redhat_hints()
 
 	my %map = (
 		"lsdiff"		=> "patchutils",
-		"Digest::SHA1"		=> "perl-Digest-SHA1",
+		"Digest::SHA"		=> "perl-Digest-SHA1",
 		"Proc::ProcessTable"	=> "perl-Proc-ProcessTable",
 	);
 
@@ -75,7 +75,7 @@ sub give_ubuntu_hints()
 
 	my %map = (
 		"lsdiff"		=> "patchutils",
-		"Digest::SHA1"		=> "libdigest-sha1-perl",
+		"Digest::SHA"		=> "libdigest-sha1-perl",
 		"Proc::ProcessTable"	=> "libproc-processtable-perl",
 	);
 
@@ -98,7 +98,7 @@ sub give_arch_linux_hints()
 
 	my %map = (
 		"lsdiff"		=> "community/patchutils",
-		"Digest::SHA1"		=> "extra/perl-digest-sha1",
+		"Digest::SHA"		=> "extra/perl-digest-sha1",
 		"Proc::ProcessTable"	=> "aur/perl-proc-processtable",
 	);
 
@@ -191,7 +191,7 @@ sub check_needs()
 	need_program "lsdiff";
 
 	# Check for needed perl modules
-	need_perl_module "Digest::SHA1";
+	need_perl_module "Digest::SHA";
 	need_perl_module "Proc::ProcessTable";
 
 	give_hints if ($need);

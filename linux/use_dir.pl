@@ -5,7 +5,7 @@ use File::Path;
 use File::Copy;
 use Fcntl ':mode';
 use Getopt::Long;
-use Digest::SHA1;
+use Digest::SHA;
 
 my $silent = 0;
 my $debug = 0;
@@ -107,7 +107,7 @@ sub hash_calc($)
 {
 	my $file = shift;
 
-	my $ctx = Digest::SHA1->new;
+	my $ctx = Digest::SHA->new;
 
 	my $rc = open INHASH, $file;
 	if (!$rc) {
