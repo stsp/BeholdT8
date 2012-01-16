@@ -68,17 +68,6 @@
  	.open = stk_v4l_vm_open,
  	.close = stk_v4l_vm_close
  };
---- linux.orig/drivers/media/video/uvc/uvc_queue.c
-+++ linux/drivers/media/video/uvc/uvc_queue.c
-@@ -394,7 +394,7 @@ static void uvc_vm_close(struct vm_area_
- 	buffer->vma_use_count--;
- }
- 
--static const struct vm_operations_struct uvc_vm_ops = {
-+static struct vm_operations_struct uvc_vm_ops = {
- 	.open		= uvc_vm_open,
- 	.close		= uvc_vm_close,
- };
 --- linux.orig/drivers/media/video/videobuf-dma-contig.c
 +++ linux/drivers/media/video/videobuf-dma-contig.c
 @@ -106,7 +106,7 @@ static void videobuf_vm_close(struct vm_
