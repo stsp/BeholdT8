@@ -53,7 +53,7 @@ sub give_redhat_hints()
 
 	my %map = (
 		"lsdiff"		=> "patchutils",
-		"Digest::SHA"		=> "perl-Digest-SHA1",
+		"Digest::SHA"		=> "perl-Digest-SHA",
 		"Proc::ProcessTable"	=> "perl-Proc-ProcessTable",
 	);
 
