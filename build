@@ -134,7 +134,10 @@ sub give_hints()
 		give_arch_linux_hints;
 		return;
 	}
-
+	if ($system_release =~ /Debian/) {
+		give_ubuntu_hints;
+		return;
+	}
 	# Fall-back to generic hint code
 	foreach my $prog (@missing) {
 		print "ERROR: please install \"$prog\", otherwise, build won't work.\n";
