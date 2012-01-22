@@ -864,4 +864,32 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 #endif
 #endif /*pr_debug_ratelimited */
 
+#ifndef module_usb_driver
+#define module_usb_driver(drv)			\
+static int __init usb_mod_init(void)		\
+{						\
+	return usb_register(&drv);		\
+}						\
+static void __exit usb_mod_exit(void)		\
+{						\
+	usb_deregister(&drv);			\
+}						\
+module_init(usb_mod_init);			\
+module_exit(usb_mod_exit);
+#endif /* module_usb_driver */
+
+#ifndef module_platform_driver
+#define module_platform_driver(drv)		\
+static int __init plat_mod_init(void)		\
+{						\
+	return platform_driver_register(&drv);	\
+}						\
+static void __exit plat_mod_exit(void)		\
+{						\
+	platform_driver_unregister(&drv);	\
+}						\
+module_init(plat_mod_init);			\
+module_exit(plat_mod_exit);
+#endif /* module_platform_driver */
+
 #endif /*  _COMPAT_H */
