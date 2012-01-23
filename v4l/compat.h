@@ -892,4 +892,10 @@ module_init(plat_mod_init);			\
 module_exit(plat_mod_exit);
 #endif /* module_platform_driver */
 
+#ifdef NEED_DMA_TRANSFER_DIRECTION
+#include <linux/dmaengine.h>
+#define DMA_DEV_TO_MEM DMA_FROM_DEVICE
+#define DMA_MEM_TO_DEV DMA_TO_DEVICE
+#endif
+
 #endif /*  _COMPAT_H */
