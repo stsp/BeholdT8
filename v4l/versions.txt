@@ -45,6 +45,8 @@ VIDEO_DT3155
 [2.6.33]
 VIDEO_AK881X
 V4L2_MEM2MEM_DEV
+# Requires sound/aci.h introduced in 2.6.33
+RADIO_MIROPCM20
 
 [2.6.32]
 # These rely on arch support that wasn't available until 2.6.32
