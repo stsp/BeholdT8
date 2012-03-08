@@ -114,6 +114,28 @@ sub give_arch_linux_hints()
 	printf("You should install those package(s) (repository/package): $install\n");
 }
 
+sub give_gentoo_hints()
+{
+	my $install;
+
+	my %map = (
+		"lsdiff"		=> "dev-util/patchutils",
+		"Digest::SHA"		=> "dev-perl/Digest-SHA1",
+		"Proc::ProcessTable"	=> "dev-perl/Proc-ProcessTable",
+	);
+
+	foreach my $prog (@missing) {
+		print "ERROR: please install \"$prog\", otherwise, build won't work.\n";
+		if (defined($map{$prog})) {
+			$install .= " " . $map{$prog};
+		} else {
+			$install .= " " . $prog;
+		}
+	}
+
+	printf("You should emerge those package(s): $install\n");
+}
+
 sub give_hints()
 {
 
@@ -136,6 +158,10 @@ sub give_hints()
 	}
 	if ($system_release =~ /Debian/) {
 		give_ubuntu_hints;
+		return;
+	}
+	if ($system_release =~ /Gentoo/) {
+		give_gentoo_hints;
 		return;
 	}
 	# Fall-back to generic hint code
@@ -280,6 +306,7 @@ $system_release =~ s/Description:\s*// if ($system_release);
 $system_release = catcheck("/etc/system-release") if !$system_release;
 $system_release = catcheck("/etc/redhat-release") if !$system_release;
 $system_release = catcheck("/etc/lsb-release") if !$system_release;
+$system_release = catcheck("/etc/gentoo-release") if !$system_release;
 $system_release =~ s/\s+$//;
 
 check_needs;
