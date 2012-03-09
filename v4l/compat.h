@@ -898,4 +898,24 @@ module_exit(plat_mod_exit);
 #define DMA_MEM_TO_DEV DMA_TO_DEVICE
 #endif
 
+#ifndef module_driver
+#define module_driver(__driver, __register, __unregister) \
+static int __init __driver##_init(void) \
+{ \
+	return __register(&(__driver)); \
+} \
+module_init(__driver##_init); \
+static void __exit __driver##_exit(void) \
+{ \
+	__unregister(&(__driver)); \
+} \
+module_exit(__driver##_exit);
+#endif
+
+#ifndef module_i2c_driver
+#define module_i2c_driver(__i2c_driver) \
+       module_driver(__i2c_driver, i2c_add_driver, \
+                       i2c_del_driver)
+#endif
+
 #endif /*  _COMPAT_H */
