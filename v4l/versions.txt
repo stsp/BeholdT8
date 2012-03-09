@@ -30,6 +30,10 @@ VIDEO_VIA_CAMERA
 
 [2.6.36]
 
+[2.6.35]
+# Requires request_any_context_irq() introduced in 2.6.35
+IR_GPIO_CIR
+
 [2.6.34]
 MACH_DAVINCI_DM6467_EVM
 MFD_TIMBERDALE
