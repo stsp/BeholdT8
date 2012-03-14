@@ -48,6 +48,7 @@ add v2.6.35_vm_prev.patch
 add v2.6.35_firedtv_handle_fcp.patch
 add v2.6.35_i2c_new_probed_device.patch
 add v2.6.35_work_handler.patch
+add v2.6.35_kfifo.patch
 
 [2.6.34]
 add v2.6.34_dvb_net.patch
