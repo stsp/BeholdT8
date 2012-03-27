@@ -49,6 +49,8 @@ VIDEO_AK881X
 V4L2_MEM2MEM_DEV
 # Requires sound/aci.h introduced in 2.6.33
 RADIO_MIROPCM20
+# Problem with printk_ratelimited
+DVB_PT1
 
 [2.6.32]
 # These rely on arch support that wasn't available until 2.6.32
@@ -97,7 +99,6 @@ I2C_SI4713
 [2.6.24]
 # Some freezer routines
 USB_GSPCA_SN9C20X_EVDEV
-DVB_PT1
 # Requires linux/mmc/sdio_func.h
 SMS_SDIO_DRV
 VIDEO_SAA7164
