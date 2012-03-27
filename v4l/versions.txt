@@ -41,6 +41,8 @@ RADIO_SAA7706H
 VIDEO_TVP7002
 # Needs dma_set_coherent_mask
 VIDEO_DT3155
+# Needs include/linux/lcm.h
+VIDEO_APTINA_PLL
 
 [2.6.33]
 VIDEO_AK881X
