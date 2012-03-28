@@ -790,6 +790,30 @@ static inline int fw_csr_string(u32 *directory, int search_key, char *buf, size_
 }
 #endif
 
+#ifdef NEED_POLL_REQUESTED_EVENTS
+#include <linux/poll.h>
+
+static inline bool poll_does_not_wait(const poll_table *p)
+{
+	return p == NULL;
+}
+
+/* Note: this function was introduced in kernel 3.4. That version relies
+   on changes in the core poll code in order to be able to get the right
+   value. For older kernels we use this compatibility function which will
+   not always get it right: if you pass multiple file descriptors to the
+   select() call, and if one of the earlier fds found an event, then for any
+   subsequent file descriptors the poll_table pointer is set to NULL and you
+   loose the key information.
+
+   You can't make this fool-proof other than by going to kernel 3.4.
+ */
+static inline unsigned long poll_requested_events(const poll_table *p)
+{
+	return p ? p->key : ~0UL;
+}
+#endif
+
 #ifdef NEED_VZALLOC
 #include <linux/vmalloc.h>
 
