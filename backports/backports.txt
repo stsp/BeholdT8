@@ -42,6 +42,7 @@ delete v2.6.38_use_getkeycode_new_setkeycode_new.patch
 add v2.6.36_input_getkeycode.patch
 add v2.6.36_dvb_usb_input_getkeycode.patch
 add tda18271_debug_fix.patch
+add v2.6.36_kmap_atomic.patch
 
 [2.6.35]
 add v2.6.35_vm_prev.patch
