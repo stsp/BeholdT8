@@ -888,7 +888,7 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 #endif
 #endif /*pr_debug_ratelimited */
 
-#ifndef module_usb_driver
+#ifdef NEED_MODULE_USB_DRIVER
 #define module_usb_driver(drv)			\
 static int __init usb_mod_init(void)		\
 {						\
@@ -902,7 +902,7 @@ module_init(usb_mod_init);			\
 module_exit(usb_mod_exit);
 #endif /* module_usb_driver */
 
-#ifndef module_platform_driver
+#ifdef NEED_MODULE_PLATFORM_DRIVER
 #define module_platform_driver(drv)		\
 static int __init plat_mod_init(void)		\
 {						\

@@ -516,6 +516,8 @@ sub check_other_dependencies()
 	check_file_for_func("include/linux/err.h", "IS_ERR_OR_NULL", "NEED_IS_ERR_OR_NULL");
 	check_file_for_func("include/linux/dmaengine.h", "dma_transfer_direction", "NEED_DMA_TRANSFER_DIRECTION");
 	check_file_for_func("include/linux/poll.h", "poll_requested_events", "NEED_POLL_REQUESTED_EVENTS");
+	check_file_for_func("include/linux/usb.h", "module_usb_driver", "NEED_MODULE_USB_DRIVER");
+	check_file_for_func("include/linux/platform_device.h", "module_platform_driver", "NEED_MODULE_PLATFORM_DRIVER");
 }
 
 # Do the basic rules
