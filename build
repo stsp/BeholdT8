@@ -307,6 +307,7 @@ $system_release = catcheck("/etc/system-release") if !$system_release;
 $system_release = catcheck("/etc/redhat-release") if !$system_release;
 $system_release = catcheck("/etc/lsb-release") if !$system_release;
 $system_release = catcheck("/etc/gentoo-release") if !$system_release;
+$system_release = catcheck("/etc/issue") if !$system_release;
 $system_release =~ s/\s+$//;
 
 check_needs;
