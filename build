@@ -15,7 +15,7 @@ my $main_git = 0;
 my @git;
 
 my $main_git_url = "git://linuxtv.org/media_tree.git";
-my $main_branch = "staging/for_v3.2";
+my $main_branch = "staging/for_v3.5";
 my $firmware_url = "http://www.linuxtv.org/downloads/firmware/";
 my $firmware_tarball = "dvb-firmwares.tar.bz2";
 
