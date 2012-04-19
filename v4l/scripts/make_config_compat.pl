@@ -518,6 +518,8 @@ sub check_other_dependencies()
 	check_file_for_func("include/linux/poll.h", "poll_requested_events", "NEED_POLL_REQUESTED_EVENTS");
 	check_file_for_func("include/linux/usb.h", "module_usb_driver", "NEED_MODULE_USB_DRIVER");
 	check_file_for_func("include/linux/platform_device.h", "module_platform_driver", "NEED_MODULE_PLATFORM_DRIVER");
+	check_file_for_func("include/linux/slab.h", "kmalloc_array", "NEED_KMALLOC_ARRAY");
+	check_file_for_func("include/linux/dmaengine.h", "dmaengine_prep_slave_sg", "NEED_DMAENGINE_PREP_SLAVE_SG");
 }
 
 # Do the basic rules

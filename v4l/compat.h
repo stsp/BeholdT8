@@ -942,4 +942,25 @@ module_exit(__driver##_exit);
                        i2c_del_driver)
 #endif
 
+#ifdef NEED_KMALLOC_ARRAY
+#include <linux/slab.h>
+static inline void *kmalloc_array(size_t n, size_t size, gfp_t flags)
+{
+	if (size != 0 && n > ULONG_MAX / size)
+		return NULL;
+	return __kmalloc(n * size, flags);
+}
+#endif
+
+#ifdef NEED_DMAENGINE_PREP_SLAVE_SG
+#include <linux/dmaengine.h>
+static inline struct dma_async_tx_descriptor *dmaengine_prep_slave_sg(
+	struct dma_chan *chan, struct scatterlist *sgl,	unsigned int sg_len,
+	enum dma_transfer_direction dir, unsigned long flags)
+{
+	return chan->device->device_prep_slave_sg(chan, sgl, sg_len,
+						  dir, flags);
+}
+#endif
+
 #endif /*  _COMPAT_H */
