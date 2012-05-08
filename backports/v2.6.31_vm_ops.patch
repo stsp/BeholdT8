@@ -1,5 +1,4 @@
 ---
- drivers/media/video/et61x251/et61x251_core.c |    2 +-
  drivers/media/video/gspca/gspca.c            |    2 +-
  drivers/media/video/meye.c                   |    2 +-
  drivers/media/video/sn9c102/sn9c102_core.c   |    2 +-
@@ -13,17 +12,6 @@
  include/media/videobuf2-memops.h             |    4 ++--
  13 files changed, 15 insertions(+), 15 deletions(-)
 
---- linux.orig/drivers/media/video/et61x251/et61x251_core.c
-+++ linux/drivers/media/video/et61x251/et61x251_core.c
-@@ -1499,7 +1499,7 @@ static void et61x251_vm_close(struct vm_
- }
- 
- 
--static const struct vm_operations_struct et61x251_vm_ops = {
-+static struct vm_operations_struct et61x251_vm_ops = {
- 	.open = et61x251_vm_open,
- 	.close = et61x251_vm_close,
- };
 --- linux.orig/drivers/media/video/gspca/gspca.c
 +++ linux/drivers/media/video/gspca/gspca.c
 @@ -107,7 +107,7 @@ static void gspca_vm_close(struct vm_are

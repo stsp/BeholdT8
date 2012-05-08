@@ -322,30 +322,6 @@ index ffd8bc7..c38d97d 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include "cx25821-video.h"
-diff --git a/drivers/media/video/et61x251/et61x251_core.c b/drivers/media/video/et61x251/et61x251_core.c
-index 5539f09..8cdf5b6 100644
---- a/drivers/media/video/et61x251/et61x251_core.c
-+++ b/drivers/media/video/et61x251/et61x251_core.c
-@@ -18,6 +18,7 @@
-  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.               *
-  ***************************************************************************/
- 
-+#undef pr_fmt
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include <linux/version.h>
-diff --git a/drivers/media/video/et61x251/et61x251_tas5130d1b.c b/drivers/media/video/et61x251/et61x251_tas5130d1b.c
-index ced2e16..3977c93 100644
---- a/drivers/media/video/et61x251/et61x251_tas5130d1b.c
-+++ b/drivers/media/video/et61x251/et61x251_tas5130d1b.c
-@@ -19,6 +19,7 @@
-  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.               *
-  ***************************************************************************/
- 
-+#undef pr_fmt
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include "et61x251_sensor.h"
 diff --git a/drivers/media/video/gspca/benq.c b/drivers/media/video/gspca/benq.c
 index 9769f17..e9b1052 100644
 --- a/drivers/media/video/gspca/benq.c

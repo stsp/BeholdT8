@@ -1,9 +1,3 @@
-diff --git a/drivers/media/video/et61x251/et61x251_core.c b/drivers/media/video/et61x251/et61x251_core.c
---- a/drivers/media/video/et61x251/et61x251_core.c
-+++ b/drivers/media/video/et61x251/et61x251_core.c
-@@ -1582,1 +1582,1 @@ et61x251_vidioc_querycap(struct et61x251
--		.version = LINUX_VERSION_CODE,
-+		.version = V4L2_VERSION,
 diff --git a/drivers/media/video/pvrusb2/pvrusb2-v4l2.c b/drivers/media/video/pvrusb2/pvrusb2-v4l2.c
 --- a/drivers/media/video/pvrusb2/pvrusb2-v4l2.c
 +++ b/drivers/media/video/pvrusb2/pvrusb2-v4l2.c
