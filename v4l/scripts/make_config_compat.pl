@@ -520,6 +520,7 @@ sub check_other_dependencies()
 	check_file_for_func("include/linux/platform_device.h", "module_platform_driver", "NEED_MODULE_PLATFORM_DRIVER");
 	check_file_for_func("include/linux/slab.h", "kmalloc_array", "NEED_KMALLOC_ARRAY");
 	check_file_for_func("include/linux/dmaengine.h", "dmaengine_prep_slave_sg", "NEED_DMAENGINE_PREP_SLAVE_SG");
+	check_file_for_func("include/linux/pm.h", "SET_SYSTEM_SLEEP_PM_OPS", "NEED_SET_SYSTEM_SLEEP_PM_OPS");
 }
 
 # Do the basic rules

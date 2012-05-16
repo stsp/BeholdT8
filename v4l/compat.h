@@ -963,4 +963,18 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_slave_sg(
 }
 #endif
 
+#ifdef NEED_SET_SYSTEM_SLEEP_PM_OPS
+#ifdef CONFIG_PM_SLEEP
+#define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+        .suspend = suspend_fn, \
+        .resume = resume_fn, \
+        .freeze = suspend_fn, \
+        .thaw = resume_fn, \
+        .poweroff = suspend_fn, \
+        .restore = resume_fn,
+#else
+#define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+#endif
+#endif
+
 #endif /*  _COMPAT_H */
