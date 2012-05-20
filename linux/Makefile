@@ -30,6 +30,7 @@ TARFILES += include/linux/ti_wilink_st.h
 TARFILES += include/linux/media.h
 TARFILES += include/linux/v4l2-subdev.h
 TARFILES += include/linux/v4l2-mediabus.h
+TARFILES += include/linux/v4l2-dv-timings.h
 TARFILES += include/linux/uvcvideo.h
 TARFILES += include/linux/fixp-arith.h
 
