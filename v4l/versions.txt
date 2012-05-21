@@ -43,7 +43,13 @@ VIDEO_TVP7002
 VIDEO_DT3155
 # Needs include/linux/lcm.h
 VIDEO_APTINA_PLL
-# Requires gpio_request_one introduced in 2.6.34
+# Depends on VIDEO_APTINA_PLL
+VIDEO_MT9M032
+# Depends on VIDEO_APTINA_PLL and requires gpio_request_one
+VIDEO_MT9P031
+# Needs include/linux/lcm.h
+VIDEO_SMIAPP_PLL
+# Depends on VIDEO_SMIAPP_PLL and requires gpio_request_one
 VIDEO_SMIAPP
 
 [2.6.33]
