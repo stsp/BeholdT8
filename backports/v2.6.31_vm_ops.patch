@@ -58,14 +58,14 @@
  };
 --- linux.orig/drivers/media/video/videobuf-dma-contig.c
 +++ linux/drivers/media/video/videobuf-dma-contig.c
-@@ -106,7 +106,7 @@ static void videobuf_vm_close(struct vm_
+@@ -156,7 +156,7 @@
  	}
  }
  
 -static const struct vm_operations_struct videobuf_vm_ops = {
 +static struct vm_operations_struct videobuf_vm_ops = {
- 	.open     = videobuf_vm_open,
- 	.close    = videobuf_vm_close,
+ 	.open	= videobuf_vm_open,
+ 	.close	= videobuf_vm_close,
  };
 --- linux.orig/drivers/media/video/videobuf-dma-sg.c
 +++ linux/drivers/media/video/videobuf-dma-sg.c
