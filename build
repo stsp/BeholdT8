@@ -91,6 +91,38 @@ sub give_ubuntu_hints()
 	printf("You should run:\n\tsudo apt-get install $install\n");
 }
 
+sub give_opensuse_hints()
+{
+	my $install;
+
+	my %map = (
+		"lsdiff"		=> "patchutils",
+		"Digest::SHA"		=> "perl-Digest-SHA1",
+		"Proc::ProcessTable"	=> "perl-Proc-ProcessTable",
+	);
+	
+	my $need_perl_repo = 0;
+	
+	foreach my $prog (@missing) {
+		print "ERROR: please install \"$prog\", otherwise, build won't work.\n";
+		if (defined($map{$prog})) {
+			$install .= " " . $map{$prog};
+		} else {
+			$install .= " " . $prog;
+		}
+		if ($prog eq "Proc::ProcessTable") {
+			$need_perl_repo = 1;
+		}
+	}
+	
+	printf("You should run:\n\tsudo zypper install $install\n");
+	
+	if ($need_perl_repo) {
+		printf("\nThe Proc::ProcessTable perl module can be found in the perl buildservice repository. ");
+		printf("Add with the command (replacing 12.1 with your openSUSE release version):\n");
+		printf("\tsudo zypper ar http://download.opensuse.org/repositories/devel:/languages:/perl/openSUSE_12.1/ perl\n");
+	}
+}
 
 sub give_arch_linux_hints()
 {
@@ -150,6 +182,10 @@ sub give_hints()
 	}
 	if ($system_release =~ /Ubuntu/) {
 		give_ubuntu_hints;
+		return;
+	}
+	if ($system_release =~ /openSUSE/) {
+		give_opensuse_hints;
 		return;
 	}
 	if ($system_release =~ /Arch Linux/) {
