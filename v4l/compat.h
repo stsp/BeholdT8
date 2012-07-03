@@ -977,4 +977,26 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_slave_sg(
 #endif
 #endif
 
+#ifdef NEED_UNLOCK_I2C_XFER
+#include <linux/i2c.h>
+
+static inline int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+{
+ unsigned long orig_jiffies;
+ int ret, try;
+
+ /* Retry automatically on arbitration loss */
+ orig_jiffies = jiffies;
+ for (ret = 0, try = 0; try <= adap->retries; try++) {
+         ret = adap->algo->master_xfer(adap, msgs, num);
+         if (ret != -EAGAIN)
+                 break;
+         if (time_after(jiffies, orig_jiffies + adap->timeout))
+                 break;
+ }
+
+ return ret;
+}
+#endif
+
 #endif /*  _COMPAT_H */
