@@ -1,0 +1,15 @@
+---
+ drivers/media/dvb/frontends/drxk_hard.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+--- a/drivers/media/dvb/frontends/drxk_hard.c
++++ b/drivers/media/dvb/frontends/drxk_hard.c
+@@ -6548,7 +6548,6 @@ struct dvb_frontend *drxk_attach(const struct drxk_config *config,
+ 		status = request_firmware_nowait(THIS_MODULE, 1,
+ 					      state->microcode_name,
+ 					      state->i2c->dev.parent,
+-					      GFP_KERNEL,
+ 					      state, load_firmware_cb);
+ 		if (status < 0) {
+ 			printk(KERN_ERR
+
