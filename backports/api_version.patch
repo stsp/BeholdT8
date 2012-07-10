@@ -25,6 +25,12 @@ diff --git a/drivers/media/video/uvc/uvc_v4l2.c b/drivers/media/video/uvc/uvc_v4
 diff --git a/drivers/media/video/v4l2-ioctl.c b/drivers/media/video/v4l2-ioctl.c
 --- a/drivers/media/video/v4l2-ioctl.c
 +++ b/drivers/media/video/v4l2-ioctl.c
-@@ -609,1 +609,1 @@ static long __video_do_ioctl(struct file
--		cap->version = LINUX_VERSION_CODE;
-+		cap->version = V4L2_VERSION;
+@@ -927,7 +927,7 @@ static int v4l_querycap(const struct v4l2_ioctl_ops *ops,
+ {
+ 	struct v4l2_capability *cap = (struct v4l2_capability *)arg;
+ 
+-	cap->version = LINUX_VERSION_CODE;
++	cap->version = V4L2_VERSION;
+ 	return ops->vidioc_querycap(file, fh, cap);
+ }
+ 
