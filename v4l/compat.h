@@ -999,4 +999,18 @@ static inline int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
 }
 #endif
 
+#ifdef NEED_KSTRTOU16
+#include <linux/kernel.h>
+
+static inline int kstrtou16(const char *s, unsigned int base, u16 *res)
+{
+	unsigned long val;
+	int ret;
+
+	ret = strict_strtoul(s, base, &val);
+	*res = (u16)val;
+	return ret;
+}
+#endif
+
 #endif /*  _COMPAT_H */
