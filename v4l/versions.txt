@@ -73,6 +73,8 @@ IR_ITE_CIR
 IR_FINTEK
 # Relies on a struct class change
 DVB_DDBRIDGE
+# Relies on i2c_lock_adapter
+DVB_DRXK
 
 [2.6.31]
 # These rely on arch support that wasn't available until 2.6.31
