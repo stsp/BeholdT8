@@ -523,6 +523,7 @@ sub check_other_dependencies()
 	check_file_for_func("include/linux/pm.h", "SET_SYSTEM_SLEEP_PM_OPS", "NEED_SET_SYSTEM_SLEEP_PM_OPS");
 	check_file_for_func("include/linux/i2c.h", "__i2c_transfer", "NEED_UNLOCK_I2C_XFER");
 	check_file_for_func("include/linux/kernel.h", "kstrtou16", "NEED_KSTRTOU16");
+	check_file_for_func("include/linux/string.h", "memweight", "NEED_MEMWEIGHT");
 }
 
 # Do the basic rules
