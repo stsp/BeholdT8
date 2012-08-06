@@ -977,6 +977,10 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_slave_sg(
 #endif
 #endif
 
+#ifdef NEED_I2C_CLIENT_SCCB
+#define I2C_CLIENT_SCCB 0x9000
+#endif
+
 #ifdef NEED_UNLOCK_I2C_XFER
 #include <linux/i2c.h>
 
