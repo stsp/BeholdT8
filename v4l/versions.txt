@@ -1,6 +1,10 @@
 # Use this for stuff for drivers that don't compile
 [3.255.255]
 
+[3.5.0]
+# needs devm_clk_get
+VIDEO_CODA
+
 [3.2.0]
 # due to the rename at include/linux from "pm_qos_params.h" to "pm_qos.h"
 SOC_CAMERA
