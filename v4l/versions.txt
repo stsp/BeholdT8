@@ -5,6 +5,10 @@
 # needs devm_clk_get
 VIDEO_CODA
 
+[3.3.0]
+# Needs struct dma_interleaved_template in dmaengine.h
+VIDEO_MEM2MEM_DEINTERLACE
+
 [3.2.0]
 # due to the rename at include/linux from "pm_qos_params.h" to "pm_qos.h"
 SOC_CAMERA
