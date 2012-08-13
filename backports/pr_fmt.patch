@@ -46,18 +46,6 @@ index ce30533..335758e 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include <media/saa7146_vv.h>
-diff --git a/drivers/media/common/tuners/tda18212.c b/drivers/media/common/tuners/tda18212.c
-index 602c2e3..4bea7fe 100644
---- a/drivers/media/common/tuners/tda18212.c
-+++ b/drivers/media/common/tuners/tda18212.c
-@@ -18,6 +18,7 @@
-  *    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-  */
- 
-+#undef pr_fmt
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include "tda18212.h"
 diff --git a/drivers/media/dvb/bt8xx/dvb-bt8xx.c b/drivers/media/dvb/bt8xx/dvb-bt8xx.c
 index 81fab9a..c919b9e 100644
 --- a/drivers/media/dvb/bt8xx/dvb-bt8xx.c
@@ -1006,3 +994,39 @@ index 2e41317..2fb9ed3 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #define DEBUG_VARIABLE debug
+diff --git a/drivers/media/dvb/frontends/nxt200x.c b/drivers/media/dvb/frontends/nxt200x.c
+index 03af52e..cc2c404 100644
+--- a/drivers/media/dvb/frontends/nxt200x.c
++++ b/drivers/media/dvb/frontends/nxt200x.c
+@@ -37,6 +37,7 @@
+  * /usr/lib/hotplug/firmware/ or /lib/firmware/
+  * (depending on configuration of firmware hotplug).
+  */
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #define NXT2002_DEFAULT_FIRMWARE "dvb-fe-nxt2002.fw"
+diff --git a/drivers/media/rc/fintek-cir.c b/drivers/media/rc/fintek-cir.c
+index ab30c64..f4d6b05 100644
+--- a/drivers/media/rc/fintek-cir.c
++++ b/drivers/media/rc/fintek-cir.c
+@@ -23,6 +23,7 @@
+  * USA
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/kernel.h>
+diff --git a/drivers/media/rc/nuvoton-cir.c b/drivers/media/rc/nuvoton-cir.c
+index 699eef3..e68faa4 100644
+--- a/drivers/media/rc/nuvoton-cir.c
++++ b/drivers/media/rc/nuvoton-cir.c
+@@ -25,6 +25,7 @@
+  * USA
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/kernel.h>
