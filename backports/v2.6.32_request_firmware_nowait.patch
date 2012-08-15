@@ -1,9 +1,9 @@
 ---
- drivers/media/dvb-frontends/drxk.hard.c |    1 -
+ drivers/media/dvb-frontends/drxk_hard.c |    1 -
  1 files changed, 0 insertions(+), 1 deletions(-)
 
---- a/drivers/media/dvb-frontends/drxk.hard.c
-+++ b/drivers/media/dvb-frontends/drxk.hard.c
+--- a/drivers/media/dvb-frontends/drxk_hard.c
++++ b/drivers/media/dvb-frontends/drxk_hard.c
 @@ -6548,7 +6548,6 @@ struct dvb_frontend *drxk_attach(const struct drxk_config *config,
  		status = request_firmware_nowait(THIS_MODULE, 1,
  					      state->microcode_name,
