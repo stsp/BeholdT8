@@ -1,6 +1,6 @@
-diff --git a/drivers/media/video/v4l2-compat-ioctl32.c b/drivers/media/video/v4l2-compat-ioctl32.c
---- a/drivers/media/video/v4l2-compat-ioctl32.c
-+++ b/drivers/media/video/v4l2-compat-ioctl32.c
+diff --git a/drivers/media/v4l2-core/v4l2-compat-ioctl32.c b/drivers/media/v4l2-core/v4l2-compat-ioctl32.c
+--- a/drivers/media/v4l2-core/v4l2-compat-ioctl32.c
++++ b/drivers/media/v4l2-core/v4l2-compat-ioctl32.c
 @@ -20,6 +20,10 @@
  
  #ifdef CONFIG_COMPAT

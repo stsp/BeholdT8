@@ -1,6 +1,6 @@
-diff -r a0ea01e58ec5 drivers/media/dvb/frontends/tua6100.c
---- a/drivers/media/dvb/frontends/tua6100.c	Wed Oct 27 20:58:38 2010 -0200
-+++ b/drivers/media/dvb/frontends/tua6100.c	Wed Oct 27 21:07:04 2010 -0200
+diff -r a0ea01e58ec5 drivers/media/dvb-frontends/tua6100.c
+--- a/drivers/media/dvb-frontends/tua6100.c	Wed Oct 27 20:58:38 2010 -0200
++++ b/drivers/media/dvb-frontends/tua6100.c	Wed Oct 27 21:07:04 2010 -0200
 @@ -80,6 +80,7 @@
  	struct i2c_msg msg1 = { .addr = priv->i2c_address, .flags = 0, .buf = reg1, .len = 4 };
  	struct i2c_msg msg2 = { .addr = priv->i2c_address, .flags = 0, .buf = reg2, .len = 3 };

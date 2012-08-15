@@ -1,6 +1,6 @@
-diff -r 4f23f0dc68fb drivers/media/common/tuners/tda18271-common.c
---- a/drivers/media/common/tuners/tda18271-common.c	Fri Sep 16 12:13:36 2011 -0300
-+++ b/drivers/media/common/tuners/tda18271-common.c	Fri Sep 16 12:16:50 2011 -0300
+diff -r 4f23f0dc68fb drivers/media/tuners/tda18271-common.c
+--- a/drivers/media/tuners/tda18271-common.c	Fri Sep 16 12:13:36 2011 -0300
++++ b/drivers/media/tuners/tda18271-common.c	Fri Sep 16 12:16:50 2011 -0300
 @@ -675,29 +675,3 @@
  fail:
  	return ret;
@@ -31,9 +31,9 @@ diff -r 4f23f0dc68fb drivers/media/common/tuners/tda18271-common.c
 -
 -	return rtn;
 -}
-diff -r 4f23f0dc68fb drivers/media/common/tuners/tda18271-priv.h
---- a/drivers/media/common/tuners/tda18271-priv.h	Fri Sep 16 12:13:36 2011 -0300
-+++ b/drivers/media/common/tuners/tda18271-priv.h	Fri Sep 16 12:16:50 2011 -0300
+diff -r 4f23f0dc68fb drivers/media/tuners/tda18271-priv.h
+--- a/drivers/media/tuners/tda18271-priv.h	Fri Sep 16 12:13:36 2011 -0300
++++ b/drivers/media/tuners/tda18271-priv.h	Fri Sep 16 12:16:50 2011 -0300
 @@ -136,12 +136,17 @@
  #define DBG_ADV  8
  #define DBG_CAL  16

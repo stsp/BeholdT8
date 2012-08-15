@@ -1,9 +1,9 @@
 ---
- drivers/media/dvb/firewire/firedtv-fw.c |    6 +++---
+ drivers/media/firewire/firedtv-fw.c |    6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
---- linux.orig/drivers/media/dvb/firewire/firedtv-fw.c
-+++ linux/drivers/media/dvb/firewire/firedtv-fw.c
+--- linux.orig/drivers/media/firewire/firedtv-fw.c
++++ linux/drivers/media/firewire/firedtv-fw.c
 @@ -192,9 +192,9 @@ void fdtv_stop_iso(struct firedtv *fdtv)
  }
  

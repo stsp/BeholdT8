@@ -1,10 +1,10 @@
 ---
  drivers/media/rc/ir-raw.c                |   16 ++++----
  drivers/media/rc/rc-core-priv.h          |    2 +-
- drivers/media/video/cx23885/cx23888-ir.c |   33 ++++++----------
- drivers/media/video/cx25840/cx25840-ir.c |   28 +++++---------
- drivers/media/video/meye.c               |   60 ++++++++++++++----------------
- drivers/media/video/meye.h               |    4 +-
+ drivers/media/pci/cx23885/cx23888-ir.c |   33 ++++++----------
+ drivers/media/i2c/cx25840/cx25840-ir.c |   28 +++++---------
+ drivers/media/pci/meye/meye.c               |   60 ++++++++++++++----------------
+ drivers/media/pci/meye/meye.h               |    4 +-
  include/media/lirc_dev.h                 |   50 +++++++++----------------
  7 files changed, 80 insertions(+), 113 deletions(-)
 
@@ -73,8 +73,8 @@
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
  	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
---- a/drivers/media/video/cx23885/cx23888-ir.c
-+++ b/drivers/media/video/cx23885/cx23888-ir.c
+--- a/drivers/media/pci/cx23885/cx23888-ir.c
++++ b/drivers/media/pci/cx23885/cx23888-ir.c
 @@ -138,7 +138,7 @@ struct cx23888_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
@@ -172,8 +172,8 @@
  	kfree(state);
  	/* Nothing more to free() as state held the actual v4l2_subdev object */
  	return 0;
---- a/drivers/media/video/cx25840/cx25840-ir.c
-+++ b/drivers/media/video/cx25840/cx25840-ir.c
+--- a/drivers/media/i2c/cx25840/cx25840-ir.c
++++ b/drivers/media/i2c/cx25840/cx25840-ir.c
 @@ -117,7 +117,7 @@ struct cx25840_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
@@ -259,8 +259,8 @@
  	kfree(ir_state);
  	state->ir_state = NULL;
  	return 0;
---- a/drivers/media/video/meye.c
-+++ b/drivers/media/video/meye.c
+--- a/drivers/media/pci/meye/meye.c
++++ b/drivers/media/pci/meye/meye.c
 @@ -802,8 +802,8 @@ again:
  		return IRQ_HANDLED;
  
@@ -433,8 +433,8 @@
  
  	vfree(meye.grab_temp);
  
---- a/drivers/media/video/meye.h
-+++ b/drivers/media/video/meye.h
+--- a/drivers/media/pci/meye/meye.h
++++ b/drivers/media/pci/meye/meye.h
 @@ -304,9 +304,9 @@ struct meye {
  	struct meye_grab_buffer grab_buffer[MEYE_MAX_BUFNBRS];
  	int vma_use_count[MEYE_MAX_BUFNBRS]; /* mmap count */

@@ -1,5 +1,5 @@
 ---
- drivers/media/dvb/dvb-usb/dvb-usb-remote.c |    4 ++--
+ drivers/media/usb/dvb-usb/dvb-usb-remote.c |    4 ++--
  drivers/media/rc/rc-main.c                 |    4 ++--
  2 files changed, 4 insertions(+), 4 deletions(-)
 
@@ -23,8 +23,8 @@
  {
  	struct rc_dev *rdev = input_get_drvdata(idev);
  	struct rc_map *rc_map = &rdev->rc_map;
---- linux.orig/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
-+++ linux/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
+--- linux.orig/drivers/media/usb/dvb-usb/dvb-usb-remote.c
++++ linux/drivers/media/usb/dvb-usb/dvb-usb-remote.c
 @@ -9,7 +9,7 @@
  #include <linux/usb/input.h>
  

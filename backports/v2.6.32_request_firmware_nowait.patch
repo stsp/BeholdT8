@@ -1,9 +1,9 @@
 ---
- drivers/media/dvb/frontends/drxk_hard.c |    1 -
+ drivers/media/dvb-frontends/drxk.hard.c |    1 -
  1 files changed, 0 insertions(+), 1 deletions(-)
 
---- a/drivers/media/dvb/frontends/drxk_hard.c
-+++ b/drivers/media/dvb/frontends/drxk_hard.c
+--- a/drivers/media/dvb-frontends/drxk.hard.c
++++ b/drivers/media/dvb-frontends/drxk.hard.c
 @@ -6548,7 +6548,6 @@ struct dvb_frontend *drxk_attach(const struct drxk_config *config,
  		status = request_firmware_nowait(THIS_MODULE, 1,
  					      state->microcode_name,
@@ -13,10 +13,10 @@
  		if (status < 0) {
  			printk(KERN_ERR
 
-diff --git a/drivers/media/common/tuners/tuner-xc2028.c b/drivers/media/common/tuners/tuner-xc2028.c
+diff --git a/drivers/media/tuners/tuner-xc2028.c b/drivers/media/tuners/tuner-xc2028.c
 index f88f948..8591799 100644
---- a/drivers/media/common/tuners/tuner-xc2028.c
-+++ b/drivers/media/common/tuners/tuner-xc2028.c
+--- a/drivers/media/tuners/tuner-xc2028.c
++++ b/drivers/media/tuners/tuner-xc2028.c
 @@ -1408,7 +1408,6 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
  		rc = request_firmware_nowait(THIS_MODULE, 1,
  					     priv->fname,

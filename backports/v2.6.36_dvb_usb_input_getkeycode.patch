@@ -1,9 +1,9 @@
 ---
- drivers/media/dvb/dvb-usb/dvb-usb-remote.c |  111 ++++++++++-------------------
+ drivers/media/usb/dvb-usb/dvb-usb-remote.c |  111 ++++++++++-------------------
  1 file changed, 42 insertions(+), 69 deletions(-)
 
---- linux.orig/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
-+++ linux/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
+--- linux.orig/drivers/media/usb/dvb-usb/dvb-usb-remote.c
++++ linux/drivers/media/usb/dvb-usb/dvb-usb-remote.c
 @@ -8,71 +8,60 @@
  #include "dvb-usb-common.h"
  #include <linux/usb/input.h>

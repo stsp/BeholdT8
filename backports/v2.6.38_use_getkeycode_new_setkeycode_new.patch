@@ -1,11 +1,11 @@
- drivers/media/dvb/dvb-usb/dvb-usb-remote.c |    4 ++--
+ drivers/media/usb/dvb-usb/dvb-usb-remote.c |    4 ++--
  drivers/media/rc/rc-main.c                 |    4 ++--
  2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/dvb/dvb-usb/dvb-usb-remote.c b/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-remote.c b/drivers/media/usb/dvb-usb/dvb-usb-remote.c
 index 41bacff..a031975 100644
---- a/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
-+++ b/drivers/media/dvb/dvb-usb/dvb-usb-remote.c
+--- a/drivers/media/usb/dvb-usb/dvb-usb-remote.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-remote.c
 @@ -198,8 +198,8 @@ static int legacy_dvb_usb_remote_init(struct dvb_usb_device *d)
  	d->input_dev = input_dev;
  	d->rc_dev = NULL;

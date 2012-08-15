@@ -1,6 +1,6 @@
-diff -r b3c7edceaba9 drivers/media/common/saa7146_hlp.c
---- a/drivers/media/common/saa7146_hlp.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/common/saa7146_hlp.c	Wed Nov 23 19:57:12 2011 -0200
+diff -r b3c7edceaba9 drivers/media/common/saa7146/saa7146_hlp.c
+--- a/drivers/media/common/saa7146/saa7146_hlp.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/common/saa7146/saa7146_hlp.c	Wed Nov 23 19:57:12 2011 -0200
 @@ -1,7 +1,6 @@
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
@@ -9,9 +9,9 @@ diff -r b3c7edceaba9 drivers/media/common/saa7146_hlp.c
  #include <media/saa7146_vv.h>
  
  static void calculate_output_format_register(struct saa7146_dev* saa, u32 palette, u32* clip_format)
-diff -r b3c7edceaba9 drivers/media/dvb/siano/smsendian.c
---- a/drivers/media/dvb/siano/smsendian.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/dvb/siano/smsendian.c	Wed Nov 23 19:57:12 2011 -0200
+diff -r b3c7edceaba9 drivers/media/common/siano/smsendian.c
+--- a/drivers/media/common/siano/smsendian.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/common/siano/smsendian.c	Wed Nov 23 19:57:12 2011 -0200
 @@ -19,7 +19,6 @@
  
   ****************************************************************/
@@ -53,9 +53,9 @@ diff -r b3c7edceaba9 drivers/media/rc/ir-raw.c
  #include <linux/kthread.h>
  #include <linux/mutex.h>
  #include <linux/kmod.h>
-diff -r b3c7edceaba9 drivers/media/video/hdpvr/hdpvr-i2c.c
---- a/drivers/media/video/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/video/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:57:12 2011 -0200
+diff -r b3c7edceaba9 drivers/media/usb/hdpvr/hdpvr-i2c.c
+--- a/drivers/media/usb/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/usb/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:57:12 2011 -0200
 @@ -17,7 +17,6 @@
  
  #include <linux/i2c.h>
@@ -64,9 +64,9 @@ diff -r b3c7edceaba9 drivers/media/video/hdpvr/hdpvr-i2c.c
  
  #include "hdpvr.h"
  
-diff -r b3c7edceaba9 drivers/media/video/v4l2-ctrls.c
---- a/drivers/media/video/v4l2-ctrls.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/video/v4l2-ctrls.c	Wed Nov 23 19:57:12 2011 -0200
+diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-ctrls.c
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c	Wed Nov 23 19:57:12 2011 -0200
 @@ -20,7 +20,6 @@
  
  #include <linux/ctype.h>
@@ -75,9 +75,9 @@ diff -r b3c7edceaba9 drivers/media/video/v4l2-ctrls.c
  #include <media/v4l2-ioctl.h>
  #include <media/v4l2-device.h>
  #include <media/v4l2-ctrls.h>
-diff -r b3c7edceaba9 drivers/media/video/v4l2-event.c
---- a/drivers/media/video/v4l2-event.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/video/v4l2-event.c	Wed Nov 23 19:57:12 2011 -0200
+diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-event.c
+--- a/drivers/media/v4l2-core/v4l2-event.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/v4l2-core/v4l2-event.c	Wed Nov 23 19:57:12 2011 -0200
 @@ -29,7 +29,6 @@
  
  #include <linux/sched.h>
@@ -86,9 +86,9 @@ diff -r b3c7edceaba9 drivers/media/video/v4l2-event.c
  
  static unsigned sev_pos(const struct v4l2_subscribed_event *sev, unsigned idx)
  {
-diff -r b3c7edceaba9 drivers/media/video/v4l2-fh.c
---- a/drivers/media/video/v4l2-fh.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/video/v4l2-fh.c	Wed Nov 23 19:57:12 2011 -0200
+diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-fh.c
+--- a/drivers/media/v4l2-core/v4l2-fh.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/v4l2-core/v4l2-fh.c	Wed Nov 23 19:57:12 2011 -0200
 @@ -24,7 +24,6 @@
  
  #include <linux/bitops.h>
@@ -97,9 +97,9 @@ diff -r b3c7edceaba9 drivers/media/video/v4l2-fh.c
  #include <media/v4l2-dev.h>
  #include <media/v4l2-fh.h>
  #include <media/v4l2-event.h>
-diff -r b3c7edceaba9 drivers/media/video/v4l2-subdev.c
---- a/drivers/media/video/v4l2-subdev.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/video/v4l2-subdev.c	Wed Nov 23 19:57:12 2011 -0200
+diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-subdev.c
+--- a/drivers/media/v4l2-core/v4l2-subdev.c	Wed Nov 23 19:55:49 2011 -0200
++++ b/drivers/media/v4l2-core/v4l2-subdev.c	Wed Nov 23 19:57:12 2011 -0200
 @@ -24,7 +24,6 @@
  #include <linux/slab.h>
  #include <linux/types.h>

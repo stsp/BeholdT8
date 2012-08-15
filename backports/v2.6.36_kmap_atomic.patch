@@ -1,7 +1,7 @@
-diff --git a/drivers/media/video/ivtv/ivtv-udma.c b/drivers/media/video/ivtv/ivtv-udma.c
+diff --git a/drivers/media/pci/ivtv/ivtv-udma.c b/drivers/media/pci/ivtv/ivtv-udma.c
 index 7338cb2..69cc816 100644
---- a/drivers/media/video/ivtv/ivtv-udma.c
-+++ b/drivers/media/video/ivtv/ivtv-udma.c
+--- a/drivers/media/pci/ivtv/ivtv-udma.c
++++ b/drivers/media/pci/ivtv/ivtv-udma.c
 @@ -57,9 +57,9 @@ int ivtv_udma_fill_sg_list (struct ivtv_user_dma *dma, struct ivtv_dma_page_info
  			if (dma->bouncemap[map_offset] == NULL)
  				return -1;

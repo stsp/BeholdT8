@@ -1,12 +1,12 @@
 ---
- drivers/media/video/ivtv/ivtv-driver.c |   26 ++++++++++----------------
- drivers/media/video/ivtv/ivtv-driver.h |    8 ++++----
- drivers/media/video/ivtv/ivtv-irq.c    |   15 ++++++++++++---
- drivers/media/video/ivtv/ivtv-irq.h    |    2 +-
+ drivers/media/pci/ivtv/ivtv-driver.c |   26 ++++++++++----------------
+ drivers/media/pci/ivtv/ivtv-driver.h |    8 ++++----
+ drivers/media/pci/ivtv/ivtv-irq.c    |   15 ++++++++++++---
+ drivers/media/pci/ivtv/ivtv-irq.h    |    2 +-
  4 files changed, 27 insertions(+), 24 deletions(-)
 
---- linux.orig/drivers/media/video/ivtv/ivtv-driver.c
-+++ linux/drivers/media/video/ivtv/ivtv-driver.c
+--- linux.orig/drivers/media/pci/ivtv/ivtv-driver.c
++++ linux/drivers/media/pci/ivtv/ivtv-driver.c
 @@ -706,8 +706,6 @@ done:
   */
  static int __devinit ivtv_init_struct1(struct ivtv *itv)
@@ -71,8 +71,8 @@
  
  	ivtv_streams_cleanup(itv, 1);
  	ivtv_udma_free(itv);
---- linux.orig/drivers/media/video/ivtv/ivtv-driver.h
-+++ linux/drivers/media/video/ivtv/ivtv-driver.h
+--- linux.orig/drivers/media/pci/ivtv/ivtv-driver.h
++++ linux/drivers/media/pci/ivtv/ivtv-driver.h
 @@ -51,7 +51,7 @@
  #include <linux/unistd.h>
  #include <linux/pagemap.h>
@@ -102,8 +102,8 @@
  	spinlock_t dma_reg_lock;        /* lock access to DMA engine registers */
  	int cur_dma_stream;		/* index of current stream doing DMA (-1 if none) */
  	int cur_pio_stream;		/* index of current stream doing PIO (-1 if none) */
---- linux.orig/drivers/media/video/ivtv/ivtv-irq.c
-+++ linux/drivers/media/video/ivtv/ivtv-irq.c
+--- linux.orig/drivers/media/pci/ivtv/ivtv-irq.c
++++ linux/drivers/media/pci/ivtv/ivtv-irq.c
 @@ -71,10 +71,19 @@ static void ivtv_pio_work_handler(struct
  	write_reg(IVTV_IRQ_ENC_PIO_COMPLETE, 0x44);
  }
@@ -135,8 +135,8 @@
  	}
  
  	spin_unlock(&itv->dma_reg_lock);
---- linux.orig/drivers/media/video/ivtv/ivtv-irq.h
-+++ linux/drivers/media/video/ivtv/ivtv-irq.h
+--- linux.orig/drivers/media/pci/ivtv/ivtv-irq.h
++++ linux/drivers/media/pci/ivtv/ivtv-irq.h
 @@ -46,7 +46,7 @@
  
  irqreturn_t ivtv_irq_handler(int irq, void *dev_id);

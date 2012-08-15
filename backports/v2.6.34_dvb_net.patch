@@ -1,6 +1,6 @@
-diff -r 5254948f88c4 drivers/media/dvb/dvb-core/dvb_net.c
---- a/drivers/media/dvb/dvb-core/dvb_net.c	Sun Oct 17 19:59:28 2010 -0200
-+++ b/drivers/media/dvb/dvb-core/dvb_net.c	Sun Oct 17 20:09:51 2010 -0200
+diff -r 5254948f88c4 drivers/media/dvb-core/dvb_net.c
+--- a/drivers/media/dvb-core/dvb_net.c	Sun Oct 17 19:59:28 2010 -0200
++++ b/drivers/media/dvb-core/dvb_net.c	Sun Oct 17 20:09:51 2010 -0200
 @@ -1119,14 +1119,14 @@
  }
  

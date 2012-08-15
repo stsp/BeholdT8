@@ -1,10 +1,10 @@
 ---
- drivers/media/dvb/dvb-core/dvbdev.c |    4 ++--
+ drivers/media/dvb-core/dvbdev.c |    4 ++--
  drivers/media/rc/rc-main.c          |    4 ++--
  2 files changed, 4 insertions(+), 4 deletions(-)
 
---- linux.orig/drivers/media/dvb/dvb-core/dvbdev.c
-+++ linux/drivers/media/dvb/dvb-core/dvbdev.c
+--- linux.orig/drivers/media/dvb-core/dvbdev.c
++++ linux/drivers/media/dvb-core/dvbdev.c
 @@ -450,7 +450,7 @@ static int dvb_uevent(struct device *dev
  	return 0;
  }

@@ -1,7 +1,7 @@
-diff --git a/drivers/media/video/via-camera.c b/drivers/media/video/via-camera.c
+diff --git a/drivers/media/platform/via-camera.c b/drivers/media/platform/via-camera.c
 index 6a82875..afab027 100644
---- a/drivers/media/video/via-camera.c
-+++ b/drivers/media/video/via-camera.c
+--- a/drivers/media/platform/via-camera.c
++++ b/drivers/media/platform/via-camera.c
 @@ -21,7 +21,6 @@
  #include <media/videobuf-dma-sg.h>
  #include <linux/delay.h>
