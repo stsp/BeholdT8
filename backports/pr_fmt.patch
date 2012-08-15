@@ -814,10 +814,10 @@ index 91d99b4..6c62d4d 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include <linux/input.h>
-diff --git a/drivers/media/usb/gspca/stv06xx/stv06xx.hdcs.c b/drivers/media/usb/gspca/stv06xx/stv06xx.hdcs.c
+diff --git a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
 index a8698b7..2a7756f 100644
---- a/drivers/media/usb/gspca/stv06xx/stv06xx.hdcs.c
-+++ b/drivers/media/usb/gspca/stv06xx/stv06xx.hdcs.c
+--- a/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
++++ b/drivers/media/usb/gspca/stv06xx/stv06xx_hdcs.c
 @@ -28,6 +28,7 @@
   * P/N 861040-0000: Sensor ST VV6410       ASIC STV0610   - QuickCam Web
   */
