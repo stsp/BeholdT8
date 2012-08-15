@@ -12,6 +12,8 @@ while (<>) {
 
 	if ($from && $to) {
 		printf "$from -> $to\n" if ($debug);
+		$from =~ s/\./\\./g;
+		$to =~ s/\./\\./g;
 		$sed .= "\t-e 's,$from,$to,g' \\\n";
 		$from = 0;
 		$to = 0;
