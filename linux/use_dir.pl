@@ -169,8 +169,8 @@ sub get_patched_files()
 	open IN, $patchfile or return %files;
 
 	# Those files are always patched to add warnings about the usage of experimental version
-	$files{"drivers/media/dvb/dvb-core/dvbdev.c"} = 1;
-	$files{"drivers/media/video/v4l2-dev.c"} = 1;
+	$files{"drivers/media/dvb-core/dvbdev.c"} = 1;
+	$files{"drivers/media/v4l2-core/v4l2-dev.c"} = 1;
 	$files{"drivers/media/rc/rc-main.c"} = 1;
 
 	while (<IN>) {

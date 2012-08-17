@@ -79,9 +79,9 @@ if (!$need_patch) {
 
 if ($need_patch) {
 	# Patch dvbdev
-	patch_file "drivers/media/dvb/dvb-core/dvbdev.c", "__init init_dvbdev", "MKDEV", $logs;
+	patch_file "drivers/media/dvb-core/dvbdev.c", "__init init_dvbdev", "MKDEV", $logs;
 	# Patch v4l2-dev
-	patch_file "drivers/media/video/v4l2-dev.c", "__init videodev_init", "printk", $logs;
+	patch_file "drivers/media/v4l2-core/v4l2-dev.c", "__init videodev_init", "printk", $logs;
 	# Patch rc core
 	patch_file "drivers/media/rc/rc-main.c", "__init rc_core_init", "rc_map_register", $logs;
 

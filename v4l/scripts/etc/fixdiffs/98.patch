@@ -1,7 +1,7 @@
 
-diff -upr oldtree/drivers/media/dvb/dvb-core/dvb_net.c /home/v4l/tokernel/wrk/linux-next/drivers/media/dvb/dvb-core/dvb_net.c
---- next/drivers/media/dvb/dvb-core/dvb_net.c	2010-01-15 19:05:35.000000000 -0200
-+++ ../oldtree/drivers/media/dvb/dvb-core/dvb_net.c	2010-01-15 19:11:43.000000000 -0200
+diff -upr oldtree/drivers/media/dvb-core/dvb_net.c /home/v4l/tokernel/wrk/linux-next/drivers/media/dvb-core/dvb_net.c
+--- next/drivers/media/dvb-core/dvb_net.c	2010-01-15 19:05:35.000000000 -0200
++++ ../oldtree/drivers/media/dvb-core/dvb_net.c	2010-01-15 19:11:43.000000000 -0200
 @@ -949,11 +949,8 @@ static int dvb_net_filter_sec_set(struct
  	(*secfilter)->filter_mask[10] = mac_mask[1];
  	(*secfilter)->filter_mask[11]=mac_mask[0];

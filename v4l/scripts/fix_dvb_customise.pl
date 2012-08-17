@@ -7,7 +7,7 @@ use Fcntl ':mode';
 my $debug = 0;
 
 my $SRC = "../linux";
-my $fname = "$SRC/drivers/media/dvb/frontends/Makefile";
+my $fname = "$SRC/drivers/media/dvb-frontends/Makefile";
 
 ####################
 # Get Makefile rules
@@ -124,7 +124,7 @@ sub parse_makefiles()
 	my $fname = $File::Find::name;
 
 	return if !($fname =~ m|/Makefile$|);
-	return if ($fname =~ m|drivers/media/dvb/frontends/|);
+	return if ($fname =~ m|drivers/media/dvb-frontends/|);
 
 
 	my ($refs, $mult) = get_makefile($fname);
@@ -212,7 +212,7 @@ sub parse_headers()
 	my $file = $File::Find::name;
 
 	return if !($file =~ m/\.[ch]$/);
-	return if ($file =~ m|drivers/media/dvb/frontends/|);
+	return if ($file =~ m|drivers/media/dvb-frontends/|);
 
 	open IN, $file or die "Can't open $file\n";
 	while (<IN>) {
@@ -239,7 +239,7 @@ sub parse_kconfigs()
 	my $all_sels;
 
 	return if !($file =~ m/Kconfig$/);
-	return if ($file =~ m|drivers/media/dvb/frontends/|);
+	return if ($file =~ m|drivers/media/dvb-frontends/|);
 
 	open IN, $file or die "Can't open $file\n";
 	while (<IN>) {
