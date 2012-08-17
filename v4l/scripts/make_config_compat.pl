@@ -459,6 +459,28 @@ sub check_i2c_smbus_read_word_swapped()
 	$out.= "\n#define NEED_I2C_SMBUS_WORD_SWAPPED 1\n";
 }
 
+sub check_printk_ratelimited()
+{
+	my @files = ( "$kdir/include/linux/kernel.h" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or next;
+		while (<IN>) {
+			# It's either defined in kernel.h, or printk.h
+			# is included from kernel.h
+			if (m/printk.h/ || m/printk_ratelimited/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define NEED_PRINTK_RATELIMITED 1\n";
+}
+
 
 sub check_file_for_func($$$)
 {
@@ -509,6 +531,7 @@ sub check_other_dependencies()
 	check_flush_work_sync();
 	check_autosuspend_delay();
 	check_i2c_smbus_read_word_swapped();
+	check_printk_ratelimited();
 	check_file_for_func("include/linux/kernel.h", "hex_to_bin", "NEED_HEX_TO_BIN");
 	check_file_for_func("include/sound/control.h", "snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO");
 	check_file_for_func("include/linux/sysfs.h", "sysfs_attr_init", "NEED_SYSFS_ATTR_INIT");
@@ -525,6 +548,7 @@ sub check_other_dependencies()
 	check_file_for_func("include/linux/i2c.h", "I2C_CLIENT_SCCB", "NEED_I2C_CLIENT_SCCB");
 	check_file_for_func("include/linux/kernel.h", "kstrtou16", "NEED_KSTRTOU16");
 	check_file_for_func("include/linux/string.h", "memweight", "NEED_MEMWEIGHT");
+	check_file_for_func("include/linux/usb/ch9.h", "usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP");
 }
 
 # Do the basic rules

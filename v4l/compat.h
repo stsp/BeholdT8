@@ -1048,4 +1048,16 @@ static inline size_t memweight(const void *ptr, size_t bytes)
 }
 #endif
 
+#ifdef NEED_USB_ENDPOINT_MAXP
+#include <linux/usb.h>
+static inline int usb_endpoint_maxp(const struct usb_endpoint_descriptor *epd)
+{
+	        return __le16_to_cpu(epd->wMaxPacketSize);
+}
+#endif
+
+#ifdef NEED_PRINTK_RATELIMITED
+#define printk_ratelimited printk
+#endif
+
 #endif /*  _COMPAT_H */
