@@ -30,3 +30,7 @@ download untar::
 
 dir::
 	$(MAKE) -C linux/ $(MAKECMDGOALS) DIR="../$(DIR)"
+
+cleanall:
+	$(MAKE) distclean
+	$(MAKE) -C linux distclean
