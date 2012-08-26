@@ -22,6 +22,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/common/saa7146_i2c\.c,drivers/media/common/saa7146/saa7146_i2c\.c,g' \
 	-e 's,drivers/media/common/saa7146_vbi\.c,drivers/media/common/saa7146/saa7146_vbi\.c,g' \
 	-e 's,drivers/media/common/saa7146_video\.c,drivers/media/common/saa7146/saa7146_video\.c,g' \
+	-e 's,drivers/media/dvb/siano/Kconfig,drivers/media/common/siano/Kconfig,g' \
 	-e 's,drivers/media/dvb/siano/Makefile,drivers/media/common/siano/Makefile,g' \
 	-e 's,drivers/media/dvb/siano/sms-cards\.c,drivers/media/common/siano/sms-cards\.c,g' \
 	-e 's,drivers/media/dvb/siano/sms-cards\.h,drivers/media/common/siano/sms-cards\.h,g' \
@@ -32,6 +33,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/dvb/siano/smsendian\.h,drivers/media/common/siano/smsendian\.h,g' \
 	-e 's,drivers/media/dvb/siano/smsir\.c,drivers/media/common/siano/smsir\.c,g' \
 	-e 's,drivers/media/dvb/siano/smsir\.h,drivers/media/common/siano/smsir\.h,g' \
+	-e 's,drivers/media/dvb/Kconfig,drivers/media/dvb-core/Kconfig,g' \
 	-e 's,drivers/media/dvb/dvb-core/Makefile,drivers/media/dvb-core/Makefile,g' \
 	-e 's,drivers/media/dvb/dvb-core/demux\.h,drivers/media/dvb-core/demux\.h,g' \
 	-e 's,drivers/media/dvb/dvb-core/dmxdev\.c,drivers/media/dvb-core/dmxdev\.c,g' \
@@ -389,7 +391,6 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/ov9640\.h,drivers/media/i2c/soc_camera/ov9640\.h,g' \
 	-e 's,drivers/media/video/ov9740\.c,drivers/media/i2c/soc_camera/ov9740\.c,g' \
 	-e 's,drivers/media/video/rj54n1cb0c\.c,drivers/media/i2c/soc_camera/rj54n1cb0c\.c,g' \
-	-e 's,drivers/media/video/sh_mobile_csi2\.c,drivers/media/i2c/soc_camera/sh_mobile_csi2\.c,g' \
 	-e 's,drivers/media/video/tw9910\.c,drivers/media/i2c/soc_camera/tw9910\.c,g' \
 	-e 's,drivers/media/video/sr030pc30\.c,drivers/media/i2c/sr030pc30\.c,g' \
 	-e 's,drivers/media/video/tcm825x\.c,drivers/media/i2c/tcm825x\.c,g' \
@@ -426,6 +427,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/dvb/b2c2/flexcop-dma\.c,drivers/media/pci/b2c2/flexcop-dma\.c,g' \
 	-e 's,drivers/media/dvb/b2c2/flexcop-pci\.c,drivers/media/pci/b2c2/flexcop-pci\.c,g' \
 	-e 's,drivers/media/dvb/bt8xx/Kconfig,drivers/media/pci/bt8xx/Kconfig,g' \
+	-e 's,drivers/media/video/bt8xx/Makefile,drivers/media/pci/bt8xx/Makefile,g' \
 	-e 's,drivers/media/video/bt8xx/bt848\.h,drivers/media/pci/bt8xx/bt848\.h,g' \
 	-e 's,drivers/media/dvb/bt8xx/bt878\.c,drivers/media/pci/bt8xx/bt878\.c,g' \
 	-e 's,drivers/media/dvb/bt8xx/bt878\.h,drivers/media/pci/bt8xx/bt878\.h,g' \
@@ -579,6 +581,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/dvb/ddbridge/ddbridge-regs\.h,drivers/media/pci/ddbridge/ddbridge-regs\.h,g' \
 	-e 's,drivers/media/dvb/ddbridge/ddbridge\.h,drivers/media/pci/ddbridge/ddbridge\.h,g' \
 	-e 's,drivers/media/dvb/dm1105/Kconfig,drivers/media/pci/dm1105/Kconfig,g' \
+	-e 's,drivers/media/dvb/dm1105/Makefile,drivers/media/pci/dm1105/Makefile,g' \
 	-e 's,drivers/media/dvb/dm1105/dm1105\.c,drivers/media/pci/dm1105/dm1105\.c,g' \
 	-e 's,drivers/media/video/ivtv/Kconfig,drivers/media/pci/ivtv/Kconfig,g' \
 	-e 's,drivers/media/video/ivtv/Makefile,drivers/media/pci/ivtv/Makefile,g' \
@@ -670,6 +673,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/dvb/ngene/ngene-i2c\.c,drivers/media/pci/ngene/ngene-i2c\.c,g' \
 	-e 's,drivers/media/dvb/ngene/ngene\.h,drivers/media/pci/ngene/ngene\.h,g' \
 	-e 's,drivers/media/dvb/pluto2/Kconfig,drivers/media/pci/pluto2/Kconfig,g' \
+	-e 's,drivers/media/dvb/pluto2/Makefile,drivers/media/pci/pluto2/Makefile,g' \
 	-e 's,drivers/media/dvb/pluto2/pluto2\.c,drivers/media/pci/pluto2/pluto2\.c,g' \
 	-e 's,drivers/media/dvb/pt1/Kconfig,drivers/media/pci/pt1/Kconfig,g' \
 	-e 's,drivers/media/dvb/pt1/Makefile,drivers/media/pci/pt1/Makefile,g' \
@@ -757,7 +761,6 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/zoran/zr36060\.c,drivers/media/pci/zoran/zr36060\.c,g' \
 	-e 's,drivers/media/video/zoran/zr36060\.h,drivers/media/pci/zoran/zr36060\.h,g' \
 	-e 's,drivers/media/video/arv\.c,drivers/media/platform/arv\.c,g' \
-	-e 's,drivers/media/video/atmel-isi\.c,drivers/media/platform/atmel-isi\.c,g' \
 	-e 's,drivers/media/video/blackfin/Kconfig,drivers/media/platform/blackfin/Kconfig,g' \
 	-e 's,drivers/media/video/blackfin/Makefile,drivers/media/platform/blackfin/Makefile,g' \
 	-e 's,drivers/media/video/blackfin/bfin_capture\.c,drivers/media/platform/blackfin/bfin_capture\.c,g' \
@@ -798,10 +801,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/marvell-ccic/mcam-core\.h,drivers/media/platform/marvell-ccic/mcam-core\.h,g' \
 	-e 's,drivers/media/video/marvell-ccic/mmp-driver\.c,drivers/media/platform/marvell-ccic/mmp-driver\.c,g' \
 	-e 's,drivers/media/video/mem2mem_testdev\.c,drivers/media/platform/mem2mem_testdev\.c,g' \
-	-e 's,drivers/media/video/mx1_camera\.c,drivers/media/platform/mx1_camera\.c,g' \
-	-e 's,drivers/media/video/mx2_camera\.c,drivers/media/platform/mx2_camera\.c,g' \
 	-e 's,drivers/media/video/mx2_emmaprp\.c,drivers/media/platform/mx2_emmaprp\.c,g' \
-	-e 's,drivers/media/video/mx3_camera\.c,drivers/media/platform/mx3_camera\.c,g' \
 	-e 's,drivers/media/video/omap/Kconfig,drivers/media/platform/omap/Kconfig,g' \
 	-e 's,drivers/media/video/omap/Makefile,drivers/media/platform/omap/Makefile,g' \
 	-e 's,drivers/media/video/omap/omap_vout\.c,drivers/media/platform/omap/omap_vout\.c,g' \
@@ -810,7 +810,6 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/omap/omap_voutdef\.h,drivers/media/platform/omap/omap_voutdef\.h,g' \
 	-e 's,drivers/media/video/omap/omap_voutlib\.c,drivers/media/platform/omap/omap_voutlib\.c,g' \
 	-e 's,drivers/media/video/omap/omap_voutlib\.h,drivers/media/platform/omap/omap_voutlib\.h,g' \
-	-e 's,drivers/media/video/omap1_camera\.c,drivers/media/platform/omap1_camera\.c,g' \
 	-e 's,drivers/media/video/omap24xxcam-dma\.c,drivers/media/platform/omap24xxcam-dma\.c,g' \
 	-e 's,drivers/media/video/omap24xxcam\.c,drivers/media/platform/omap24xxcam\.c,g' \
 	-e 's,drivers/media/video/omap24xxcam\.h,drivers/media/platform/omap24xxcam\.h,g' \
@@ -845,7 +844,6 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/omap3isp/ispvideo\.h,drivers/media/platform/omap3isp/ispvideo\.h,g' \
 	-e 's,drivers/media/video/omap3isp/luma_enhance_table\.h,drivers/media/platform/omap3isp/luma_enhance_table\.h,g' \
 	-e 's,drivers/media/video/omap3isp/noise_filter_table\.h,drivers/media/platform/omap3isp/noise_filter_table\.h,g' \
-	-e 's,drivers/media/video/pxa_camera\.c,drivers/media/platform/pxa_camera\.c,g' \
 	-e 's,drivers/media/video/s5p-fimc/Kconfig,drivers/media/platform/s5p-fimc/Kconfig,g' \
 	-e 's,drivers/media/video/s5p-fimc/Makefile,drivers/media/platform/s5p-fimc/Makefile,g' \
 	-e 's,drivers/media/video/s5p-fimc/fimc-capture\.c,drivers/media/platform/s5p-fimc/fimc-capture\.c,g' \
@@ -909,11 +907,18 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/s5p-tv/regs-vp\.h,drivers/media/platform/s5p-tv/regs-vp\.h,g' \
 	-e 's,drivers/media/video/s5p-tv/sdo_drv\.c,drivers/media/platform/s5p-tv/sdo_drv\.c,g' \
 	-e 's,drivers/media/video/s5p-tv/sii9234_drv\.c,drivers/media/platform/s5p-tv/sii9234_drv\.c,g' \
-	-e 's,drivers/media/video/sh_mobile_ceu_camera\.c,drivers/media/platform/sh_mobile_ceu_camera\.c,g' \
 	-e 's,drivers/media/video/sh_vou\.c,drivers/media/platform/sh_vou\.c,g' \
-	-e 's,drivers/media/video/soc_camera\.c,drivers/media/platform/soc_camera\.c,g' \
-	-e 's,drivers/media/video/soc_camera_platform\.c,drivers/media/platform/soc_camera_platform\.c,g' \
-	-e 's,drivers/media/video/soc_mediabus\.c,drivers/media/platform/soc_mediabus\.c,g' \
+	-e 's,drivers/media/video/atmel-isi\.c,drivers/media/platform/soc_camera/atmel-isi\.c,g' \
+	-e 's,drivers/media/video/mx1_camera\.c,drivers/media/platform/soc_camera/mx1_camera\.c,g' \
+	-e 's,drivers/media/video/mx2_camera\.c,drivers/media/platform/soc_camera/mx2_camera\.c,g' \
+	-e 's,drivers/media/video/mx3_camera\.c,drivers/media/platform/soc_camera/mx3_camera\.c,g' \
+	-e 's,drivers/media/video/omap1_camera\.c,drivers/media/platform/soc_camera/omap1_camera\.c,g' \
+	-e 's,drivers/media/video/pxa_camera\.c,drivers/media/platform/soc_camera/pxa_camera\.c,g' \
+	-e 's,drivers/media/video/sh_mobile_ceu_camera\.c,drivers/media/platform/soc_camera/sh_mobile_ceu_camera\.c,g' \
+	-e 's,drivers/media/video/sh_mobile_csi2\.c,drivers/media/platform/soc_camera/sh_mobile_csi2\.c,g' \
+	-e 's,drivers/media/video/soc_camera\.c,drivers/media/platform/soc_camera/soc_camera\.c,g' \
+	-e 's,drivers/media/video/soc_camera_platform\.c,drivers/media/platform/soc_camera/soc_camera_platform\.c,g' \
+	-e 's,drivers/media/video/soc_mediabus\.c,drivers/media/platform/soc_camera/soc_mediabus\.c,g' \
 	-e 's,drivers/media/video/timblogiw\.c,drivers/media/platform/timblogiw\.c,g' \
 	-e 's,drivers/media/video/via-camera\.c,drivers/media/platform/via-camera\.c,g' \
 	-e 's,drivers/media/video/via-camera\.h,drivers/media/platform/via-camera\.h,g' \
@@ -1345,6 +1350,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/stk-webcam\.c,drivers/media/usb/stkwebcam/stk-webcam\.c,g' \
 	-e 's,drivers/media/video/stk-webcam\.h,drivers/media/usb/stkwebcam/stk-webcam\.h,g' \
 	-e 's,drivers/media/video/tlg2300/Kconfig,drivers/media/usb/tlg2300/Kconfig,g' \
+	-e 's,drivers/media/video/tlg2300/Makefile,drivers/media/usb/tlg2300/Makefile,g' \
 	-e 's,drivers/media/video/tlg2300/pd-alsa\.c,drivers/media/usb/tlg2300/pd-alsa\.c,g' \
 	-e 's,drivers/media/video/tlg2300/pd-common\.h,drivers/media/usb/tlg2300/pd-common\.h,g' \
 	-e 's,drivers/media/video/tlg2300/pd-dvb\.c,drivers/media/usb/tlg2300/pd-dvb\.c,g' \
@@ -1366,6 +1372,7 @@ mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/
 	-e 's,drivers/media/video/tm6000/tm6000-video\.c,drivers/media/usb/tm6000/tm6000-video\.c,g' \
 	-e 's,drivers/media/video/tm6000/tm6000\.h,drivers/media/usb/tm6000/tm6000\.h,g' \
 	-e 's,drivers/media/dvb/ttusb-budget/Kconfig,drivers/media/usb/ttusb-budget/Kconfig,g' \
+	-e 's,drivers/media/dvb/ttusb-budget/Makefile,drivers/media/usb/ttusb-budget/Makefile,g' \
 	-e 's,drivers/media/dvb/ttusb-budget/dvb-ttusb-budget\.c,drivers/media/usb/ttusb-budget/dvb-ttusb-budget\.c,g' \
 	-e 's,drivers/media/dvb/ttusb-dec/Kconfig,drivers/media/usb/ttusb-dec/Kconfig,g' \
 	-e 's,drivers/media/dvb/ttusb-dec/Makefile,drivers/media/usb/ttusb-dec/Makefile,g' \
