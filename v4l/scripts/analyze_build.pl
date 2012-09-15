@@ -104,7 +104,7 @@ sub open_makefile($) {
 	    if ($2 eq '+') {
 		# Adding to files
 		print STDERR "Should use ':=' in $file:$.\n$_\n" if ($check && !exists $multi{"$dir/$1"});
-		push @files, $multi{"$dir/$1"} if (exists($multi{"$dir/$1"}));
+		push @files, split(/\s+/, $multi{"$dir/$1"});
 	    } else {
 		print STDERR "Setting objects twice in $file:$.\n$_\n" if ($check && exists $multi{"$dir/$1"});
 	    }
