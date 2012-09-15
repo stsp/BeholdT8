@@ -44,7 +44,7 @@ my $man;
 my $prefix = 'linux/drivers/media/';
 
 GetOptions(
-	"path" => \$prefix,
+	"path=s" => \$prefix,
 	"extra_check" => \$check,
 	"show_modules" => \$show_modules,
 	"show_files_per_module" => \$show_files_per_module,
