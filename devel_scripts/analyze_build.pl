@@ -248,7 +248,7 @@ B<analyze_build.pl> [--path path] [--extra_check] [--show_modules]
 
 =item B<--path> path
 
-Path for the Kernel sub-tree to check. Default: $prefix.
+Path for the Kernel sub-tree to check. Default: linux/drivers/media.
 
 =item B<--extra_check>
 
