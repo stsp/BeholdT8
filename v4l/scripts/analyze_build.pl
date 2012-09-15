@@ -28,15 +28,33 @@
 # Also has some ability to check Makefiles for errors
 use strict;
 use FileHandle;
+use Getopt::Long;
+use Pod::Usage;
 
-# Print out some extra checks of Makefile correctness
-my $check = 0;
+# Controls what will be displayed
+my $check;
+my $show_modules;
+my $show_files_per_module;
+my $show_files_per_config;
+my $help;
+my $man;
 
 # Directory to start in.  Will be stripped from all filenames printed out.
 my $prefix = 'linux/drivers/media/';
 
-# Root of source tree
-my $root;
+GetOptions(
+	"path" => \$prefix,
+	"extra_check" => \$check,
+	"show_modules" => \$show_modules,
+	"show_files_per_module" => \$show_files_per_module,
+	"show_files_per_config" => \$show_files_per_config,
+	'help|?' => \$help,
+	man => \$man
+) or pod2usage(2);
+
+pod2usage(1) if $help;
+pod2usage(-exitstatus => 0, -verbose => 2) if $man;
+
 
 # List of Makefile's opened
 my %makefiles = ();
@@ -59,7 +77,7 @@ sub open_makefile($) {
 
 	#    print STDERR "opening $root$file (dir=$dir)\n";
 	my $in = new FileHandle;
-	open $in, '<', "$root$file" or die "Unable to open Makefile '$root$file': $!";
+	open $in, '<', "$file" or die "Unable to open Makefile '$file': $!";
 
 	while (<$in>) {
 		# print STDERR "Line: $_";
@@ -124,62 +142,116 @@ sub open_makefile($) {
 	}
 }
 
-if ($#ARGV >= 0) {
-	$prefix = $ARGV[0];
-	$prefix .= '/' unless ($prefix =~ m|/$|);
-}
-
-# Find root of source tree: command line, then Hg command, lastly cwd
-if ($#ARGV >= 1) {
-	$root = $ARGV[1];
-	$root .= '/' unless ($root =~ m|/$|);
-} else {
-	$root = `hg root 2>/dev/null`;
-	if($? == 0) {
-		chomp $root;
-		$root .= '/';
-	} else {
-		$root = '';
-	}
-}
-print "# Using source tree root '$root'\n" if ($root ne '');
-
 open_makefile($prefix."Makefile");
 
-print "# Kconfig variable = kernel modules built\n";
-foreach my $var (keys %config) {
-	my @list = @{$config{$var}};
-	map { s/^$prefix(.*)$/\1.ko/ } @list;
-	printf "%-22s= %s\n", $var, join(' ', @list);
-}
-
-print "\n# kernel module = source files\n";
-my %modules = ();
-foreach my $mods (values %config) {
-	$modules{$_} = 1 foreach @$mods;
-}
-foreach (keys %modules) {
-	/$prefix(.*)$/;
-	printf "%-30s = ", "$1.ko";
-	if (exists $multi{$_}) {
-		my @list = split(/\s+/, $multi{$_});
-		map { s/^$prefix(.*)$/\1.c/ } @list;
-		print join(' ', @list), "\n";
-	} else {
-		print "$1.c\n";
+if ($show_modules) {
+	print "# Kconfig variable = kernel modules built\n";
+	foreach my $var (keys %config) {
+		my @list = @{$config{$var}};
+		map { s/^$prefix(.*)$/\1.ko/ } @list;
+		printf "%-22s= %s\n", $var, join(' ', @list);
 	}
 }
 
-print "\n# Kconfig varible = source files\n";
-while (my ($var, $list) = each %config) {
-	my @outlist = ();
-	foreach (@$list) {
+if ($show_files_per_module) {
+	print "\n# kernel module = source files\n";
+	my %modules = ();
+	foreach my $mods (values %config) {
+		$modules{$_} = 1 foreach @$mods;
+	}
+	foreach (keys %modules) {
+		/$prefix(.*)$/;
+		printf "%-30s = ", "$1.ko";
 		if (exists $multi{$_}) {
-			push @outlist, split(/\s+/, $multi{$_});
+			my @list = split(/\s+/, $multi{$_});
+			map { s/^$prefix(.*)$/\1.c/ } @list;
+			print join(' ', @list), "\n";
 		} else {
-			push @outlist, $_;
+			print "$1.c\n";
 		}
 	}
-	map { s/^$prefix(.*)$/\1.c/ } @outlist;
-	printf "%-22s= %s\n", $var, join(' ', @outlist);
 }
+
+if ($show_files_per_config) {
+	print "\n# Kconfig varible = source files\n";
+	while (my ($var, $list) = each %config) {
+		my @outlist = ();
+		foreach (@$list) {
+			if (exists $multi{$_}) {
+				push @outlist, split(/\s+/, $multi{$_});
+			} else {
+				push @outlist, $_;
+			}
+		}
+		map { s/^$prefix(.*)$/\1.c/ } @outlist;
+		printf "%-22s= %s\n", $var, join(' ', @outlist);
+	}
+}
+exit;
+
+__END__
+
+=head1 NAME
+
+analyze_build.pl - Analyze the Kernel Makefiles to detect its config
+
+=head1 SYNOPSIS
+
+B<analyze_build.pl> [--path path] [--extra_check] [--show_modules]
+	[--show_files_per_module] [--show_files_per_config]
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--path> path
+
+Path for the Kernel sub-tree to check. Default: $prefix.
+
+=item B<--extra_check>
+
+Enable extra checks
+
+=item B<--show_modules>
+
+Show modules (.ko files) and their corresponding Kconfig option
+
+=item B<--show_files_per_module>
+
+Show C source files for each module (.ko file)
+
+=item B<--show_files_per_config>
+
+Show C source files for each Kconfig option
+
+=item B<--help>
+
+Prints a brief help message and exits.
+
+=item B<--man>
+
+Prints the manual page and exits.
+
+=back
+
+=head1 DESCRIPTION
+
+B<search_msg.pl> talk with an IMAP server to read messages with
+patches from it.
+
+=head1 BUGS
+
+Report bugs to Mauro Carvalho Chehab <mchehab@redhat.com>
+
+=head1 COPYRIGHT
+
+Copyright (c) 2006 Trent Piepho <xyzzy@speakeasy.org>
+
+Copyright (c) 2012 by Mauro Carvalho Chehab <mchehab@redhat.com>.
+
+License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>.
+
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+=cut
