@@ -102,6 +102,12 @@ sub open_makefile($) {
 		# Eat comments
 		s/#.*$//;
 
+		if (/^\s*ccflags-(.*)?\s*([:+]?)=\s*(\S.*?)\s*$/) {
+			if ($check) {
+				print STDERR "Should use '+=' with ccflags-$1 in $file:$.\n$_\n" if ($2 ne "+");
+			}
+			next;
+		}
 		if (/^\s*obj-(\S+)\s*([:+]?)=\s*(\S.*?)\s*$/) {
 			print STDERR "Should use '+=' in $file:$.\n$_\n" if ($check && $2 ne '+');
 			my ($var,$targets) = ($1, $3);
@@ -134,12 +140,6 @@ sub open_makefile($) {
 				print STDERR "Setting objects twice in $file:$.\n$_\n" if ($check && exists $multi{"$dir/$1"});
 			}
 			$multi{"$dir/$1"} = "@files";
-			next;
-		}
-		if (/^\s*ccflags-([ym])?\s*([:+]?)=\s*(\S.*?)\s*$/) {
-			if ($check) {
-				print STDERR "Should use '+=' with ccflags-$1 in $file:$.\n$_\n" if ($2 ne "+");
-			}
 			next;
 		}
 		if (/^\s*(\S+)-[ym]?\s*([:+]?)\s*=\s*(\S.*?)\s*$/) {
