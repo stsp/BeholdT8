@@ -36,6 +36,7 @@ my $check;
 my $show_modules;
 my $show_files_per_module;
 my $show_files_per_config;
+my $show_all;
 my $help;
 my $man;
 
@@ -48,6 +49,7 @@ GetOptions(
 	"show_modules" => \$show_modules,
 	"show_files_per_module" => \$show_files_per_module,
 	"show_files_per_config" => \$show_files_per_config,
+	"show_all" => \$show_all,
 	'help|?' => \$help,
 	man => \$man
 ) or pod2usage(2);
@@ -55,6 +57,11 @@ GetOptions(
 pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 
+if ($show_all) {
+	$show_modules = 1;
+	$show_files_per_module = 1;
+	$show_files_per_config = 1;
+}
 
 # List of Makefile's opened
 my %makefiles = ();
@@ -223,6 +230,10 @@ Show C source files for each module (.ko file)
 =item B<--show_files_per_config>
 
 Show C source files for each Kconfig option
+
+=item B<--show_all>
+
+Equivalent to  B<--show_modules> B<--show_files_per_module B<--show_files_per_config>
 
 =item B<--help>
 
