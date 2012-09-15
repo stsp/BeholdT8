@@ -121,7 +121,7 @@ sub open_makefile($) {
 			}
 			next;
 		}
-		if (/(\S+)-objs\s*([:+]?)=\s*(\S.*?)\s*$/) {
+		if (/(\S+)-objs\s*([:+]?)\s*=\s*(\S.*?)\s*$/) {
 			my @files = split(/\s+/, $3);
 			foreach my $f (@files) {
 				$f =~ s|^(.*)\.o$|$dir/$1|;
@@ -136,12 +136,47 @@ sub open_makefile($) {
 			$multi{"$dir/$1"} = "@files";
 			next;
 		}
-		if (/^\s*EXTRA_CFLAGS\s*([:+]?)=\s*(\S.*?)\s*$/) {
+		if (/^\s*ccflags-([ym])?\s*([:+]?)=\s*(\S.*?)\s*$/) {
+			if ($check) {
+				print STDERR "Should use '+=' with ccflags-$1 in $file:$.\n$_\n" if ($2 ne "+");
+			}
+			next;
+		}
+		if (/^\s*(\S+)-[ym]?\s*([:+]?)\s*=\s*(\S.*?)\s*$/) {
+			my @files = split(/\s+/, $3);
+			foreach my $f (@files) {
+				$f =~ s|^(.*)\.o$|$dir/$1|;
+			}
+			if ($2 eq '+') {
+				# Adding to files
+				print STDERR "Should use ':=' in $file:$.\n$_\n" if ($check && !exists $multi{"$dir/$1"});
+				push @files, split(/\s+/, $multi{"$dir/$1"});
+			} else {
+				print STDERR "Setting objects twice in $file:$.\n$_\n" if ($check && exists $multi{"$dir/$1"});
+			}
+			$multi{"$dir/$1"} = "@files";
+			next;
+		}
+		if (/^\s*(\S+)-\$\((\S+)\)\s*([:+]?)\s*=\s*(\S.*?)\s*$/) {
+			print STDERR "Should use '+=' in $file:$.\n$_\n" if ($check && $3 ne '+');
+			my ($var, $files, $targets) = ($2, $3, $4);
+			$multi{"$dir/$1"} = $files;
+			foreach(split(/\s+/, $targets)) {
+				if (m|/$|) { # Ends in /, means it's a directory
+					open_makefile("$dir/$_".'Makefile');
+				} elsif (/^(\S+)\.o$/) {
+					push @{$config{$var}}, "$dir/$1";
+				} else {
+					print STDERR "Confused by target '$_' in $file:$.\n";
+				}
+			}
+			next;
+		}
+		if (/^\s*EXTRA_CFLAGS\s*([:+]?)\s*=\s*(\S.*?)\s*$/) {
 			if ($check) {
 				sub allI { /^-I/ or return 0 foreach split(/\s+/, $_[0]);return 1; }
 				my $use = allI($2) ? ':' : '+';
-			print STDERR "Should use '$use=' with EXTRA_CFLAGS in $file:$.\n$_\n"
-			if ($1 ne $use);
+				print STDERR "Should use '$use=' with EXTRA_CFLAGS in $file:$.\n$_\n" if ($1 ne $use);
 			}
 			next;
 		}
