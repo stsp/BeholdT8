@@ -98,15 +98,17 @@ sub open_makefile($) {
 	}
 	if (/(\S+)-objs\s*([:+]?)=\s*(\S.*?)\s*$/) {
 	    my @files = split(/\s+/, $3);
-	    map { s|^(.*)\.o$|$dir/\1| } @files;
+	    foreach my $f (@files) {
+		$f =~ s|^(.*)\.o$|$dir/$1|;
+	    }
 	    if ($2 eq '+') {
 		# Adding to files
 		print STDERR "Should use ':=' in $file:$.\n$_\n" if ($check && !exists $multi{"$dir/$1"});
-		push @files, @{$multi{"$dir/$1"}};
+		push @files, $multi{"$dir/$1"} if (exists($multi{"$dir/$1"}));
 	    } else {
 		print STDERR "Setting objects twice in $file:$.\n$_\n" if ($check && exists $multi{"$dir/$1"});
 	    }
-	    $multi{"$dir/$1"} = \@files;
+	    $multi{"$dir/$1"} = "@files";
 	    next;
 	}
 	if (/^\s*EXTRA_CFLAGS\s*([:+]?)=\s*(\S.*?)\s*$/) {
@@ -160,7 +162,7 @@ foreach (keys %modules) {
     /$prefix(.*)$/;
     printf "%-30s = ", "$1.ko";
     if (exists $multi{$_}) {
-	my @list =  @{$multi{$_}};
+	my @list = split(/\s+/, $multi{$_});
 	map { s/^$prefix(.*)$/\1.c/ } @list;
 	print join(' ', @list), "\n";
     } else {
@@ -173,7 +175,7 @@ while (my ($var, $list) = each %config) {
     my @outlist = ();
     foreach (@$list) {
 	if (exists $multi{$_}) {
-	    push @outlist, @{$multi{$_}};
+	    push @outlist, split(/\s+/, $multi{$_});
 	} else {
 	    push @outlist, $_;
 	}
