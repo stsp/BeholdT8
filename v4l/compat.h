@@ -888,6 +888,10 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 #endif
 #endif /*pr_debug_ratelimited */
 
+#ifdef NEED_DEV_DBG_RATELIMITED
+#define dev_dbg_ratelimited dev_dbg
+#endif
+
 #ifdef NEED_MODULE_USB_DRIVER
 #define module_usb_driver(drv)			\
 static int __init usb_mod_init(void)		\

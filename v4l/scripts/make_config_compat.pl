@@ -549,6 +549,7 @@ sub check_other_dependencies()
 	check_file_for_func("include/linux/kernel.h", "kstrtou16", "NEED_KSTRTOU16");
 	check_file_for_func("include/linux/string.h", "memweight", "NEED_MEMWEIGHT");
 	check_file_for_func("include/linux/usb/ch9.h", "usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP");
+	check_file_for_func("include/linux/device.h", "dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED");
 }
 
 # Do the basic rules
