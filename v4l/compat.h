@@ -1086,4 +1086,10 @@ static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
 }
 #endif
 
+#ifndef module_pci_driver
+#define module_pci_driver(__pci_driver) \
+       module_driver(__pci_driver, pci_register_driver, \
+                       pci_unregister_driver)
+#endif
+
 #endif /*  _COMPAT_H */
