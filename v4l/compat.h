@@ -1064,4 +1064,10 @@ static inline int usb_endpoint_maxp(const struct usb_endpoint_descriptor *epd)
 #define printk_ratelimited printk
 #endif
 
+#ifndef module_pci_driver
+#define module_pci_driver(__pci_driver) \
+       module_driver(__pci_driver, pci_register_driver, \
+                       pci_unregister_driver)
+#endif
+
 #endif /*  _COMPAT_H */
