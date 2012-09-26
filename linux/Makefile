@@ -32,6 +32,7 @@ TARFILES += include/linux/v4l2-subdev.h
 TARFILES += include/linux/v4l2-common.h
 TARFILES += include/linux/v4l2-mediabus.h
 TARFILES += include/linux/v4l2-dv-timings.h
+TARFILES += include/linux/v4l2-controls.h
 TARFILES += include/linux/uvcvideo.h
 TARFILES += include/linux/fixp-arith.h
 
