@@ -5,6 +5,10 @@
 # needs devm_clk_get, clk_enable, clk_disable
 VIDEO_CODA
 
+[3.4.0]
+# needs devm_regulator_bulk_get
+VIDEO_S5K4ECGX
+
 [3.3.0]
 # Needs struct dma_interleaved_template in dmaengine.h
 VIDEO_MEM2MEM_DEINTERLACE
