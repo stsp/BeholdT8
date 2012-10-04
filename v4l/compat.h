@@ -1070,4 +1070,20 @@ static inline int usb_endpoint_maxp(const struct usb_endpoint_descriptor *epd)
                        pci_unregister_driver)
 #endif
 
+#ifdef NEED_GPIOF_OUT_INIT_LOW
+#define GPIOF_OUT_INIT_LOW      (GPIOF_DIR_OUT | GPIOF_INIT_LOW)
+#define GPIOF_OUT_INIT_HIGH      (GPIOF_DIR_OUT | GPIOF_INIT_HIGH)
+#endif
+
+#ifdef NEED_LOCK_ADAPTER
+static inline void i2c_lock_adapter(struct i2c_adapter *adapter)
+{
+	mutex_lock(&adapter->bus_lock);
+}
+static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
+{
+	mutex_unlock(&adapter->bus_lock);
+}
+#endif
+
 #endif /*  _COMPAT_H */

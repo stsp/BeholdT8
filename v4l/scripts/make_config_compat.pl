@@ -482,24 +482,26 @@ sub check_printk_ratelimited()
 }
 
 
-sub check_file_for_func($$$)
+sub check_files_for_func($$@)
 {
-	my $incfile = shift;
 	my $function = shift;
 	my $define = shift;
+	my @incfiles = shift;
 
-	my @files = ( "$kdir/$incfile" );
+	for my $incfile (@incfiles) {
+		my @files = ( "$kdir/$incfile" );
 
-	foreach my $file ( @files ) {
-		open IN, "<$file" or die "File not found: $file";
-		while (<IN>) {
-			if (m/($function)/) {
-				close IN;
-				# definition found. No need for compat
-				return;
+		foreach my $file ( @files ) {
+			open IN, "<$file" or die "File not found: $file";
+			while (<IN>) {
+				if (m/($function)/) {
+					close IN;
+					# definition found. No need for compat
+					return;
+				}
 			}
+			close IN;
 		}
-		close IN;
 	}
 
 	# definition not found. This means that we need compat
@@ -532,24 +534,26 @@ sub check_other_dependencies()
 	check_autosuspend_delay();
 	check_i2c_smbus_read_word_swapped();
 	check_printk_ratelimited();
-	check_file_for_func("include/linux/kernel.h", "hex_to_bin", "NEED_HEX_TO_BIN");
-	check_file_for_func("include/sound/control.h", "snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO");
-	check_file_for_func("include/linux/sysfs.h", "sysfs_attr_init", "NEED_SYSFS_ATTR_INIT");
-	check_file_for_func("include/linux/delay.h", "usleep_range", "NEED_USLEEP_RANGE");
-	check_file_for_func("include/linux/err.h", "IS_ERR_OR_NULL", "NEED_IS_ERR_OR_NULL");
-	check_file_for_func("include/linux/dmaengine.h", "dma_transfer_direction", "NEED_DMA_TRANSFER_DIRECTION");
-	check_file_for_func("include/linux/poll.h", "poll_requested_events", "NEED_POLL_REQUESTED_EVENTS");
-	check_file_for_func("include/linux/usb.h", "module_usb_driver", "NEED_MODULE_USB_DRIVER");
-	check_file_for_func("include/linux/platform_device.h", "module_platform_driver", "NEED_MODULE_PLATFORM_DRIVER");
-	check_file_for_func("include/linux/slab.h", "kmalloc_array", "NEED_KMALLOC_ARRAY");
-	check_file_for_func("include/linux/dmaengine.h", "dmaengine_prep_slave_sg", "NEED_DMAENGINE_PREP_SLAVE_SG");
-	check_file_for_func("include/linux/pm.h", "SET_SYSTEM_SLEEP_PM_OPS", "NEED_SET_SYSTEM_SLEEP_PM_OPS");
-	check_file_for_func("include/linux/i2c.h", "__i2c_transfer", "NEED_UNLOCK_I2C_XFER");
-	check_file_for_func("include/linux/i2c.h", "I2C_CLIENT_SCCB", "NEED_I2C_CLIENT_SCCB");
-	check_file_for_func("include/linux/kernel.h", "kstrtou16", "NEED_KSTRTOU16");
-	check_file_for_func("include/linux/string.h", "memweight", "NEED_MEMWEIGHT");
-	check_file_for_func("include/linux/usb/ch9.h", "usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP");
-	check_file_for_func("include/linux/device.h", "dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED");
+	check_files_for_func("hex_to_bin", "NEED_HEX_TO_BIN", "include/linux/kernel.h");
+	check_files_for_func("snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO", "include/sound/control.h");
+	check_files_for_func("sysfs_attr_init", "NEED_SYSFS_ATTR_INIT", "include/linux/sysfs.h");
+	check_files_for_func("usleep_range", "NEED_USLEEP_RANGE", "include/linux/delay.h");
+	check_files_for_func("IS_ERR_OR_NULL", "NEED_IS_ERR_OR_NULL", "include/linux/err.h");
+	check_files_for_func("dma_transfer_direction", "NEED_DMA_TRANSFER_DIRECTION", "include/linux/dmaengine.h");
+	check_files_for_func("poll_requested_events", "NEED_POLL_REQUESTED_EVENTS", "include/linux/poll.h");
+	check_files_for_func("module_usb_driver", "NEED_MODULE_USB_DRIVER", "include/linux/usb.h");
+	check_files_for_func("module_platform_driver", "NEED_MODULE_PLATFORM_DRIVER", "include/linux/platform_device.h");
+	check_files_for_func("kmalloc_array", "NEED_KMALLOC_ARRAY", "include/linux/slab.h");
+	check_files_for_func("dmaengine_prep_slave_sg", "NEED_DMAENGINE_PREP_SLAVE_SG", "include/linux/dmaengine.h");
+	check_files_for_func("SET_SYSTEM_SLEEP_PM_OPS", "NEED_SET_SYSTEM_SLEEP_PM_OPS", "include/linux/pm.h");
+	check_files_for_func("__i2c_transfer", "NEED_UNLOCK_I2C_XFER", "include/linux/i2c.h");
+	check_files_for_func("I2C_CLIENT_SCCB", "NEED_I2C_CLIENT_SCCB", "include/linux/i2c.h");
+	check_files_for_func("kstrtou16", "NEED_KSTRTOU16", "include/linux/kernel.h");
+	check_files_for_func("memweight", "NEED_MEMWEIGHT", "include/linux/string.h");
+	check_files_for_func("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "include/linux/usb/ch9.h");
+	check_files_for_func("dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED", "include/linux/device.h");
+	check_files_for_func("GPIOF_OUT_INIT_LOW", "NEED_GPIOF_OUT_INIT_LOW", "include/linux/gpio.h", "include/asm-generic/gpio.h");
+	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");
 }
 
 # Do the basic rules
