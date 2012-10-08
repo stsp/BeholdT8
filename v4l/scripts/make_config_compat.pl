@@ -552,9 +552,7 @@ sub check_other_dependencies()
 	check_files_for_func("memweight", "NEED_MEMWEIGHT", "include/linux/string.h");
 	check_files_for_func("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "include/linux/usb/ch9.h");
 	check_files_for_func("dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED", "include/linux/device.h");
-	check_files_for_func("GPIOF_OUT_INIT_LOW", "NEED_GPIOF_OUT_INIT_LOW", "include/linux/gpio.h", "include/asm-generic/gpio.h");
 	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");
-	check_files_for_func("SZ_1M", "NEED_SZ_1M", "include/linux/sizes.h", "include/asm-generic/sizes.h");
 }
 
 # Do the basic rules
