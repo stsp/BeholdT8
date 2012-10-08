@@ -1,5 +1,6 @@
 # Use this for stuff for drivers that don't compile
 [3.255.255]
+VIDEO_M5MOLS
 
 [3.6.0]
 # needs devm_clk_get, clk_enable, clk_disable
