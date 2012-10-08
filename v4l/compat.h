@@ -1092,4 +1092,8 @@ static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
                        pci_unregister_driver)
 #endif
 
+#ifdef NEED_SZ_1M
+#define SZ_1M                                0x00100000
+#endif
+
 #endif /*  _COMPAT_H */

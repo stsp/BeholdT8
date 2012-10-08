@@ -486,13 +486,13 @@ sub check_files_for_func($$@)
 {
 	my $function = shift;
 	my $define = shift;
-	my @incfiles = shift;
+	my @incfiles = @_;
 
 	for my $incfile (@incfiles) {
 		my @files = ( "$kdir/$incfile" );
 
 		foreach my $file ( @files ) {
-			open IN, "<$file" or die "File not found: $file";
+			open IN, "<$file" or next;
 			while (<IN>) {
 				if (m/($function)/) {
 					close IN;
@@ -554,6 +554,7 @@ sub check_other_dependencies()
 	check_files_for_func("dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED", "include/linux/device.h");
 	check_files_for_func("GPIOF_OUT_INIT_LOW", "NEED_GPIOF_OUT_INIT_LOW", "include/linux/gpio.h", "include/asm-generic/gpio.h");
 	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");
+	check_files_for_func("SZ_1M", "NEED_SZ_1M", "include/linux/sizes.h", "include/asm-generic/sizes.h");
 }
 
 # Do the basic rules
