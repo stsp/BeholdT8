@@ -161,13 +161,13 @@ KDIR26		:= /lib/modules/$(KERNELRELEASE)/kernel/drivers/media
 HOSTCC:=$(CC)
 CC += -I$(obj)
 
-CPPFLAGS := -I$(SUBDIRS)/../linux/include $(CPPFLAGS) -I$(SUBDIRS)/
+CPPFLAGS := -I$(SUBDIRS)/../linux/include -I$(SUBDIRS)/../linux/include/uapi $(CPPFLAGS) -I$(SUBDIRS)/
 
 # Needed for kernel 2.6.24 or up
-KBUILD_CPPFLAGS := -I$(SUBDIRS)/../linux/include $(KBUILD_CPPFLAGS) -I$(SUBDIRS)/
+KBUILD_CPPFLAGS := -I$(SUBDIRS)/../linux/include -I$(SUBDIRS)/../linux/include/uapi $(KBUILD_CPPFLAGS) -I$(SUBDIRS)/
 
 # Needed for kernel 2.6.29 or up
-LINUXINCLUDE    := -I$(SUBDIRS)/../linux/include $(LINUXINCLUDE) -I$(SUBDIRS)/
+LINUXINCLUDE    := -I$(SUBDIRS)/../linux/include -I$(SUBDIRS)/../linux/include/uapi $(LINUXINCLUDE) -I$(SUBDIRS)/
 
 MYCFLAGS :=
 
