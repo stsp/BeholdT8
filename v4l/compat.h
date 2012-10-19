@@ -1087,4 +1087,8 @@ static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
                        pci_unregister_driver)
 #endif
 
+#ifdef NEED_DONTDUMP
+#define VM_DONTDUMP VM_NODUMP
+#endif
+
 #endif /*  _COMPAT_H */

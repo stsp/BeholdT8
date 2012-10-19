@@ -553,6 +553,7 @@ sub check_other_dependencies()
 	check_files_for_func("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "include/linux/usb/ch9.h");
 	check_files_for_func("dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED", "include/linux/device.h");
 	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");
+	check_files_for_func("VM_DONTDUMP", "NEED_DONTDUMP", "include/linux/mm.h");
 }
 
 # Do the basic rules
