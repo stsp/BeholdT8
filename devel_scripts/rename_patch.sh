@@ -4,6 +4,16 @@ if [ "$1" == "" ]; then echo "usage: /home/v4l/media_build/devel_scripts/gen_ren
 
 OLD="$1.old"
 mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/common/b2c2/Kconfig,g' \
+	-e 's,include/linux/ivtvfb\.h,include/uapi/linux/ivtvfb\.h,g' \
+	-e 's,include/linux/ivtv\.h,include/uapi/linux/ivtv\.h,g' \
+	-e 's,include/linux/media\.h,include/uapi/linux/media\.h,g' \
+	-e 's,include/linux/meye\.h,include/uapi/linux/meye\.h,g' \
+	-e 's,include/linux/uvcvideo\.h,include/uapi/linux/uvcvideo\.h,g' \
+	-e 's,include/linux/v4l2-common\.h,include/uapi/linux/v4l2-common\.h,g' \
+	-e 's,include/linux/v4l2-controls\.h,include/uapi/linux/v4l2-controls\.h,g' \
+	-e 's,include/linux/v4l2-dv-timings\.h,include/uapi/linux/v4l2-dv-timings\.h,g' \
+	-e 's,include/linux/v4l2-mediabus\.h,include/uapi/linux/v4l2-mediabus\.h,g' \
+	-e 's,include/linux/v4l2-subdev\.h,include/uapi/linux/v4l2-subdev\.h,g' \
 	-e 's,drivers/media/dvb/b2c2/flexcop-common\.h,drivers/media/common/b2c2/flexcop-common\.h,g' \
 	-e 's,drivers/media/dvb/b2c2/flexcop-eeprom\.c,drivers/media/common/b2c2/flexcop-eeprom\.c,g' \
 	-e 's,drivers/media/dvb/b2c2/flexcop-fe-tuner\.c,drivers/media/common/b2c2/flexcop-fe-tuner\.c,g' \
