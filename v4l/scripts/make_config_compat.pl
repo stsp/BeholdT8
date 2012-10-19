@@ -554,6 +554,7 @@ sub check_other_dependencies()
 	check_files_for_func("dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED", "include/linux/device.h");
 	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");
 	check_files_for_func("VM_DONTDUMP", "NEED_DONTDUMP", "include/linux/mm.h");
+	check_files_for_func("VM_NODUMP", "NEED_NODUMP", "include/linux/mm.h");
 }
 
 # Do the basic rules

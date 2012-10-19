@@ -1088,6 +1088,14 @@ static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
 #endif
 
 #ifdef NEED_DONTDUMP
+#ifdef NEED_NODUMP
+/*
+ * If NODUMP doesn't exist, then this flag was actually called VM_ALWAYSDUMP
+ * and we have to invert the meaning of the flag.
+ * So NODUMP == !VM_ALWAYSDUMP == 0.
+ */
+#define VM_NODUMP (0)
+#endif
 #define VM_DONTDUMP VM_NODUMP
 #endif
 
