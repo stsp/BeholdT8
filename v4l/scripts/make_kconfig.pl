@@ -498,7 +498,7 @@ sub get_version()
 {
 	open IN, '<.version' or die 'File not found: .version';
 	while (<IN>) {
-		if (/KERNELRELEASE\s*[:]*[=]+\s*(\d+)\.(\d+)\.(\d+)/) {
+		if (/KERNELRELEASE\s*[:]*[=]+\s*(\d+)\.(\d+)[\.-](\d+)/) {
 			$version=$1;
 			$level=$2;
 			$sublevel=$3;
