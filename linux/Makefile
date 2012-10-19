@@ -6,34 +6,43 @@
 
 MAINDIRS += drivers firmware include sound
 
-# Media drivers
+# Drivers source code
 TARDIR += drivers/media/
 TARDIR += drivers/staging/media/
 TARDIR += drivers/misc/altera-stapl/
-TARFILES += include/misc/altera.h
 TARFILES += sound/pci/bt87x.c
 TARFILES += sound/i2c/other/tea575x-tuner.c
 
 # Includes
+
+# Pure kernel API
 TARDIR += include/media/
-TARDIR += include/linux/dvb/
-TARFILES += include/linux/usb/video.h
-TARFILES += include/uapi/linux/ivtv.h
 TARFILES += include/linux/mmc/sdio_ids.h
-TARFILES += include/uapi/linux/ivtvfb.h
-TARFILES += include/linux/videodev2.h
-TARFILES += include/uapi/linux/meye.h
 TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
 TARFILES += include/linux/via-core.h
 TARFILES += include/linux/ti_wilink_st.h
+
+TARFILES += include/misc/altera.h
+
+# Userspace API
+TARFILES += include/uapi/linux/videodev2.h
+TARFILES += include/uapi/linux/meye.h
+TARFILES += include/uapi/linux/ivtv.h
+TARFILES += include/uapi/linux/ivtvfb.h
 TARFILES += include/uapi/linux/media.h
-TARFILES += include/uapi/linux/v4l2-subdev.h
-TARFILES += include/uapi/linux/v4l2-common.h
-TARFILES += include/uapi/linux/v4l2-mediabus.h
 TARFILES += include/uapi/linux/v4l2-dv-timings.h
 TARFILES += include/uapi/linux/v4l2-controls.h
 TARFILES += include/uapi/linux/uvcvideo.h
+
+# Both Kernelspace and Userspace API
+TARDIR += include/linux/dvb/			include/uapi/linux/dvb/
+TARFILES += include/linux/usb/video.h		include/uapi/linux/dvb/video.h
+TARFILES += include/media/v4l2-subdev.h		include/uapi/linux/v4l2-subdev.h
+TARFILES += include/media/v4l2-common.h		include/uapi/linux/v4l2-common.h
+TARFILES += include/media/v4l2-mediabus.h	include/uapi/linux/v4l2-mediabus.h
+
+# Other random files
 TARFILES += include/linux/fixp-arith.h
 
 # Firmware
@@ -104,7 +113,7 @@ clean:
 dir: clean
 	@lsdiff --version >/dev/null # Make 'make dir' fail if lsdiff is not installed
 	@if [ "$(DIR)" = "" ]; then echo "make $@ DIR=<version>"; exit -1; fi
-	@if [ ! -f "$(DIR)/include/linux/videodev2.h" ]; then echo "$(DIR) does not contain kernel sources"; exit -1; fi
+	@if [ ! -f "$(DIR)/include/uapi/linux/videodev2.h" ]; then echo "$(DIR) does not contain kernel sources"; exit -1; fi
 	@echo "Searching in $(DIR)/Makefile for kernel version."
 	./use_dir.pl $(DIR)
 
