@@ -120,6 +120,11 @@ sub open_makefile($) {
 			remove_includes($1, $orig);	# will print line for us
 			next;
 		}
+		if (/^\s*ccflags-.*=\s*(\S.*?)\s*$/) {
+			# print STDERR "cflags matched '$1'\n";
+			remove_includes($1, $orig);	# will print line for us
+			next;
+		}
 		# Any flags should be added to already existing flags
 		$orig =~ s/ccflags-y\s*:=/ccflags-y +=/;
 		print OUT $orig;
