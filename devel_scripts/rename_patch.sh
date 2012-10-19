@@ -4,6 +4,11 @@ if [ "$1" == "" ]; then echo "usage: /home/v4l/media_build/devel_scripts/gen_ren
 
 OLD="$1.old"
 mv $1 $OLD && cat $OLD | sed -e 's,drivers/media/dvb/b2c2/Kconfig,drivers/media/common/b2c2/Kconfig,g' \
+	-e 's,include/linux/dvb/ca\.h,include/uapi/linux/dvb/ca\.h,g' \
+	-e 's,include/linux/dvb/frontend\.h,include/uapi/linux/dvb/frontend\.h,g' \
+	-e 's,include/linux/dvb/net\.h,include/uapi/linux/dvb/net\.h,g' \
+	-e 's,include/linux/dvb/osd\.h,include/uapi/linux/dvb/osd\.h,g' \
+	-e 's,include/linux/dvb/version\.h,include/uapi/linux/dvb/version\.h,g' \
 	-e 's,include/linux/ivtvfb\.h,include/uapi/linux/ivtvfb\.h,g' \
 	-e 's,include/linux/ivtv\.h,include/uapi/linux/ivtv\.h,g' \
 	-e 's,include/linux/media\.h,include/uapi/linux/media\.h,g' \
