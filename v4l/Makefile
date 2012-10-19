@@ -1,4 +1,4 @@
-ifeq ($(wildcard ../linux/include/linux/videodev2.h),)
+ifeq ($(wildcard ../linux/include/uapi/linux/videodev2.h),)
 
 # No kernel source! User needs to download one
 def:
