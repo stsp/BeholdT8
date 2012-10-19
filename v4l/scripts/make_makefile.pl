@@ -58,7 +58,17 @@ sub remove_includes($$)
 	my $count = 0;
 
 	foreach(split /\s+/, $flags) {
-		if (m|^-Idrivers/media|) {
+		if (m,^.\(extra\-cflags-[ym]\),) {
+			# Remove any -I flags from original Makefile line
+			$orig =~ s/.\(extra\-cflags-[ym]\)//;
+			next;
+		}
+		if (m,^-I.*srctree.*(drivers/media|drivers/staging/media),) {
+			# Remove any -I flags from original Makefile line
+			$orig =~ s/$_[ \t]*//;
+			next;
+		}
+		if (m,^-I(drivers/media|drivers/staging/media),) {
 			# Remove any -I flags from original Makefile line
 			$orig =~ s/$_[ \t]*//;
 			next;
