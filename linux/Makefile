@@ -20,12 +20,14 @@ TARDIR += include/media/
 TARFILES += include/linux/mmc/sdio_ids.h
 TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
+TARFILES += include/linux/usb/video.h
 TARFILES += include/linux/via-core.h
 TARFILES += include/linux/ti_wilink_st.h
 
 TARFILES += include/misc/altera.h
 
 # Userspace API
+TARDIR += include/uapi/linux/dvb/
 TARFILES += include/uapi/linux/videodev2.h
 TARFILES += include/uapi/linux/meye.h
 TARFILES += include/uapi/linux/ivtv.h
@@ -36,8 +38,6 @@ TARFILES += include/uapi/linux/v4l2-controls.h
 TARFILES += include/uapi/linux/uvcvideo.h
 
 # Both Kernelspace and Userspace API
-TARDIR += include/linux/dvb/			include/uapi/linux/dvb/
-TARFILES += include/linux/usb/video.h		include/uapi/linux/dvb/video.h
 TARFILES += include/media/v4l2-subdev.h		include/uapi/linux/v4l2-subdev.h
 TARFILES += include/media/v4l2-common.h		include/uapi/linux/v4l2-common.h
 TARFILES += include/media/v4l2-mediabus.h	include/uapi/linux/v4l2-mediabus.h
