@@ -14,7 +14,9 @@ sub patch_file($$$$)
 	open IN, "$filename" or die "can't open $filename";
 	my $is_function;
 	my $file;
+	my $org_file;
 	while (<IN>) {
+		$org_file .= $_;
 		next if (m/($warning)/);
 		$file .= $_;
 		if (m/($function)/) {
@@ -41,16 +43,20 @@ sub patch_file($$$$)
 		};
 	}
 	close IN;
+	if ($org_file ne $file) {
+		open OUT, ">$filename.new" or die "Can't open $filename.new";
+		print OUT $file;
+		close OUT;
 
-	open OUT, ">$filename.new" or die "Can't open $filename.new";
-	print OUT $file;
-	close OUT;
-	rename "$filename", "$filename~" or die "Can't rename $filename to $filename~";
-	rename "$filename.new", "$filename" or die "Can't rename $filename.new to $filename";
-	if ($patched) {
-		print "Patched $filename\n";
+		rename "$filename", "$filename~" or die "Can't rename $filename to $filename~";
+		rename "$filename.new", "$filename" or die "Can't rename $filename.new to $filename";
+		if ($patched) {
+			print "Patched $filename\n";
+		} else {
+			die "$filename was not patched.\n";
+		}
 	} else {
-		die "$filename was not patched.\n";
+			print "$filename was already patched\n";
 	}
 }
 
@@ -68,24 +74,9 @@ $logs =~ s,\n,\\n\\t,g;
 $logs =~ s,\",\\\",g;
 $logs = "Latest git patches (needed if you report a bug to linux-media\@vger.kernel.org):\\n\\t$logs";
 
-my $need_patch;
-open IN, "md5sum git_log|" or die "can't find git_log";
-my $hash = <IN>;
-close IN;
-open IN, ".git_log.md5" or $need_patch = 1;
-if (!$need_patch) {
-	$need_patch = 1 if ($hash ne <IN>);
-}
-
-if ($need_patch) {
-	# Patch dvbdev
-	patch_file "drivers/media/dvb-core/dvbdev.c", "__init init_dvbdev", "MKDEV", $logs;
-	# Patch v4l2-dev
-	patch_file "drivers/media/v4l2-core/v4l2-dev.c", "__init videodev_init", "printk", $logs;
-	# Patch rc core
-	patch_file "drivers/media/rc/rc-main.c", "__init rc_core_init", "rc_map_register", $logs;
-
-	open OUT,">.git_log.md5";
-	print OUT $hash;
-	close OUT;
-}
+# Patch dvbdev
+patch_file "drivers/media/dvb-core/dvbdev.c", "__init init_dvbdev", "MKDEV", $logs;
+# Patch v4l2-dev
+patch_file "drivers/media/v4l2-core/v4l2-dev.c", "__init videodev_init", "printk", $logs;
+# Patch rc core
+patch_file "drivers/media/rc/rc-main.c", "__init rc_core_init", "rc_map_register", $logs;
