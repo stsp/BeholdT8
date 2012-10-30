@@ -63,12 +63,30 @@ sub patch_file($$$$)
 #
 # Main
 #
-
-# Prepare patches message
 open IN, "git_log" or die "can't open git_log";
 my $logs;
 $logs.=$_ while (<IN>);
 close IN;
+
+if (open IN,".linked_dir") {
+	while (<IN>) {
+		if (m/^path:\s*(.*)/) {
+			my $dir=$1;
+			my $new_log = qx(git --git-dir $dir/.git log --pretty=oneline -n3 |sed -r 's,([\x22]),,g; s,([\x25\x5c]),\x5c\\1,g');
+			if ($new_log ne $logs) {
+				printf("Git version changed.\n");
+				open OUT, ">git_log";
+				print OUT $new_log;
+				close OUT;
+				$logs = $new_log;
+			}
+			last;
+		}
+	}
+	close IN;
+}
+
+# Prepare patches message
 $logs =~ s/\s+$//;
 $logs =~ s,\n,\\n\\t,g;
 $logs =~ s,\",\\\",g;
