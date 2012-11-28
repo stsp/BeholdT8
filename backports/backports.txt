@@ -63,6 +63,7 @@ add v2.6.33_pvrusb2_sysfs.patch
 [2.6.32]
 add v2.6.32_kfifo.patch
 add v2.6.32_request_firmware_nowait.patch
+add v2.6.32_usb_ss_ep_comp.patch
 
 [2.6.31]
 add v2.6.31_nodename.patch
