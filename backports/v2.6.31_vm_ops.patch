@@ -1,31 +1,20 @@
----
- drivers/media/usb/gspca/gspca.c            |    2 +-
- drivers/media/pci/meye/meye.c                   |    2 +-
- drivers/media/usb/sn9c102/sn9c102_core.c   |    2 +-
- drivers/media/usb/stkwebcam/stk-webcam.c             |    2 +-
- drivers/media/usb/uvc/uvc_queue.c          |    2 +-
- drivers/media/v4l2-core/videobuf-dma-contig.c    |    2 +-
- drivers/media/v4l2-core/videobuf-dma-sg.c        |    2 +-
- drivers/media/v4l2-core/videobuf-vmalloc.c       |    2 +-
- drivers/media/v4l2-core/videobuf2-memops.c       |    4 ++--
- drivers/media/pci/zoran/zoran_driver.c     |    2 +-
- include/media/videobuf2-memops.h             |    4 ++--
- 13 files changed, 15 insertions(+), 15 deletions(-)
+ drivers/media/pci/meye/meye.c                 |    2 +-
+ drivers/media/pci/zoran/zoran_driver.c        |    2 +-
+ drivers/media/usb/gspca/gspca.c               |    2 +-
+ drivers/media/usb/sn9c102/sn9c102_core.c      |    2 +-
+ drivers/media/usb/stkwebcam/stk-webcam.c      |    2 +-
+ drivers/media/v4l2-core/videobuf-dma-contig.c |    2 +-
+ drivers/media/v4l2-core/videobuf-dma-sg.c     |    2 +-
+ drivers/media/v4l2-core/videobuf-vmalloc.c    |    2 +-
+ drivers/media/v4l2-core/videobuf2-memops.c    |    2 +-
+ include/media/videobuf2-memops.h              |    2 +-
+ 10 files changed, 10 insertions(+), 10 deletions(-)
 
---- linux.orig/drivers/media/usb/gspca/gspca.c
-+++ linux/drivers/media/usb/gspca/gspca.c
-@@ -107,7 +107,7 @@ static void gspca_vm_close(struct vm_are
- 		frame->v4l2_buf.flags &= ~V4L2_BUF_FLAG_MAPPED;
- }
- 
--static const struct vm_operations_struct gspca_vm_ops = {
-+static struct vm_operations_struct gspca_vm_ops = {
- 	.open		= gspca_vm_open,
- 	.close		= gspca_vm_close,
- };
---- linux.orig/drivers/media/pci/meye/meye.c
-+++ linux/drivers/media/pci/meye/meye.c
-@@ -1593,7 +1593,7 @@ static void meye_vm_close(struct vm_area
+diff --git a/drivers/media/pci/meye/meye.c b/drivers/media/pci/meye/meye.c
+index 5f826fd..9f6e8c7 100644
+--- a/drivers/media/pci/meye/meye.c
++++ b/drivers/media/pci/meye/meye.c
+@@ -1593,7 +1593,7 @@ static void meye_vm_close(struct vm_area_struct *vma)
  	meye.vma_use_count[idx]--;
  }
  
@@ -34,84 +23,11 @@
  	.open		= meye_vm_open,
  	.close		= meye_vm_close,
  };
---- linux.orig/drivers/media/usb/sn9c102/sn9c102_core.c
-+++ linux/drivers/media/usb/sn9c102/sn9c102_core.c
-@@ -2078,7 +2078,7 @@ static void sn9c102_vm_close(struct vm_a
- }
- 
- 
--static const struct vm_operations_struct sn9c102_vm_ops = {
-+static struct vm_operations_struct sn9c102_vm_ops = {
- 	.open = sn9c102_vm_open,
- 	.close = sn9c102_vm_close,
- };
---- linux.orig/drivers/media/usb/stkwebcam/stk-webcam.c
-+++ linux/drivers/media/usb/stkwebcam/stk-webcam.c
-@@ -672,7 +672,7 @@ static void stk_v4l_vm_close(struct vm_a
- 	if (sbuf->mapcount == 0)
- 		sbuf->v4lbuf.flags &= ~V4L2_BUF_FLAG_MAPPED;
- }
--static const struct vm_operations_struct stk_v4l_vm_ops = {
-+static struct vm_operations_struct stk_v4l_vm_ops = {
- 	.open = stk_v4l_vm_open,
- 	.close = stk_v4l_vm_close
- };
---- linux.orig/drivers/media/v4l2-core/videobuf-dma-contig.c
-+++ linux/drivers/media/v4l2-core/videobuf-dma-contig.c
-@@ -156,7 +156,7 @@
- 	}
- }
- 
--static const struct vm_operations_struct videobuf_vm_ops = {
-+static struct vm_operations_struct videobuf_vm_ops = {
- 	.open	= videobuf_vm_open,
- 	.close	= videobuf_vm_close,
- };
---- linux.orig/drivers/media/v4l2-core/videobuf-dma-sg.c
-+++ linux/drivers/media/v4l2-core/videobuf-dma-sg.c
-@@ -402,7 +402,7 @@ static int videobuf_vm_fault(struct vm_a
- 	return 0;
- }
- 
--static const struct vm_operations_struct videobuf_vm_ops = {
-+static struct vm_operations_struct videobuf_vm_ops = {
- 	.open	= videobuf_vm_open,
- 	.close	= videobuf_vm_close,
- 	.fault	= videobuf_vm_fault,
---- linux.orig/drivers/media/v4l2-core/videobuf-vmalloc.c
-+++ linux/drivers/media/v4l2-core/videobuf-vmalloc.c
-@@ -120,7 +120,7 @@ static void videobuf_vm_close(struct vm_
- 	return;
- }
- 
--static const struct vm_operations_struct videobuf_vm_ops = {
-+static struct vm_operations_struct videobuf_vm_ops = {
- 	.open     = videobuf_vm_open,
- 	.close    = videobuf_vm_close,
- };
---- linux.orig/drivers/media/v4l2-core/videobuf2-memops.c
-+++ linux/drivers/media/v4l2-core/videobuf2-memops.c
-@@ -155,7 +155,7 @@ EXPORT_SYMBOL_GPL(vb2_get_contig_userptr
-  */
- int vb2_mmap_pfn_range(struct vm_area_struct *vma, unsigned long paddr,
- 				unsigned long size,
--				const struct vm_operations_struct *vm_ops,
-+				struct vm_operations_struct *vm_ops,
- 				void *priv)
- {
- 	int ret;
-@@ -223,7 +223,7 @@ static void vb2_common_vm_close(struct v
-  * vb2_common_vm_ops - common vm_ops used for tracking refcount of mmaped
-  * video buffers
-  */
--const struct vm_operations_struct vb2_common_vm_ops = {
-+struct vm_operations_struct vb2_common_vm_ops = {
- 	.open = vb2_common_vm_open,
- 	.close = vb2_common_vm_close,
- };
---- linux.orig/drivers/media/pci/zoran/zoran_driver.c
-+++ linux/drivers/media/pci/zoran/zoran_driver.c
-@@ -2850,7 +2850,7 @@ zoran_vm_close (struct vm_area_struct *v
+diff --git a/drivers/media/pci/zoran/zoran_driver.c b/drivers/media/pci/zoran/zoran_driver.c
+index 53f12c7..0a3455c 100644
+--- a/drivers/media/pci/zoran/zoran_driver.c
++++ b/drivers/media/pci/zoran/zoran_driver.c
+@@ -2860,7 +2860,7 @@ zoran_vm_close (struct vm_area_struct *vma)
  	mutex_unlock(&zr->resource_lock);
  }
  
@@ -120,9 +36,102 @@
  	.open = zoran_vm_open,
  	.close = zoran_vm_close,
  };
---- linux.orig/include/media/videobuf2-memops.h
-+++ linux/include/media/videobuf2-memops.h
-@@ -28,14 +28,14 @@ struct vb2_vmarea_handler {
+diff --git a/drivers/media/usb/gspca/gspca.c b/drivers/media/usb/gspca/gspca.c
+index 2c41cbc..3c27da0 100644
+--- a/drivers/media/usb/gspca/gspca.c
++++ b/drivers/media/usb/gspca/gspca.c
+@@ -111,7 +111,7 @@ static void gspca_vm_close(struct vm_area_struct *vma)
+ 		frame->v4l2_buf.flags &= ~V4L2_BUF_FLAG_MAPPED;
+ }
+ 
+-static const struct vm_operations_struct gspca_vm_ops = {
++static struct vm_operations_struct gspca_vm_ops = {
+ 	.open		= gspca_vm_open,
+ 	.close		= gspca_vm_close,
+ };
+diff --git a/drivers/media/usb/sn9c102/sn9c102_core.c b/drivers/media/usb/sn9c102/sn9c102_core.c
+index f9d4ac0..7a89b05 100644
+--- a/drivers/media/usb/sn9c102/sn9c102_core.c
++++ b/drivers/media/usb/sn9c102/sn9c102_core.c
+@@ -2076,7 +2076,7 @@ static void sn9c102_vm_close(struct vm_area_struct* vma)
+ }
+ 
+ 
+-static const struct vm_operations_struct sn9c102_vm_ops = {
++static struct vm_operations_struct sn9c102_vm_ops = {
+ 	.open = sn9c102_vm_open,
+ 	.close = sn9c102_vm_close,
+ };
+diff --git a/drivers/media/usb/stkwebcam/stk-webcam.c b/drivers/media/usb/stkwebcam/stk-webcam.c
+index 5d3c032..aaad71d 100644
+--- a/drivers/media/usb/stkwebcam/stk-webcam.c
++++ b/drivers/media/usb/stkwebcam/stk-webcam.c
+@@ -678,7 +678,7 @@ static void stk_v4l_vm_close(struct vm_area_struct *vma)
+ 	if (sbuf->mapcount == 0)
+ 		sbuf->v4lbuf.flags &= ~V4L2_BUF_FLAG_MAPPED;
+ }
+-static const struct vm_operations_struct stk_v4l_vm_ops = {
++static struct vm_operations_struct stk_v4l_vm_ops = {
+ 	.open = stk_v4l_vm_open,
+ 	.close = stk_v4l_vm_close
+ };
+diff --git a/drivers/media/v4l2-core/videobuf-dma-contig.c b/drivers/media/v4l2-core/videobuf-dma-contig.c
+index 3a43ba0..3decf93 100644
+--- a/drivers/media/v4l2-core/videobuf-dma-contig.c
++++ b/drivers/media/v4l2-core/videobuf-dma-contig.c
+@@ -156,7 +156,7 @@ static void videobuf_vm_close(struct vm_area_struct *vma)
+ 	}
+ }
+ 
+-static const struct vm_operations_struct videobuf_vm_ops = {
++static struct vm_operations_struct videobuf_vm_ops = {
+ 	.open	= videobuf_vm_open,
+ 	.close	= videobuf_vm_close,
+ };
+diff --git a/drivers/media/v4l2-core/videobuf-dma-sg.c b/drivers/media/v4l2-core/videobuf-dma-sg.c
+index 828e7c1..396df88 100644
+--- a/drivers/media/v4l2-core/videobuf-dma-sg.c
++++ b/drivers/media/v4l2-core/videobuf-dma-sg.c
+@@ -403,7 +403,7 @@ static int videobuf_vm_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
+ 	return 0;
+ }
+ 
+-static const struct vm_operations_struct videobuf_vm_ops = {
++static struct vm_operations_struct videobuf_vm_ops = {
+ 	.open	= videobuf_vm_open,
+ 	.close	= videobuf_vm_close,
+ 	.fault	= videobuf_vm_fault,
+diff --git a/drivers/media/v4l2-core/videobuf-vmalloc.c b/drivers/media/v4l2-core/videobuf-vmalloc.c
+index 2ff7fcc..f854aca 100644
+--- a/drivers/media/v4l2-core/videobuf-vmalloc.c
++++ b/drivers/media/v4l2-core/videobuf-vmalloc.c
+@@ -120,7 +120,7 @@ static void videobuf_vm_close(struct vm_area_struct *vma)
+ 	return;
+ }
+ 
+-static const struct vm_operations_struct videobuf_vm_ops = {
++static struct vm_operations_struct videobuf_vm_ops = {
+ 	.open     = videobuf_vm_open,
+ 	.close    = videobuf_vm_close,
+ };
+diff --git a/drivers/media/v4l2-core/videobuf2-memops.c b/drivers/media/v4l2-core/videobuf2-memops.c
+index 655664c..d6af17d 100644
+--- a/drivers/media/v4l2-core/videobuf2-memops.c
++++ b/drivers/media/v4l2-core/videobuf2-memops.c
+@@ -175,7 +175,7 @@ static void vb2_common_vm_close(struct vm_area_struct *vma)
+  * vb2_common_vm_ops - common vm_ops used for tracking refcount of mmaped
+  * video buffers
+  */
+-const struct vm_operations_struct vb2_common_vm_ops = {
++struct vm_operations_struct vb2_common_vm_ops = {
+ 	.open = vb2_common_vm_open,
+ 	.close = vb2_common_vm_close,
+ };
+diff --git a/include/media/videobuf2-memops.h b/include/media/videobuf2-memops.h
+index f05444c..c395259 100644
+--- a/include/media/videobuf2-memops.h
++++ b/include/media/videobuf2-memops.h
+@@ -28,7 +28,7 @@ struct vb2_vmarea_handler {
  	void			*arg;
  };
  
@@ -131,11 +140,3 @@
  
  int vb2_get_contig_userptr(unsigned long vaddr, unsigned long size,
  			   struct vm_area_struct **res_vma, dma_addr_t *res_pa);
- 
- int vb2_mmap_pfn_range(struct vm_area_struct *vma, unsigned long paddr,
- 				unsigned long size,
--				const struct vm_operations_struct *vm_ops,
-+				struct vm_operations_struct *vm_ops,
- 				void *priv);
- 
- struct vm_area_struct *vb2_get_vma(struct vm_area_struct *vma);
