@@ -89,8 +89,6 @@ IR_ENE
 IR_WINBOND_CIR
 IR_ITE_CIR
 IR_FINTEK
-# Relies on a struct class change
-DVB_DDBRIDGE
 # Relies on i2c_lock_adapter
 DVB_DRXK
 

@@ -42,3 +42,14 @@
  };
  
  static struct {
+--- linux.orig/drivers/media/pci/ddbridge/ddbridge-core.c
++++ linux/drivers/media/pci/ddbridge/ddbridge-core.c
+@@ -1499,7 +1499,7 @@ static int ddb_class_create(void)
+ 		unregister_chrdev(ddb_major, DDB_NAME);
+ 		return PTR_ERR(ddb_class);
+ 	}
+-	ddb_class->devnode = ddb_devnode;
++	ddb_class->nodename = ddb_devnode;
+ 	return 0;
+ }
+ 
