@@ -20,7 +20,7 @@ TARDIR += include/media/
 TARFILES += include/linux/mmc/sdio_ids.h
 TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
-TARFILES += include/linux/usb/video.h
+TARFILES += include/uapi/linux/usb/video.h
 TARFILES += include/linux/via-core.h
 TARFILES += include/linux/ti_wilink_st.h
 
