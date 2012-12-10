@@ -23,6 +23,7 @@ TARFILES += include/sound/aci.h
 TARFILES += include/uapi/linux/usb/video.h
 TARFILES += include/linux/via-core.h
 TARFILES += include/linux/ti_wilink_st.h
+TARFILES += include/linux/dma-buf.h
 
 TARFILES += include/misc/altera.h
 

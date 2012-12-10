@@ -6,6 +6,8 @@
 VIDEO_CODA
 # needs include/linux/sizes.h
 VIDEO_M5MOLS
+# needs dma_mmap_coherent and sg_alloc_table_from_pages.
+VIDEOBUF2_DMA_CONTIG
 
 [3.4.0]
 # needs devm_regulator_bulk_get
