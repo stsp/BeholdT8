@@ -1030,3 +1030,13 @@ index 699eef3..e68faa4 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include <linux/kernel.h>
+--- linux/drivers/media/media-devnode.c.orig	2012-12-10 17:39:47.360515135 +0100
++++ linux/drivers/media/media-devnode.c	2012-12-10 17:39:59.080516581 +0100
+@@ -30,6 +30,7 @@
+  * counting.
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/errno.h>
