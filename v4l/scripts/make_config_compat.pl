@@ -219,7 +219,9 @@ sub check_net_dev()
 sub check_usb_endpoint_type()
 {
 	my $nfiles = 0;
-	my @files = ( "$kdir/include/linux/usb.h", "$kdir/include/linux/usb/ch9.h" );
+	my @files = ( "$kdir/include/linux/usb.h",
+		      "$kdir/include/linux/usb/ch9.h",
+		      "$kdir/include/uapi/linux/usb/ch9.h" );
 
 	foreach my $file ( @files ) {
 		open IN, "<$file" or next;
@@ -508,6 +510,33 @@ sub check_files_for_func($$@)
 	$out.= "\n#define $define 1\n";
 }
 
+sub check_files_for_func_uapi($$@)
+{
+	my $function = shift;
+	my $define = shift;
+	my @incfiles = @_;
+
+	for my $incfile (@incfiles) {
+		my @files = ( "$kdir/include/linux/$incfile",
+			      "$kdir/include/uapi/linux/$incfile" );
+
+		foreach my $file ( @files ) {
+			open IN, "<$file" or next;
+			while (<IN>) {
+				if (m/($function)/) {
+					close IN;
+					# definition found. No need for compat
+					return;
+				}
+			}
+			close IN;
+		}
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define $define 1\n";
+}
+
 sub check_other_dependencies()
 {
 	check_spin_lock();
@@ -550,11 +579,13 @@ sub check_other_dependencies()
 	check_files_for_func("I2C_CLIENT_SCCB", "NEED_I2C_CLIENT_SCCB", "include/linux/i2c.h");
 	check_files_for_func("kstrtou16", "NEED_KSTRTOU16", "include/linux/kernel.h");
 	check_files_for_func("memweight", "NEED_MEMWEIGHT", "include/linux/string.h");
-	check_files_for_func("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "include/linux/usb/ch9.h");
 	check_files_for_func("dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED", "include/linux/device.h");
 	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");
 	check_files_for_func("VM_DONTDUMP", "NEED_DONTDUMP", "include/linux/mm.h");
 	check_files_for_func("VM_NODUMP", "NEED_NODUMP", "include/linux/mm.h");
+
+	# For tests for uapi-dependent logic
+	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");
 }
 
 # Do the basic rules
