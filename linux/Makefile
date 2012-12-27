@@ -52,8 +52,6 @@ TARFILES += firmware/av7110/Boot.S
 TARFILES += firmware/cpia2/stv0672_vp4.bin.ihex
 TARFILES += firmware/ihex2fw.c
 TARFILES += firmware/vicam/firmware.H16
-TARFILES += firmware/dabusb/bitstream.bin.ihex
-TARFILES += firmware/dabusb/firmware.HEX
 TARFILES += firmware/ttusb-budget/dspbootcode.bin.ihex
 
 TODAY_TAR := linux-media-`date "+%Y-%m-%d"`.tar
