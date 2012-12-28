@@ -1,8 +1,59 @@
+diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
+index 7c503fb..3abf527 100644
+--- a/drivers/media/pci/saa7134/saa7134-video.c
++++ b/drivers/media/pci/saa7134/saa7134-video.c
+@@ -2248,17 +2248,6 @@ static int saa7134_streamon(struct file *file, void *priv,
+ 	if (!res_get(dev, fh, res))
+ 		return -EBUSY;
+ 
+-	/* The SAA7134 has a 1K FIFO; the datasheet suggests that when
+-	 * configured conservatively, there's 22 usec of buffering for video.
+-	 * We therefore request a DMA latency of 20 usec, giving us 2 usec of
+-	 * margin in case the FIFO is configured differently to the datasheet.
+-	 * Unfortunately, I lack register-level documentation to check the
+-	 * Linux FIFO setup and confirm the perfect value.
+-	 */
+-	pm_qos_add_request(&fh->qos_request,
+-			   PM_QOS_CPU_DMA_LATENCY,
+-			   20);
+-
+ 	return videobuf_streamon(saa7134_queue(fh));
+ }
+ 
+@@ -2270,8 +2259,6 @@ static int saa7134_streamoff(struct file *file, void *priv,
+ 	struct saa7134_dev *dev = fh->dev;
+ 	int res = saa7134_resource(fh);
+ 
+-	pm_qos_remove_request(&fh->qos_request);
+-
+ 	err = videobuf_streamoff(saa7134_queue(fh));
+ 	if (err < 0)
+ 		return err;
+diff --git a/drivers/media/pci/saa7134/saa7134.h b/drivers/media/pci/saa7134/saa7134.h
+index 0a3feaa..c24b651 100644
+--- a/drivers/media/pci/saa7134/saa7134.h
++++ b/drivers/media/pci/saa7134/saa7134.h
+@@ -29,7 +29,6 @@
+ #include <linux/notifier.h>
+ #include <linux/delay.h>
+ #include <linux/mutex.h>
+-#include <linux/pm_qos.h>
+ 
+ #include <asm/io.h>
+ 
+@@ -470,7 +469,6 @@ struct saa7134_fh {
+ 	enum v4l2_buf_type         type;
+ 	unsigned int               resources;
+ 	enum v4l2_priority	   prio;
+-	struct pm_qos_request	   qos_request;
+ 
+ 	/* video overlay */
+ 	struct v4l2_window         win;
 diff --git a/drivers/media/platform/via-camera.c b/drivers/media/platform/via-camera.c
-index 6a82875..afab027 100644
+index eb404c2..6465988 100644
 --- a/drivers/media/platform/via-camera.c
 +++ b/drivers/media/platform/via-camera.c
-@@ -21,7 +21,6 @@
+@@ -22,7 +22,6 @@
  #include <media/videobuf-dma-sg.h>
  #include <linux/delay.h>
  #include <linux/dma-mapping.h>
@@ -10,7 +61,7 @@ index 6a82875..afab027 100644
  #include <linux/via-core.h>
  #include <linux/via-gpio.h>
  #include <linux/via_i2c.h>
-@@ -69,7 +68,6 @@ struct via_camera {
+@@ -70,7 +69,6 @@ struct via_camera {
  	struct mutex lock;
  	enum viacam_opstate opstate;
  	unsigned long flags;
@@ -18,7 +69,7 @@ index 6a82875..afab027 100644
  	/*
  	 * GPIO info for power/reset management
  	 */
-@@ -1111,13 +1109,6 @@ static int viacam_streamon(struct file *filp, void *priv, enum v4l2_buf_type t)
+@@ -1112,13 +1110,6 @@ static int viacam_streamon(struct file *filp, void *priv, enum v4l2_buf_type t)
  			goto out;
  	}
  	/*
@@ -32,7 +83,7 @@ index 6a82875..afab027 100644
  	 * Fire things up.
  	 */
  	INIT_LIST_HEAD(&cam->buffer_queue);
-@@ -1141,7 +1132,6 @@ static int viacam_streamoff(struct file *filp, void *priv, enum v4l2_buf_type t)
+@@ -1142,7 +1133,6 @@ static int viacam_streamoff(struct file *filp, void *priv, enum v4l2_buf_type t)
  		ret = -EINVAL;
  		goto out;
  	}
