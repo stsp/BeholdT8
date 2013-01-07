@@ -583,6 +583,7 @@ sub check_other_dependencies()
 	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");
 	check_files_for_func("VM_DONTDUMP", "NEED_DONTDUMP", "include/linux/mm.h");
 	check_files_for_func("VM_NODUMP", "NEED_NODUMP", "include/linux/mm.h");
+	check_files_for_func("IS_ENABLED", "NEED_IS_ENABLED", "include/linux/kconfig.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");
