@@ -565,6 +565,11 @@ if (!defined $kernopts{BKL} && cmp_ver($kernver, '2.6.37') < 0) {
     $kernopts{BKL} = 2;
 }
 
+# Kernel < 3.2 is missing the DMA_SHARED_BUFFER option
+if (!defined $kernopts{DMA_SHARED_BUFFER} && cmp_ver($kernver, '3.2.0') < 0) {
+    $kernopts{DMA_SHARED_BUFFER} = 2;
+}
+
 # Get minimum kernel version for our variables
 parse_versions();
 
