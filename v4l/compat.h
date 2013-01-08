@@ -1105,4 +1105,19 @@ static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
 	        (config_enabled(option) || config_enabled(option##_MODULE))
 #endif
 
+#ifdef NEED_USB_TRANSLATE_ERRORS
+static inline int usb_translate_errors(int error_code)
+{               
+        switch (error_code) {
+        case 0:
+        case -ENOMEM:
+        case -ENODEV:
+        case -EOPNOTSUPP:
+                return error_code;
+        default:
+                return -EIO;
+        }
+}
+#endif
+
 #endif /*  _COMPAT_H */
