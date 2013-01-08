@@ -584,6 +584,7 @@ sub check_other_dependencies()
 	check_files_for_func("VM_DONTDUMP", "NEED_DONTDUMP", "include/linux/mm.h");
 	check_files_for_func("VM_NODUMP", "NEED_NODUMP", "include/linux/mm.h");
 	check_files_for_func("IS_ENABLED", "NEED_IS_ENABLED", "include/linux/kconfig.h");
+	check_files_for_func("DEFINE_PCI_DEVICE_TABLE", "NEED_DEFINE_PCI_DEVICE_TABLE", "include/linux/pci.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

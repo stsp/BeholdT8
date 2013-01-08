@@ -174,7 +174,7 @@ static inline int pci_msi_enabled(void)
 #define KEY_IMAGES           0x1ba   /* AL Image Browser */
 #endif
 
-#ifndef DEFINE_PCI_DEVICE_TABLE
+#ifdef NEED_DEFINE_PCI_DEVICE_TABLE
 #define DEFINE_PCI_DEVICE_TABLE(_table) \
 	const struct pci_device_id _table[] __devinitconst
 #endif
