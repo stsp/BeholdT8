@@ -69,8 +69,6 @@ VIDEO_MT9P031
 VIDEO_SMIAPP_PLL
 # Depends on VIDEO_SMIAPP_PLL and requires gpio_request_one
 VIDEO_SMIAPP
-# Depends on gpio functions/defines
-VIDEO_EM28XX_DVB
 
 [2.6.33]
 VIDEO_AK881X
