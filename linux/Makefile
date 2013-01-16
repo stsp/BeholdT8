@@ -37,11 +37,9 @@ TARFILES += include/uapi/linux/media.h
 TARFILES += include/uapi/linux/v4l2-dv-timings.h
 TARFILES += include/uapi/linux/v4l2-controls.h
 TARFILES += include/uapi/linux/uvcvideo.h
-
-# Both Kernelspace and Userspace API
-TARFILES += include/media/v4l2-subdev.h		include/uapi/linux/v4l2-subdev.h
-TARFILES += include/media/v4l2-common.h		include/uapi/linux/v4l2-common.h
-TARFILES += include/media/v4l2-mediabus.h	include/uapi/linux/v4l2-mediabus.h
+TARFILES += include/uapi/linux/v4l2-subdev.h
+TARFILES += include/uapi/linux/v4l2-common.h
+TARFILES += include/uapi/linux/v4l2-mediabus.h
 
 # Other random files
 TARFILES += include/linux/fixp-arith.h
