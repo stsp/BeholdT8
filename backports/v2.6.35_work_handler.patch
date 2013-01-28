@@ -9,14 +9,14 @@
 +++ linux/drivers/media/pci/ivtv/ivtv-driver.c
 @@ -706,8 +706,6 @@ done:
   */
- static int __devinit ivtv_init_struct1(struct ivtv *itv)
+ static int ivtv_init_struct1(struct ivtv *itv)
  {
 -	struct sched_param param = { .sched_priority = 99 };
 -
  	itv->base_addr = pci_resource_start(itv->pdev, 0);
  	itv->enc_mbox.max_mbox = 2; /* the encoder has 3 mailboxes (0-2) */
  	itv->dec_mbox.max_mbox = 1; /* the decoder has 2 mailboxes (0-1) */
-@@ -719,17 +717,13 @@ static int __devinit ivtv_init_struct1(s
+@@ -719,17 +717,13 @@ static int ivtv_init_struct1(s
  	spin_lock_init(&itv->lock);
  	spin_lock_init(&itv->dma_reg_lock);
  
@@ -38,7 +38,7 @@
  
  	/* start counting open_id at 1 */
  	itv->open_id = 1;
-@@ -1017,7 +1011,7 @@ static int __devinit ivtv_probe(struct p
+@@ -1017,7 +1011,7 @@ static int ivtv_probe(struct p
  	/* PCI Device Setup */
  	retval = ivtv_setup_pci(itv, pdev, pci_id);
  	if (retval == -EIO)

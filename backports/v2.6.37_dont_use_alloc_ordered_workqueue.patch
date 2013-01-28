@@ -6,7 +6,7 @@
 
 --- linux.orig/drivers/media/pci/cx18/cx18-driver.c
 +++ linux/drivers/media/pci/cx18/cx18-driver.c
-@@ -686,7 +686,7 @@ static int __devinit cx18_create_in_work
+@@ -686,7 +686,7 @@ static int cx18_create_in_work
  {
  	snprintf(cx->in_workq_name, sizeof(cx->in_workq_name), "%s-in",
  		 cx->v4l2_dev.name);
@@ -15,11 +15,11 @@
  	if (cx->in_work_queue == NULL) {
  		CX18_ERR("Unable to create incoming mailbox handler thread\n");
  		return -ENOMEM;
-@@ -694,6 +694,18 @@ static int __devinit cx18_create_in_work
+@@ -694,6 +694,18 @@ static int cx18_create_in_work
  	return 0;
  }
  
-+static int __devinit cx18_create_out_workq(struct cx18 *cx)
++static int cx18_create_out_workq(struct cx18 *cx)
 +{
 +	snprintf(cx->out_workq_name, sizeof(cx->out_workq_name), "%s-out",
 +		 cx->v4l2_dev.name);
@@ -31,10 +31,10 @@
 +	return 0;
 +}
 +
- static void __devinit cx18_init_in_work_orders(struct cx18 *cx)
+ static void cx18_init_in_work_orders(struct cx18 *cx)
  {
  	int i;
-@@ -720,10 +732,16 @@ static int __devinit cx18_init_struct1(s
+@@ -720,10 +732,16 @@ static int cx18_init_struct1(s
  	mutex_init(&cx->epu2apu_mb_lock);
  	mutex_init(&cx->epu2cpu_mb_lock);
  

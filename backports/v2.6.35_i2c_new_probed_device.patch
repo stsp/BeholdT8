@@ -9,7 +9,7 @@
 
 --- a/drivers/media/pci/bt8xx/bttv-input.c
 +++ b/drivers/media/pci/bt8xx/bttv-input.c
-@@ -401,7 +401,7 @@ void __devinit init_bttv_i2c_ir(struct bttv *btv)
+@@ -401,7 +401,7 @@ void init_bttv_i2c_ir(struct bttv *btv)
  		 * That's why we probe 0x1a (~0x34) first. CB
  		 */
  

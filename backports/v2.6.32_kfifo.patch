@@ -389,7 +389,7 @@
  		res = POLLIN | POLLRDNORM;
  	mutex_unlock(&meye.lock);
  	return res;
-@@ -1760,14 +1754,16 @@ static int __devinit meye_probe(struct pci_dev *pcidev,
+@@ -1760,14 +1754,16 @@ static int meye_probe(struct pci_dev *pcidev,
  	}
  
  	spin_lock_init(&meye.grabq_lock);
@@ -422,7 +422,7 @@
  outkfifoalloc1:
  	vfree(meye.grab_temp);
  outvmalloc:
-@@ -1911,8 +1907,8 @@ static void __devexit meye_remove(struct pci_dev *pcidev)
+@@ -1911,8 +1907,8 @@ static void meye_remove(struct pci_dev *pcidev)
  
  	sony_pic_camera_command(SONY_PIC_COMMAND_SETCAMERA, 0);
  
