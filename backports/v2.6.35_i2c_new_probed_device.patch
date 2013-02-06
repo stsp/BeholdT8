@@ -50,17 +50,6 @@
  	return bus->i2c_rc;
  }
  
---- a/drivers/media/usb/em28xx/em28xx-input.c
-+++ b/drivers/media/usb/em28xx/em28xx-input.c
-@@ -429,7 +429,7 @@ static void em28xx_register_i2c_ir(struct em28xx *dev)
- 
- 	if (dev->init_data.name)
- 		info.platform_data = &dev->init_data;
--	i2c_new_probed_device(&dev->i2c_adap, &info, addr_list, NULL);
-+	i2c_new_probed_device(&dev->i2c_adap, &info, addr_list);
- }
- 
- /**********************************************************
 --- a/drivers/media/pci/ivtv/ivtv-i2c.c
 +++ b/drivers/media/pci/ivtv/ivtv-i2c.c
 @@ -186,7 +186,7 @@ static int ivtv_i2c_new_ir(struct ivtv *itv, u32 hw, const char *type, u8 addr)

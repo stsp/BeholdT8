@@ -1077,6 +1077,21 @@ static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
 }
 #endif
 
+#ifdef NEED_I2C_PROBE_FUNC_QUICK_READ
+static inline int i2c_probe_func_quick_read(struct i2c_adapter *adap, unsigned short addr)
+{
+        return i2c_smbus_xfer(adap, addr, 0, I2C_SMBUS_READ, 0,
+	                              I2C_SMBUS_QUICK, NULL) >= 0;
+}
+#endif
+
+#ifdef NEED_ABS64
+#define abs64(x) ({				\
+		s64 __x = (x);			\
+		(__x < 0) ? -__x : __x;		\
+	})
+#endif
+
 #ifndef module_pci_driver
 #define module_pci_driver(__pci_driver) \
        module_driver(__pci_driver, pci_register_driver, \
