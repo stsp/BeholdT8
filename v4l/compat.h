@@ -1111,6 +1111,8 @@ static inline int i2c_probe_func_quick_read(struct i2c_adapter *adap, unsigned s
 #endif
 
 #ifdef NEED_IS_ENABLED
+#define __LINUX_KCONFIG_H
+#undef IS_ENABLED
 #define __ARG_PLACEHOLDER_1 0,
 #define config_enabled(cfg) _config_enabled(cfg)
 #define _config_enabled(value) __config_enabled(__ARG_PLACEHOLDER_##value)

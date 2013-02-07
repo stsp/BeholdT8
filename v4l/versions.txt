@@ -16,6 +16,7 @@ VIDEO_OV9650
 
 [3.4.0]
 # needs devm_regulator_bulk_get
+VIDEO_S5K6AA
 VIDEO_S5K4ECGX
 
 [3.3.0]
@@ -36,8 +37,6 @@ SOC_CAMERA_PLATFORM
 [3.0.0]
 # fw_iso_context_queue_flush
 DVB_FIREDTV
-# new gpio.h defines
-VIDEO_S5K6AA
 
 [2.6.39]
 # mfd header changes for 2.6.39 prevents compilation on 2.6.38.

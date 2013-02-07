@@ -68,7 +68,7 @@
  	struct list_head		list;		/* to keep track of raw clients */
  	struct task_struct		*thread;
  	spinlock_t			lock;
--	struct kfifo			kfifo;		/* fifo for the pulse/space durations */
+-	struct kfifo_rec_ptr_1		kfifo;		/* fifo for the pulse/space durations */
 +	struct kfifo			*kfifo;		/* fifo for the pulse/space durations */
  	ktime_t				last_event;	/* when last event occurred */
  	enum raw_event_type		last_type;	/* last event type */
@@ -311,7 +311,7 @@
 -	kfifo_reset(&meye.doneq);
 +	kfifo_reset(meye.grabq);
 +	kfifo_reset(meye.doneq);
- 	return 0;
+ 	return v4l2_fh_open(file);
  }
  
 @@ -937,8 +935,7 @@ static int meyeioc_qbuf_capt(int *nb)
@@ -386,7 +386,7 @@
  	poll_wait(file, &meye.proc_list, wait);
 -	if (kfifo_len(&meye.doneq))
 +	if (kfifo_len(meye.doneq))
- 		res = POLLIN | POLLRDNORM;
+ 		res |= POLLIN | POLLRDNORM;
  	mutex_unlock(&meye.lock);
  	return res;
 @@ -1760,14 +1754,16 @@ static int meye_probe(struct pci_dev *pcidev,
