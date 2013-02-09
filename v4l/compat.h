@@ -1137,4 +1137,14 @@ static inline int usb_translate_errors(int error_code)
 }
 #endif
 
+#ifdef NEED_PTR_RET
+static inline int __must_check PTR_RET(const void *ptr)
+{
+	if (IS_ERR(ptr))
+		return PTR_ERR(ptr);
+	else
+		return 0;
+}
+#endif
+
 #endif /*  _COMPAT_H */
