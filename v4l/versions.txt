@@ -24,6 +24,8 @@ VIDEO_S5K4ECGX
 VIDEO_MEM2MEM_DEINTERLACE
 
 [3.2.0]
+# Requires device tree support 
+IR_GPIO_CIR
 # due to the rename at include/linux from "pm_qos_params.h" to "pm_qos.h"
 SOC_CAMERA
 SOC_CAMERA_MT9V022
@@ -51,8 +53,6 @@ VIDEO_VIA_CAMERA
 [2.6.36]
 
 [2.6.35]
-# Requires request_any_context_irq() introduced in 2.6.35
-IR_GPIO_CIR
 # Requires ss_ep_comp in usb_host_endpoint
 USB_VIDEO_CLASS
 
