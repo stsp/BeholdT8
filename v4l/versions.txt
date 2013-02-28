@@ -18,14 +18,14 @@ VIDEO_OV9650
 # needs devm_regulator_bulk_get
 VIDEO_S5K6AA
 VIDEO_S5K4ECGX
+# needs EPROBE_DEFER
+IR_GPIO_CIR
 
 [3.3.0]
 # Needs struct dma_interleaved_template in dmaengine.h
 VIDEO_MEM2MEM_DEINTERLACE
 
 [3.2.0]
-# Requires device tree support 
-IR_GPIO_CIR
 # due to the rename at include/linux from "pm_qos_params.h" to "pm_qos.h"
 SOC_CAMERA
 SOC_CAMERA_MT9V022
