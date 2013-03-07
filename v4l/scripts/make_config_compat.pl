@@ -589,6 +589,7 @@ sub check_other_dependencies()
 	check_files_for_func("DEFINE_PCI_DEVICE_TABLE", "NEED_DEFINE_PCI_DEVICE_TABLE", "include/linux/pci.h");
 	check_files_for_func("usb_translate_errors", "NEED_USB_TRANSLATE_ERRORS", "include/linux/usb.h");
 	check_files_for_func("PTR_RET", "NEED_PTR_RET", "include/linux/err.h");
+	check_files_for_func("file_inode", "NEED_FILE_INODE", "include/linux/fs.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

@@ -1147,4 +1147,12 @@ static inline int __must_check PTR_RET(const void *ptr)
 }
 #endif
 
+#ifdef NEED_FILE_INODE
+#include <linux/fs.h>
+static inline struct inode *file_inode(struct file *f)
+{
+	return f->f_path.dentry->d_inode;
+}
+#endif
+
 #endif /*  _COMPAT_H */
