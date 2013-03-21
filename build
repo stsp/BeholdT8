@@ -172,7 +172,7 @@ sub give_hints()
 {
 
 	# Distro-specific hints
-	if ($system_release =~ /Red Hat Enterprise Linux Workstation/) {
+	if ($system_release =~ /Red Hat Enterprise Linux/) {
 		give_redhat_hints;
 		return;
 	}
