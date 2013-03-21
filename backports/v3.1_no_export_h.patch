@@ -1,6 +1,7 @@
-diff -r b3c7edceaba9 drivers/media/common/saa7146/saa7146_hlp.c
---- a/drivers/media/common/saa7146/saa7146_hlp.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/common/saa7146/saa7146_hlp.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/media/common/saa7146/saa7146_hlp.c b/drivers/media/common/saa7146/saa7146_hlp.c
+index be746d1..02ac2d0 100644
+--- a/drivers/media/common/saa7146/saa7146_hlp.c
++++ b/drivers/media/common/saa7146/saa7146_hlp.c
 @@ -1,7 +1,6 @@
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
@@ -9,9 +10,10 @@ diff -r b3c7edceaba9 drivers/media/common/saa7146/saa7146_hlp.c
  #include <media/saa7146_vv.h>
  
  static void calculate_output_format_register(struct saa7146_dev* saa, u32 palette, u32* clip_format)
-diff -r b3c7edceaba9 drivers/media/common/siano/smsendian.c
---- a/drivers/media/common/siano/smsendian.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/common/siano/smsendian.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/media/common/siano/smsendian.c b/drivers/media/common/siano/smsendian.c
+index e2657c2..457b6d0 100644
+--- a/drivers/media/common/siano/smsendian.c
++++ b/drivers/media/common/siano/smsendian.c
 @@ -19,7 +19,6 @@
  
   ****************************************************************/
@@ -20,20 +22,22 @@ diff -r b3c7edceaba9 drivers/media/common/siano/smsendian.c
  #include <asm/byteorder.h>
  
  #include "smsendian.h"
-diff -r b3c7edceaba9 drivers/media/media-device.c
---- a/drivers/media/media-device.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/media-device.c	Wed Nov 23 19:57:12 2011 -0200
-@@ -23,7 +23,6 @@
- #include <linux/types.h>
+diff --git a/drivers/media/media-device.c b/drivers/media/media-device.c
+index 99b80b6..d2abb94 100644
+--- a/drivers/media/media-device.c
++++ b/drivers/media/media-device.c
+@@ -21,7 +21,6 @@
+  */
+ 
+ #include <linux/compat.h>
+-#include <linux/export.h>
  #include <linux/ioctl.h>
  #include <linux/media.h>
--#include <linux/export.h>
- 
- #include <media/media-device.h>
- #include <media/media-devnode.h>
-diff -r b3c7edceaba9 drivers/media/radio/wl128x/fmdrv_v4l2.c
---- a/drivers/media/radio/wl128x/fmdrv_v4l2.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/radio/wl128x/fmdrv_v4l2.c	Wed Nov 23 19:57:12 2011 -0200
+ #include <linux/types.h>
+diff --git a/drivers/media/radio/wl128x/fmdrv_v4l2.c b/drivers/media/radio/wl128x/fmdrv_v4l2.c
+index 0a8ee8f..429f428 100644
+--- a/drivers/media/radio/wl128x/fmdrv_v4l2.c
++++ b/drivers/media/radio/wl128x/fmdrv_v4l2.c
 @@ -28,7 +28,6 @@
   *
   */
@@ -42,9 +46,10 @@ diff -r b3c7edceaba9 drivers/media/radio/wl128x/fmdrv_v4l2.c
  
  #include "fmdrv.h"
  #include "fmdrv_v4l2.h"
-diff -r b3c7edceaba9 drivers/media/rc/ir-raw.c
---- a/drivers/media/rc/ir-raw.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/rc/ir-raw.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
+index 17c94be..ccb5cf0 100644
+--- a/drivers/media/rc/ir-raw.c
++++ b/drivers/media/rc/ir-raw.c
 @@ -12,7 +12,6 @@
   *  GNU General Public License for more details.
   */
@@ -53,9 +58,10 @@ diff -r b3c7edceaba9 drivers/media/rc/ir-raw.c
  #include <linux/kthread.h>
  #include <linux/mutex.h>
  #include <linux/kmod.h>
-diff -r b3c7edceaba9 drivers/media/usb/hdpvr/hdpvr-i2c.c
---- a/drivers/media/usb/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/usb/hdpvr/hdpvr-i2c.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/media/usb/hdpvr/hdpvr-i2c.c b/drivers/media/usb/hdpvr/hdpvr-i2c.c
+index a38f58c..af3a659 100644
+--- a/drivers/media/usb/hdpvr/hdpvr-i2c.c
++++ b/drivers/media/usb/hdpvr/hdpvr-i2c.c
 @@ -17,7 +17,6 @@
  
  #include <linux/i2c.h>
@@ -64,9 +70,10 @@ diff -r b3c7edceaba9 drivers/media/usb/hdpvr/hdpvr-i2c.c
  
  #include "hdpvr.h"
  
-diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-ctrls.c
---- a/drivers/media/v4l2-core/v4l2-ctrls.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/v4l2-core/v4l2-ctrls.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
+index 6b28b58..8332c45 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls.c
 @@ -20,7 +20,6 @@
  
  #include <linux/ctype.h>
@@ -75,10 +82,11 @@ diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-ctrls.c
  #include <media/v4l2-ioctl.h>
  #include <media/v4l2-device.h>
  #include <media/v4l2-ctrls.h>
-diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-event.c
---- a/drivers/media/v4l2-core/v4l2-event.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/v4l2-core/v4l2-event.c	Wed Nov 23 19:57:12 2011 -0200
-@@ -29,7 +29,6 @@
+diff --git a/drivers/media/v4l2-core/v4l2-event.c b/drivers/media/v4l2-core/v4l2-event.c
+index 86dcb54..0eed837 100644
+--- a/drivers/media/v4l2-core/v4l2-event.c
++++ b/drivers/media/v4l2-core/v4l2-event.c
+@@ -28,7 +28,6 @@
  
  #include <linux/sched.h>
  #include <linux/slab.h>
@@ -86,9 +94,10 @@ diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-event.c
  
  static unsigned sev_pos(const struct v4l2_subscribed_event *sev, unsigned idx)
  {
-diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-fh.c
---- a/drivers/media/v4l2-core/v4l2-fh.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/v4l2-core/v4l2-fh.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/media/v4l2-core/v4l2-fh.c b/drivers/media/v4l2-core/v4l2-fh.c
+index e57c002..2e87183 100644
+--- a/drivers/media/v4l2-core/v4l2-fh.c
++++ b/drivers/media/v4l2-core/v4l2-fh.c
 @@ -24,7 +24,6 @@
  
  #include <linux/bitops.h>
@@ -97,9 +106,10 @@ diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-fh.c
  #include <media/v4l2-dev.h>
  #include <media/v4l2-fh.h>
  #include <media/v4l2-event.h>
-diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-subdev.c
---- a/drivers/media/v4l2-core/v4l2-subdev.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/media/v4l2-core/v4l2-subdev.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/media/v4l2-core/v4l2-subdev.c b/drivers/media/v4l2-core/v4l2-subdev.c
+index 996c248..3e80c90 100644
+--- a/drivers/media/v4l2-core/v4l2-subdev.c
++++ b/drivers/media/v4l2-core/v4l2-subdev.c
 @@ -24,7 +24,6 @@
  #include <linux/slab.h>
  #include <linux/types.h>
@@ -108,9 +118,10 @@ diff -r b3c7edceaba9 drivers/media/v4l2-core/v4l2-subdev.c
  
  #include <media/v4l2-ctrls.h>
  #include <media/v4l2-device.h>
-diff -r b3c7edceaba9 drivers/staging/media/solo6x10/g723.c
---- a/drivers/staging/media/solo6x10/g723.c	Wed Nov 23 19:55:49 2011 -0200
-+++ b/drivers/staging/media/solo6x10/g723.c	Wed Nov 23 19:57:12 2011 -0200
+diff --git a/drivers/staging/media/solo6x10/g723.c b/drivers/staging/media/solo6x10/g723.c
+index 2cd0de2..59274bf 100644
+--- a/drivers/staging/media/solo6x10/g723.c
++++ b/drivers/staging/media/solo6x10/g723.c
 @@ -23,7 +23,6 @@
  #include <linux/kthread.h>
  #include <linux/slab.h>
