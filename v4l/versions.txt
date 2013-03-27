@@ -1,6 +1,10 @@
 # Use this for stuff for drivers that don't compile
 [3.255.255]
 
+[3.9.0]
+# needs devm_ioremap_resource
+VIDEO_SH_VEU
+
 [3.6.0]
 # needs devm_clk_get, clk_enable, clk_disable
 VIDEO_CODA
