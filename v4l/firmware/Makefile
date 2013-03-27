@@ -1,4 +1,4 @@
-TARGETS = vicam/firmware.fw dabusb/firmware.fw dabusb/bitstream.bin ttusb-budget/dspbootcode.bin cpia2/stv0672_vp4.bin av7110/bootcode.bin
+TARGETS = vicam/firmware.fw ttusb-budget/dspbootcode.bin cpia2/stv0672_vp4.bin av7110/bootcode.bin
 FW_DIR  = $(DESTDIR)/lib/firmware
 
 ####
@@ -59,7 +59,6 @@ prep:
 
 # TODO: Use the Firmware Kconfig dependencies
 #fw-$(CONFIG_USB_VICAM) += vicam/firmware.fw
-#fw-$(CONFIG_USB_DABUSB) += dabusb/firmware.fw dabusb/bitstream.bin
 #fw-$(CONFIG_DVB_TTUSB_BUDGET) += ttusb-budget/dspbootcode.bin
 #fw-$(CONFIG_VIDEO_CPIA2) += cpia2/stv0672_vp4.bin
 #fw-$(CONFIG_DVB_AV7110) += av7110/bootcode.bin

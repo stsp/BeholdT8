@@ -6,7 +6,6 @@
 .config.old
 firmware/av7110/
 firmware/cpia2/
-firmware/dabusb/
 firmware/ttusb-budget/
 firmware/vicam/
 firmware/ihex2fw
