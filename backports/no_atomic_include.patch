@@ -1,54 +1,96 @@
 diff --git a/drivers/media/usb/hdpvr/hdpvr-core.c b/drivers/media/usb/hdpvr/hdpvr-core.c
-index 441dacf..5b59b61 100644
+index 73195fe..ac4af83 100644
 --- a/drivers/media/usb/hdpvr/hdpvr-core.c
 +++ b/drivers/media/usb/hdpvr/hdpvr-core.c
-@@ -20 +19,0 @@
+@@ -17,7 +17,6 @@
+ #include <linux/slab.h>
+ #include <linux/module.h>
+ #include <linux/uaccess.h>
 -#include <linux/atomic.h>
+ #include <linux/usb.h>
+ #include <linux/mutex.h>
+ #include <linux/i2c.h>
 diff --git a/drivers/media/usb/tlg2300/pd-dvb.c b/drivers/media/usb/tlg2300/pd-dvb.c
-index d0da11a..6b5e19f 100644
+index ca4994a..148a573 100644
 --- a/drivers/media/usb/tlg2300/pd-dvb.c
 +++ b/drivers/media/usb/tlg2300/pd-dvb.c
-@@ -10 +9,0 @@
+@@ -8,7 +8,6 @@
+ 
+ #include "vendorcmds.h"
+ #include <linux/sched.h>
 -#include <linux/atomic.h>
+ 
+ static void dvb_urb_cleanup(struct pd_dvb_adapter *pd_dvb);
+ 
 diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 10c2364..74587fa 100644
+index 61e28de..7203583 100644
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -23 +22,0 @@
+@@ -20,7 +20,6 @@
+ #include <linux/videodev2.h>
+ #include <linux/vmalloc.h>
+ #include <linux/wait.h>
 -#include <linux/atomic.h>
+ #include <media/v4l2-ctrls.h>
+ 
+ #include "uvcvideo.h"
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index c029535..d143339 100644
+index 5dbefa6..6ac10f7 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -26 +25,0 @@
+@@ -11,7 +11,6 @@
+  *
+  */
+ 
 -#include <linux/atomic.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
 diff --git a/drivers/media/usb/uvc/uvc_queue.c b/drivers/media/usb/uvc/uvc_queue.c
-index 677691c..a123a2f 100644
+index cd962be..bd2e53c 100644
 --- a/drivers/media/usb/uvc/uvc_queue.c
 +++ b/drivers/media/usb/uvc/uvc_queue.c
-@@ -22 +21,0 @@
+@@ -11,7 +11,6 @@
+  *
+  */
+ 
 -#include <linux/atomic.h>
+ #include <linux/kernel.h>
+ #include <linux/mm.h>
+ #include <linux/list.h>
 diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
-index ea71d5f..1d72c96 100644
+index b2dc326..d0d0ef0 100644
 --- a/drivers/media/usb/uvc/uvc_v4l2.c
 +++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -24 +23,0 @@
+@@ -22,7 +22,6 @@
+ #include <linux/vmalloc.h>
+ #include <linux/mm.h>
+ #include <linux/wait.h>
 -#include <linux/atomic.h>
+ 
+ #include <media/v4l2-common.h>
+ #include <media/v4l2-ctrls.h>
 diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 8244167..aa607c8 100644
+index 3394c34..57882d2 100644
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -22 +21,0 @@
+@@ -19,7 +19,6 @@
+ #include <linux/videodev2.h>
+ #include <linux/vmalloc.h>
+ #include <linux/wait.h>
 -#include <linux/atomic.h>
+ #include <asm/unaligned.h>
+ 
+ #include <media/v4l2-common.h>
 diff --git a/drivers/staging/media/solo6x10/solo6x10.h b/drivers/staging/media/solo6x10/solo6x10.h
-index abee721..a45f12d 100644
+index 3526d6b..a71d283 100644
 --- a/drivers/staging/media/solo6x10/solo6x10.h
 +++ b/drivers/staging/media/solo6x10/solo6x10.h
-@@ -30,7 +30,6 @@
- #include <linux/delay.h>
- #include <linux/slab.h>
- #include <asm/io.h>
+@@ -32,7 +32,6 @@
+ #include <linux/wait.h>
+ #include <linux/stringify.h>
+ #include <linux/io.h>
 -#include <linux/atomic.h>
+ #include <linux/slab.h>
  #include <linux/videodev2.h>
- #include <media/v4l2-dev.h>
- #include <media/videobuf-core.h>
+ 

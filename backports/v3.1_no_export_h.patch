@@ -118,15 +118,3 @@ index 996c248..3e80c90 100644
  
  #include <media/v4l2-ctrls.h>
  #include <media/v4l2-device.h>
-diff --git a/drivers/staging/media/solo6x10/g723.c b/drivers/staging/media/solo6x10/g723.c
-index 2cd0de2..59274bf 100644
---- a/drivers/staging/media/solo6x10/g723.c
-+++ b/drivers/staging/media/solo6x10/g723.c
-@@ -23,7 +23,6 @@
- #include <linux/kthread.h>
- #include <linux/slab.h>
- #include <linux/freezer.h>
--#include <linux/export.h>
- #include <sound/core.h>
- #include <sound/initval.h>
- #include <sound/pcm.h>
