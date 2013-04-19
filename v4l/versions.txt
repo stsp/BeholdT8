@@ -8,6 +8,7 @@ VIDEO_SH_VEU
 [3.6.0]
 # needs devm_clk_get, clk_enable, clk_disable
 VIDEO_CODA
+VIDEO_MT9P031
 # needs include/linux/sizes.h
 VIDEO_M5MOLS
 VIDEO_S5C73M3
@@ -71,8 +72,6 @@ VIDEO_DT3155
 VIDEO_APTINA_PLL
 # Depends on VIDEO_APTINA_PLL
 VIDEO_MT9M032
-# Depends on VIDEO_APTINA_PLL and requires gpio_request_one
-VIDEO_MT9P031
 # Needs include/linux/lcm.h
 VIDEO_SMIAPP_PLL
 # Depends on VIDEO_SMIAPP_PLL and requires gpio_request_one
