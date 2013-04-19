@@ -42,9 +42,9 @@ index 0a3feaa..c24b651 100644
  #include <asm/io.h>
  
 @@ -470,7 +469,6 @@ struct saa7134_fh {
- 	enum v4l2_buf_type         type;
- 	unsigned int               resources;
- 	enum v4l2_priority	   prio;
+	unsigned int               radio;
+	enum v4l2_buf_type         type;
+	unsigned int               resources;
 -	struct pm_qos_request	   qos_request;
  
  	/* video overlay */
