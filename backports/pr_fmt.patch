@@ -274,18 +274,6 @@ index 298a68d..5e8766c 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include "cx25821.h"
-diff --git a/drivers/media/pci/cx25821/cx25821-video-upstream-ch2.c b/drivers/media/pci/cx25821/cx25821-video-upstream-ch2.c
-index 5a157cf..d414fe5 100644
---- a/drivers/media/pci/cx25821/cx25821-video-upstream-ch2.c
-+++ b/drivers/media/pci/cx25821/cx25821-video-upstream-ch2.c
-@@ -20,6 +20,7 @@
-  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-  */
- 
-+#undef pr_fmt
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include "cx25821-video.h"
 diff --git a/drivers/media/pci/cx25821/cx25821-video-upstream.c b/drivers/media/pci/cx25821/cx25821-video-upstream.c
 index 21e7d65..4ab5ede 100644
 --- a/drivers/media/pci/cx25821/cx25821-video-upstream.c
