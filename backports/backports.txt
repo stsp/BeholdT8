@@ -56,6 +56,7 @@ add v2.6.35_kfifo.patch
 [2.6.34]
 add v2.6.34_dvb_net.patch
 add v2.6.34_fix_define_warnings.patch
+add v2.6.34_usb_ss_ep_comp.patch
 
 [2.6.33]
 add v2.6.33_input_handlers_are_int.patch
@@ -65,7 +66,6 @@ add v2.6.33_no_gpio_request_one.patch
 [2.6.32]
 add v2.6.32_kfifo.patch
 add v2.6.32_request_firmware_nowait.patch
-add v2.6.32_usb_ss_ep_comp.patch
 
 [2.6.31]
 add v2.6.31_nodename.patch
