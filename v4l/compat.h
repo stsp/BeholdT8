@@ -1155,4 +1155,8 @@ static inline struct inode *file_inode(struct file *f)
 }
 #endif
 
+#ifdef NEED_ETH_P_802_3_MIN
+#define ETH_P_802_3_MIN   0x0600
+#endif
+
 #endif /*  _COMPAT_H */
