@@ -1159,4 +1159,20 @@ static inline struct inode *file_inode(struct file *f)
 #define ETH_P_802_3_MIN   0x0600
 #endif
 
+#ifdef NEED_PROC_SET_SIZE
+#ifdef CONFIG_PROC_FS
+#include <linux/proc_fs.h>
+static inline void proc_set_size(struct proc_dir_entry *de, loff_t size)
+{
+        de->size = size;
+}
+static inline void *PDE_DATA(const struct inode *inode)
+{
+        return PDE(inode)->data;
+}
+#else
+static inline void proc_set_size(struct proc_dir_entry *de, loff_t size) {}
+#endif
+#endif
+
 #endif /*  _COMPAT_H */

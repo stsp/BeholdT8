@@ -591,6 +591,7 @@ sub check_other_dependencies()
 	check_files_for_func("PTR_RET", "NEED_PTR_RET", "include/linux/err.h");
 	check_files_for_func("file_inode", "NEED_FILE_INODE", "include/linux/fs.h");
 	check_files_for_func("ETH_P_802_3_MIN", "NEED_ETH_P_802_3_MIN", "include/uapi/linux/if_ether.h");
+	check_files_for_func("proc_set_size", "NEED_PROC_SET_SIZE", "include/linux/proc_fs.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");
