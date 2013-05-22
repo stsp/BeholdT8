@@ -1,5 +1,5 @@
 diff --git a/drivers/media/i2c/cx25840/cx25840-ir.c b/drivers/media/i2c/cx25840/cx25840-ir.c
-index 9ae977b..89328cd 100644
+index e6588ee..8f929b8 100644
 --- a/drivers/media/i2c/cx25840/cx25840-ir.c
 +++ b/drivers/media/i2c/cx25840/cx25840-ir.c
 @@ -117,7 +117,7 @@ struct cx25840_ir_state {
@@ -71,22 +71,22 @@ index 9ae977b..89328cd 100644
  
  	spin_lock_init(&ir_state->rx_kfifo_lock);
 -	if (kfifo_alloc(&ir_state->rx_kfifo,
--			CX25840_IR_RX_KFIFO_SIZE, GFP_KERNEL)) {
+-			CX25840_IR_RX_KFIFO_SIZE, GFP_KERNEL))
 +	ir_state->rx_kfifo = kfifo_alloc(CX25840_IR_RX_KFIFO_SIZE, GFP_KERNEL,
 +				      &ir_state->rx_kfifo_lock);
-+	if (IS_ERR(ir_state->rx_kfifo)) {
- 		kfree(ir_state);
++	if (IS_ERR(ir_state->rx_kfifo))
  		return -ENOMEM;
- 	}
-@@ -1272,7 +1264,7 @@ int cx25840_ir_remove(struct v4l2_subdev *sd)
+ 
+ 	ir_state->c = state->c;
+@@ -1270,7 +1262,7 @@ int cx25840_ir_remove(struct v4l2_subdev *sd)
  	cx25840_ir_rx_shutdown(sd);
  	cx25840_ir_tx_shutdown(sd);
  
 -	kfifo_free(&ir_state->rx_kfifo);
 +	kfifo_free(ir_state->rx_kfifo);
- 	kfree(ir_state);
  	state->ir_state = NULL;
  	return 0;
+ }
 diff --git a/drivers/media/pci/cx23885/cx23888-ir.c b/drivers/media/pci/cx23885/cx23888-ir.c
 index fa672fe..cdfae31 100644
 --- a/drivers/media/pci/cx23885/cx23888-ir.c
