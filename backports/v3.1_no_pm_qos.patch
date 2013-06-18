@@ -1,8 +1,8 @@
 diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
-index 7c503fb..3abf527 100644
+index e3457ae..1a9fcb0 100644
 --- a/drivers/media/pci/saa7134/saa7134-video.c
 +++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -2248,17 +2248,6 @@ static int saa7134_streamon(struct file *file, void *priv,
+@@ -2221,17 +2221,6 @@ static int saa7134_streamon(struct file *file, void *priv,
  	if (!res_get(dev, fh, res))
  		return -EBUSY;
  
@@ -13,24 +13,24 @@ index 7c503fb..3abf527 100644
 -	 * Unfortunately, I lack register-level documentation to check the
 -	 * Linux FIFO setup and confirm the perfect value.
 -	 */
--	pm_qos_add_request(&fh->qos_request,
+-	pm_qos_add_request(&dev->qos_request,
 -			   PM_QOS_CPU_DMA_LATENCY,
 -			   20);
 -
- 	return videobuf_streamon(saa7134_queue(fh));
+ 	return videobuf_streamon(saa7134_queue(file));
  }
  
-@@ -2270,8 +2259,6 @@ static int saa7134_streamoff(struct file *file, void *priv,
+@@ -2243,8 +2232,6 @@ static int saa7134_streamoff(struct file *file, void *priv,
  	struct saa7134_dev *dev = fh->dev;
- 	int res = saa7134_resource(fh);
+ 	int res = saa7134_resource(file);
  
--	pm_qos_remove_request(&fh->qos_request);
+-	pm_qos_remove_request(&dev->qos_request);
 -
- 	err = videobuf_streamoff(saa7134_queue(fh));
+ 	err = videobuf_streamoff(saa7134_queue(file));
  	if (err < 0)
  		return err;
 diff --git a/drivers/media/pci/saa7134/saa7134.h b/drivers/media/pci/saa7134/saa7134.h
-index 0a3feaa..c24b651 100644
+index 8d1453a..42671e3 100644
 --- a/drivers/media/pci/saa7134/saa7134.h
 +++ b/drivers/media/pci/saa7134/saa7134.h
 @@ -29,7 +29,6 @@
@@ -41,16 +41,16 @@ index 0a3feaa..c24b651 100644
  
  #include <asm/io.h>
  
-@@ -470,7 +469,6 @@ struct saa7134_fh {
-	unsigned int               radio;
-	enum v4l2_buf_type         type;
-	unsigned int               resources;
+@@ -594,7 +593,6 @@ struct saa7134_dev {
+ 	unsigned int               vbi_fieldcount;
+ 	struct saa7134_format      *fmt;
+ 	unsigned int               width, height;
 -	struct pm_qos_request	   qos_request;
  
- 	/* video overlay */
- 	struct v4l2_window         win;
+ 	/* various v4l controls */
+ 	struct saa7134_tvnorm      *tvnorm;              /* video */
 diff --git a/drivers/media/platform/via-camera.c b/drivers/media/platform/via-camera.c
-index eb404c2..6465988 100644
+index b4f9d03..d91b2f9 100644
 --- a/drivers/media/platform/via-camera.c
 +++ b/drivers/media/platform/via-camera.c
 @@ -22,7 +22,6 @@
@@ -61,7 +61,7 @@ index eb404c2..6465988 100644
  #include <linux/via-core.h>
  #include <linux/via-gpio.h>
  #include <linux/via_i2c.h>
-@@ -70,7 +69,6 @@ struct via_camera {
+@@ -71,7 +70,6 @@ struct via_camera {
  	struct mutex lock;
  	enum viacam_opstate opstate;
  	unsigned long flags;
@@ -69,7 +69,7 @@ index eb404c2..6465988 100644
  	/*
  	 * GPIO info for power/reset management
  	 */
-@@ -1112,13 +1110,6 @@ static int viacam_streamon(struct file *filp, void *priv, enum v4l2_buf_type t)
+@@ -1064,13 +1062,6 @@ static int viacam_streamon(struct file *filp, void *priv, enum v4l2_buf_type t)
  			goto out;
  	}
  	/*
@@ -83,7 +83,7 @@ index eb404c2..6465988 100644
  	 * Fire things up.
  	 */
  	INIT_LIST_HEAD(&cam->buffer_queue);
-@@ -1142,7 +1133,6 @@ static int viacam_streamoff(struct file *filp, void *priv, enum v4l2_buf_type t)
+@@ -1094,7 +1085,6 @@ static int viacam_streamoff(struct file *filp, void *priv, enum v4l2_buf_type t)
  		ret = -EINVAL;
  		goto out;
  	}
