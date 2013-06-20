@@ -24,6 +24,9 @@
 add api_version.patch
 add pr_fmt.patch
 
+[3.6.255]
+add v3.6_pci_error_handlers.patch
+
 [3.1.255]
 add v3.1_no_export_h.patch
 add v3.1_no_dma_buf_h.patch
