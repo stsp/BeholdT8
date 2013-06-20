@@ -64,6 +64,7 @@ add v2.6.33_pvrusb2_sysfs.patch
 add v2.6.33_no_gpio_request_one.patch
 
 [2.6.32]
+add v2.6.32_dvb_net.patch
 add v2.6.32_kfifo.patch
 add v2.6.32_request_firmware_nowait.patch
 
