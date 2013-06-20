@@ -27,6 +27,9 @@ add pr_fmt.patch
 [3.6.255]
 add v3.6_pci_error_handlers.patch
 
+[3.2.255]
+add v3.2_devnode_uses_mode_t.patch
+
 [3.1.255]
 add v3.1_no_export_h.patch
 add v3.1_no_dma_buf_h.patch
