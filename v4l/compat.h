@@ -7,8 +7,12 @@
 
 #include <linux/version.h>
 #include <linux/input.h>
+#include <linux/init.h>
 #include "config-compat.h"
 #include "../linux/kernel_version.h"
+
+#undef __devinitconst
+#define __devinitconst
 
 /* In v2.6.19-rc6-118-g52bad64 struct work_struct was was changed to be only for
  * non-delayed work and struct delayed_work was created for delayed work.  This
@@ -176,7 +180,7 @@ static inline int pci_msi_enabled(void)
 
 #ifdef NEED_DEFINE_PCI_DEVICE_TABLE
 #define DEFINE_PCI_DEVICE_TABLE(_table) \
-	const struct pci_device_id _table[] __devinitconst
+	const struct pci_device_id _table[]
 #endif
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 34)
@@ -731,10 +735,6 @@ static inline unsigned long hrtimer_forward_now(struct hrtimer *timer,
 #define PCI_VDEVICE(vendor, device)             \
 	PCI_VENDOR_ID_##vendor, (device),       \
 	PCI_ANY_ID, PCI_ANY_ID, 0, 0
-#endif
-
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 25)
-#define __devinitconst
 #endif
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 22)
