@@ -594,6 +594,7 @@ sub check_other_dependencies()
 	check_files_for_func("proc_set_size", "NEED_PROC_SET_SIZE", "include/linux/proc_fs.h");
 	check_files_for_func("SIMPLE_DEV_PM_OPS", "NEED_SIMPLE_DEV_PM_OPS", "include/linux/pm.h");
 	check_files_for_func("vm_iomap_memory", "NEED_VM_IOMAP_MEMORY", "include/linux/mm.h");
+	check_files_for_func("device_lock", "NEED_DEVICE_LOCK", "include/linux/device.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

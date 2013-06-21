@@ -1223,4 +1223,22 @@ static inline int vm_iomap_memory(struct vm_area_struct *vma, phys_addr_t start,
 }
 #endif
 
+#ifdef NEED_DEVICE_LOCK
+#include <linux/device.h>
+static inline void device_lock(struct device *dev)
+{
+	down(&dev->sem);
+}
+
+static inline int device_trylock(struct device *dev)
+{
+	return down_trylock(&dev->sem);
+}
+
+static inline void device_unlock(struct device *dev)
+{
+	up(&dev->sem);
+}
+#endif
+
 #endif /*  _COMPAT_H */
