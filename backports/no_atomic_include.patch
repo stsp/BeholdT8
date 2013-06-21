@@ -1,5 +1,17 @@
+diff --git a/drivers/media/radio/radio-si476x.c b/drivers/media/radio/radio-si476x.c
+index 9c9084c..31f2de7 100644
+--- a/drivers/media/radio/radio-si476x.c
++++ b/drivers/media/radio/radio-si476x.c
+@@ -21,7 +21,6 @@
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/slab.h>
+-#include <linux/atomic.h>
+ #include <linux/videodev2.h>
+ #include <linux/mutex.h>
+ #include <linux/debugfs.h>
 diff --git a/drivers/media/usb/hdpvr/hdpvr-core.c b/drivers/media/usb/hdpvr/hdpvr-core.c
-index 73195fe..ac4af83 100644
+index cb69405..5e44ce5 100644
 --- a/drivers/media/usb/hdpvr/hdpvr-core.c
 +++ b/drivers/media/usb/hdpvr/hdpvr-core.c
 @@ -17,7 +17,6 @@
@@ -23,7 +35,7 @@ index ca4994a..148a573 100644
  static void dvb_urb_cleanup(struct pd_dvb_adapter *pd_dvb);
  
 diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 61e28de..7203583 100644
+index a2f4501..f14e928 100644
 --- a/drivers/media/usb/uvc/uvc_ctrl.c
 +++ b/drivers/media/usb/uvc/uvc_ctrl.c
 @@ -20,7 +20,6 @@
@@ -35,7 +47,7 @@ index 61e28de..7203583 100644
  
  #include "uvcvideo.h"
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 5dbefa6..6ac10f7 100644
+index 81695d4..ac975f9 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
 @@ -11,7 +11,6 @@
@@ -59,7 +71,7 @@ index cd962be..bd2e53c 100644
  #include <linux/mm.h>
  #include <linux/list.h>
 diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
-index b2dc326..d0d0ef0 100644
+index 3afff92..ec55507 100644
 --- a/drivers/media/usb/uvc/uvc_v4l2.c
 +++ b/drivers/media/usb/uvc/uvc_v4l2.c
 @@ -22,7 +22,6 @@
@@ -82,8 +94,20 @@ index 3394c34..57882d2 100644
  #include <asm/unaligned.h>
  
  #include <media/v4l2-common.h>
+diff --git a/drivers/media/v4l2-core/v4l2-clk.c b/drivers/media/v4l2-core/v4l2-clk.c
+index b67de86..aad0fdd 100644
+--- a/drivers/media/v4l2-core/v4l2-clk.c
++++ b/drivers/media/v4l2-core/v4l2-clk.c
+@@ -8,7 +8,6 @@
+  * published by the Free Software Foundation.
+  */
+ 
+-#include <linux/atomic.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+ #include <linux/list.h>
 diff --git a/drivers/staging/media/solo6x10/solo6x10.h b/drivers/staging/media/solo6x10/solo6x10.h
-index 3526d6b..a71d283 100644
+index 6f91d2e..4c17a23 100644
 --- a/drivers/staging/media/solo6x10/solo6x10.h
 +++ b/drivers/staging/media/solo6x10/solo6x10.h
 @@ -32,7 +32,6 @@
@@ -93,4 +117,16 @@ index 3526d6b..a71d283 100644
 -#include <linux/atomic.h>
  #include <linux/slab.h>
  #include <linux/videodev2.h>
+ 
+diff --git a/include/media/v4l2-clk.h b/include/media/v4l2-clk.h
+index 0503a90..711ffde 100644
+--- a/include/media/v4l2-clk.h
++++ b/include/media/v4l2-clk.h
+@@ -14,7 +14,6 @@
+ #ifndef MEDIA_V4L2_CLK_H
+ #define MEDIA_V4L2_CLK_H
+ 
+-#include <linux/atomic.h>
+ #include <linux/list.h>
+ #include <linux/mutex.h>
  
