@@ -1,0 +1,17 @@
+diff --git a/drivers/media/firewire/firedtv-fw.c b/drivers/media/firewire/firedtv-fw.c
+index 247f0e7..b76ba25 100644
+--- a/drivers/media/firewire/firedtv-fw.c
++++ b/drivers/media/firewire/firedtv-fw.c
+@@ -390,10 +390,10 @@ static struct fw_driver fdtv_driver = {
+ 		.owner  = THIS_MODULE,
+ 		.name   = "firedtv",
+ 		.bus    = &fw_bus_type,
++		.probe    = node_probe,
++		.remove   = node_remove,
+ 	},
+-	.probe    = node_probe,
+ 	.update   = node_update,
+-	.remove   = node_remove,
+ 	.id_table = fdtv_id_table,
+ };
+ 

@@ -24,6 +24,9 @@
 add api_version.patch
 add pr_fmt.patch
 
+[3.10.255]
+add v3.10_fw_driver_probe.patch
+
 [3.6.255]
 add v3.6_pci_error_handlers.patch
 
