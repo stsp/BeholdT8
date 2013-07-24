@@ -6,7 +6,7 @@ index 004d8ac..6508785 100644
  {
  	snprintf(cx->in_workq_name, sizeof(cx->in_workq_name), "%s-in",
  		 cx->v4l2_dev.name);
--	cx->in_work_queue = alloc_ordered_workqueue("%s", 0, cx->in_workq_name);
+-	cx->in_work_queue = alloc_ordered_workqueue(0, cx->in_workq_name);
 +	cx->in_work_queue = create_singlethread_workqueue(cx->in_workq_name);
  	if (cx->in_work_queue == NULL) {
  		CX18_ERR("Unable to create incoming mailbox handler thread\n");
