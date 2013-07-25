@@ -52,6 +52,7 @@ sub give_redhat_hints()
 	my $install;
 
 	my %map = (
+		"wget"			=> "wget",
 		"lsdiff"		=> "patchutils",
 		"Digest::SHA"		=> "perl-Digest-SHA",
 		"Proc::ProcessTable"	=> "perl-Proc-ProcessTable",
@@ -254,6 +255,7 @@ sub check_needs()
 	need_program "gcc";
 	need_program "patch";
 	need_program "lsdiff";
+	need_program "wget";
 
 	# Check for needed perl modules
 	need_perl_module "Digest::SHA";
