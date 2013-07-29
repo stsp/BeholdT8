@@ -48,6 +48,8 @@ SOC_CAMERA_MT9T031
 SOC_CAMERA_OV772X
 SOC_CAMERA_TW9910
 SOC_CAMERA_PLATFORM
+# Needs of_match_ptr
+VIDEO_THS8200
 
 [3.0.0]
 # fw_iso_context_queue_flush
