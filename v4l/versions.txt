@@ -29,6 +29,8 @@ VIDEO_S5K6AA
 VIDEO_S5K4ECGX
 # needs EPROBE_DEFER
 IR_GPIO_CIR
+# needs of_property_read_bool
+VIDEO_ADV7343
 
 [3.3.0]
 # Needs struct dma_interleaved_template in dmaengine.h
@@ -130,7 +132,6 @@ VIDEO_ADV7180
 # requires id_table and new i2c stuff
 RADIO_TEA5764
 VIDEO_THS7303
-VIDEO_ADV7343
 RADIO_SI4713
 I2C_SI4713
 
