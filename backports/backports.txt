@@ -27,6 +27,9 @@ add pr_fmt.patch
 [3.10.255]
 add v3.10_fw_driver_probe.patch
 
+[3.8.255]
+add v3.8_config_of.patch
+
 [3.6.255]
 add v3.6_pci_error_handlers.patch
 
