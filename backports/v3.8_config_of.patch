@@ -6,7 +6,7 @@ index b350ab9..55825d0 100644
  
  static bool match_of(struct device *dev, struct v4l2_async_subdev *asd)
  {
-+#if CONFIG_OF
++#ifdef CONFIG_OF
  	return dev->of_node == asd->match.of.node;
 +#else
 +	return false;
