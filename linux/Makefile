@@ -11,14 +11,12 @@ TARDIR += drivers/media/
 TARDIR += drivers/staging/media/
 TARDIR += drivers/misc/altera-stapl/
 TARFILES += sound/pci/bt87x.c
-TARFILES += sound/i2c/other/tea575x-tuner.c
 
 # Includes
 
 # Pure kernel API
 TARDIR += include/media/
 TARFILES += include/linux/mmc/sdio_ids.h
-TARFILES += include/sound/tea575x-tuner.h
 TARFILES += include/sound/aci.h
 TARFILES += include/uapi/linux/usb/video.h
 TARFILES += include/linux/via-core.h
