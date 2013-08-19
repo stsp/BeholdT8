@@ -4,6 +4,8 @@
 [3.9.0]
 # needs devm_ioremap_resource
 VIDEO_SH_VEU
+VIDEO_RENESAS_VSP1
+VIDEO_RCAR_VIN
 
 [3.6.0]
 # needs devm_clk_get, clk_enable, clk_disable
