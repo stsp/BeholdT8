@@ -11,6 +11,7 @@ VIDEO_RCAR_VIN
 # needs devm_clk_get, clk_enable, clk_disable
 VIDEO_CODA
 VIDEO_MT9P031
+VIDEO_MT9V032
 # needs include/linux/sizes.h
 VIDEO_M5MOLS
 VIDEO_S5C73M3
@@ -39,6 +40,7 @@ VIDEO_ADV7343
 VIDEO_MEM2MEM_DEINTERLACE
 # Needs of_node_put
 VIDEO_TVP514X
+VIDEO_TVP7002
 
 [3.2.0]
 # due to the rename at include/linux from "pm_qos_params.h" to "pm_qos.h"
@@ -75,7 +77,6 @@ VIDEO_VIA_CAMERA
 MACH_DAVINCI_DM6467_EVM
 MFD_TIMBERDALE
 RADIO_SAA7706H
-VIDEO_TVP7002
 # Needs dma_set_coherent_mask
 VIDEO_DT3155
 # Needs include/linux/lcm.h
