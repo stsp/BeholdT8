@@ -107,7 +107,7 @@ index fb0f046..bf83c79 100644
  
  #include <linux/errno.h>
 diff --git a/drivers/media/pci/bt8xx/bttv-cards.c b/drivers/media/pci/bt8xx/bttv-cards.c
-index e564aac..d33c01c 100644
+index d85cb0a..2142ac7 100644
 --- a/drivers/media/pci/bt8xx/bttv-cards.c
 +++ b/drivers/media/pci/bt8xx/bttv-cards.c
 @@ -25,6 +25,7 @@
@@ -359,7 +359,7 @@ index 0ba3875..e958826 100644
  
  #include "budget.h"
 diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
-index ed184f6..02f61f5 100644
+index c1444f8..063f510 100644
 --- a/drivers/media/rc/ene_ir.c
 +++ b/drivers/media/rc/ene_ir.c
 @@ -30,6 +30,7 @@
@@ -407,7 +407,7 @@ index 21ee0dc..5b9a94f 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/media/rc/winbond-cir.c b/drivers/media/rc/winbond-cir.c
-index 87af2d3..43370fd 100644
+index 98bd496..6a381c3 100644
 --- a/drivers/media/rc/winbond-cir.c
 +++ b/drivers/media/rc/winbond-cir.c
 @@ -40,6 +40,7 @@
@@ -491,7 +491,7 @@ index cb1e64c..c0b7c2b 100644
  
  #include "gspca.h"
 diff --git a/drivers/media/usb/gspca/gspca.c b/drivers/media/usb/gspca/gspca.c
-index b7ae872..ec6320c 100644
+index 048507b..592e03b 100644
 --- a/drivers/media/usb/gspca/gspca.c
 +++ b/drivers/media/usb/gspca/gspca.c
 @@ -21,6 +21,7 @@
@@ -659,7 +659,7 @@ index 44c9964..256bc71 100644
  
  #define MODULE_NAME "nw80x"
 diff --git a/drivers/media/usb/gspca/ov519.c b/drivers/media/usb/gspca/ov519.c
-index a3958ee..700f7ed 100644
+index 8937d79..5974af3 100644
 --- a/drivers/media/usb/gspca/ov519.c
 +++ b/drivers/media/usb/gspca/ov519.c
 @@ -37,6 +37,7 @@
@@ -671,7 +671,7 @@ index a3958ee..700f7ed 100644
  
  #define MODULE_NAME "ov519"
 diff --git a/drivers/media/usb/gspca/ov534.c b/drivers/media/usb/gspca/ov534.c
-index 2e28c81..6106be6 100644
+index 03a33c4..aa8509f 100644
 --- a/drivers/media/usb/gspca/ov534.c
 +++ b/drivers/media/usb/gspca/ov534.c
 @@ -28,6 +28,7 @@
@@ -898,6 +898,18 @@ index 8c09826..244f4ac 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #define MODULE_NAME "stk014"
+diff --git a/drivers/media/usb/gspca/stk1135.c b/drivers/media/usb/gspca/stk1135.c
+index 5858688..57c411c 100644
+--- a/drivers/media/usb/gspca/stk1135.c
++++ b/drivers/media/usb/gspca/stk1135.c
+@@ -21,6 +21,7 @@
+  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #define MODULE_NAME "stk1135"
 diff --git a/drivers/media/usb/gspca/stv0680.c b/drivers/media/usb/gspca/stv0680.c
 index 9c08276..490e373 100644
 --- a/drivers/media/usb/gspca/stv0680.c
