@@ -24,6 +24,9 @@
 add api_version.patch
 add pr_fmt.patch
 
+[3.11.255]
+add v3.11_dev_groups.patch
+
 [3.10.255]
 add v3.10_fw_driver_probe.patch
 
