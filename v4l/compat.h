@@ -1241,4 +1241,14 @@ static inline void device_unlock(struct device *dev)
 }
 #endif
 
+#ifdef NEED_PTR_ERR_OR_ZERO
+static inline int __must_check PTR_ERR_OR_ZERO(__force const void *ptr)
+{
+	if (IS_ERR(ptr))
+		return PTR_ERR(ptr);
+	else
+		return 0;
+}
+#endif
+
 #endif /*  _COMPAT_H */
