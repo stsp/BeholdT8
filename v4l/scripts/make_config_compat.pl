@@ -596,6 +596,7 @@ sub check_other_dependencies()
 	check_files_for_func("vm_iomap_memory", "NEED_VM_IOMAP_MEMORY", "include/linux/mm.h");
 	check_files_for_func("device_lock", "NEED_DEVICE_LOCK", "include/linux/device.h");
 	check_files_for_func("PTR_ERR_OR_ZERO", "NEED_PTR_ERR_OR_ZERO", "include/linux/err.h");
+	check_files_for_func("sg_alloc_table_from_pages", "NEED_SG_ALLOC_TABLE_FROM_PAGES", "include/linux/scatterlist.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");
