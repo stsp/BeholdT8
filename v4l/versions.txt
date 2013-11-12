@@ -34,6 +34,8 @@ VIDEO_S5K4ECGX
 IR_GPIO_CIR
 # needs of_property_read_bool
 VIDEO_ADV7343
+# needs devm_regmap_init_i2c
+VIDEO_LM3560
 
 [3.3.0]
 # Needs struct dma_interleaved_template in dmaengine.h
