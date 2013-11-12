@@ -11,7 +11,7 @@ index be746d1..02ac2d0 100644
  
  static void calculate_output_format_register(struct saa7146_dev* saa, u32 palette, u32* clip_format)
 diff --git a/drivers/media/common/siano/smsendian.c b/drivers/media/common/siano/smsendian.c
-index e2657c2..457b6d0 100644
+index bfe831c..d1aa20e 100644
 --- a/drivers/media/common/siano/smsendian.c
 +++ b/drivers/media/common/siano/smsendian.c
 @@ -19,7 +19,6 @@
@@ -23,7 +23,7 @@ index e2657c2..457b6d0 100644
  
  #include "smsendian.h"
 diff --git a/drivers/media/media-device.c b/drivers/media/media-device.c
-index 99b80b6..d2abb94 100644
+index d5a7a13..5cd17ee 100644
 --- a/drivers/media/media-device.c
 +++ b/drivers/media/media-device.c
 @@ -21,7 +21,6 @@
@@ -35,7 +35,7 @@ index 99b80b6..d2abb94 100644
  #include <linux/media.h>
  #include <linux/types.h>
 diff --git a/drivers/media/radio/wl128x/fmdrv_v4l2.c b/drivers/media/radio/wl128x/fmdrv_v4l2.c
-index 0a8ee8f..429f428 100644
+index b55012c..8346c1e 100644
 --- a/drivers/media/radio/wl128x/fmdrv_v4l2.c
 +++ b/drivers/media/radio/wl128x/fmdrv_v4l2.c
 @@ -28,7 +28,6 @@
@@ -47,7 +47,7 @@ index 0a8ee8f..429f428 100644
  #include "fmdrv.h"
  #include "fmdrv_v4l2.h"
 diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
-index 17c94be..ccb5cf0 100644
+index 5c42750..7131728 100644
 --- a/drivers/media/rc/ir-raw.c
 +++ b/drivers/media/rc/ir-raw.c
 @@ -12,7 +12,6 @@
@@ -71,7 +71,7 @@ index a38f58c..af3a659 100644
  #include "hdpvr.h"
  
 diff --git a/drivers/media/v4l2-core/v4l2-ctrls.c b/drivers/media/v4l2-core/v4l2-ctrls.c
-index 6b28b58..8332c45 100644
+index 60dcc0f..477c640 100644
 --- a/drivers/media/v4l2-core/v4l2-ctrls.c
 +++ b/drivers/media/v4l2-core/v4l2-ctrls.c
 @@ -20,7 +20,6 @@
@@ -118,3 +118,15 @@ index 996c248..3e80c90 100644
  
  #include <media/v4l2-ctrls.h>
  #include <media/v4l2-device.h>
+diff --git a/include/media/v4l2-clk.h b/include/media/v4l2-clk.h
+index 0b36cc1..94e7875 100644
+--- a/include/media/v4l2-clk.h
++++ b/include/media/v4l2-clk.h
+@@ -15,7 +15,6 @@
+ #define MEDIA_V4L2_CLK_H
+ 
+ #include <linux/atomic.h>
+-#include <linux/export.h>
+ #include <linux/list.h>
+ #include <linux/mutex.h>
+ 
