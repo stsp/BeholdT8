@@ -1,8 +1,16 @@
 diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
-index e3457ae..1a9fcb0 100644
+index fb60da8..736df4d 100644
 --- a/drivers/media/pci/saa7134/saa7134-video.c
 +++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -2221,17 +2221,6 @@ static int saa7134_streamon(struct file *file, void *priv,
+@@ -1455,7 +1455,6 @@ static int video_release(struct file *file)
+ 
+ 	/* stop video capture */
+ 	if (res_check(fh, RESOURCE_VIDEO)) {
+-		pm_qos_remove_request(&dev->qos_request);
+ 		videobuf_streamoff(&fh->cap);
+ 		res_free(dev,fh,RESOURCE_VIDEO);
+ 	}
+@@ -2222,17 +2221,6 @@ static int saa7134_streamon(struct file *file, void *priv,
  	if (!res_get(dev, fh, res))
  		return -EBUSY;
  
@@ -20,7 +28,7 @@ index e3457ae..1a9fcb0 100644
  	return videobuf_streamon(saa7134_queue(file));
  }
  
-@@ -2243,8 +2232,6 @@ static int saa7134_streamoff(struct file *file, void *priv,
+@@ -2244,8 +2232,6 @@ static int saa7134_streamoff(struct file *file, void *priv,
  	struct saa7134_dev *dev = fh->dev;
  	int res = saa7134_resource(file);
  

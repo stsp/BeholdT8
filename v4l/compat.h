@@ -1317,4 +1317,43 @@ static inline int sg_alloc_table_from_pages(struct sg_table *sgt,
 }
 #endif
 
+#ifdef NEED_REPLACE_FOPS
+#define replace_fops(f, fops) \
+	do {	\
+		struct file *__file = (f); \
+		fops_put(__file->f_op); \
+		BUG_ON(!(__file->f_op = (fops))); \
+	} while(0)
+#endif
+
+#ifdef NEED_REINIT_COMPLETION
+#include <linux/completion.h>
+static inline void reinit_completion(struct completion *x)
+{
+	x->done = 0;
+}
+#endif
+
+#ifdef NEED_DMA_SET_MASK_AND_COHERENT
+#include <linux/dma-mapping.h>
+
+#ifdef NEED_DMA_SET_COHERENT_MASK
+static inline int dma_set_coherent_mask(struct device *dev, u64 mask)
+{
+	if (!dma_supported(dev, mask))
+		return -EIO;
+	dev->coherent_dma_mask = mask;
+	return 0;
+}
+#endif
+
+static inline int dma_set_mask_and_coherent(struct device *dev, u64 mask)
+{
+	int rc = dma_set_mask(dev, mask);
+	if (rc == 0)
+		dma_set_coherent_mask(dev, mask);
+	return rc;
+}
+#endif
+
 #endif /*  _COMPAT_H */
