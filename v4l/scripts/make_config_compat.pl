@@ -601,6 +601,7 @@ sub check_other_dependencies()
 	check_files_for_func("reinit_completion", "NEED_REINIT_COMPLETION", "include/linux/completion.h");
 	check_files_for_func("dma_set_mask_and_coherent", "NEED_DMA_SET_MASK_AND_COHERENT", "include/linux/dma-mapping.h");
 	check_files_for_func("dma_set_coherent_mask", "NEED_DMA_SET_COHERENT_MASK", "include/linux/dma-mapping.h");
+	check_files_for_func("bitmap_clear", "NEED_BITMAP_CLEAR", "include/linux/bitmap.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");
