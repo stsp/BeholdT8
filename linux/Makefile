@@ -25,6 +25,7 @@ TARFILES += include/linux/dma-buf.h
 TARFILES += include/linux/kconfig.h
 TARFILES += include/linux/platform_data/vsp1.h
 TARFILES += include/linux/platform_data/camera-rcar.h
+TARFILES += include/trace/events/v4l2.h
 
 TARFILES += include/misc/altera.h
 
