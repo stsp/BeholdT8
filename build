@@ -392,9 +392,9 @@ if (@git == 2) {
 	system('git --git-dir media/.git config sendemail.chainreplyto false');
 
 	if (!check_git("remote", "r_$rname")) {
-		print "adding remote r_$rname to track $git[0], $git[1]\n";
-		printf "\$ git --git-dir media/.git remote add r_$rname $git[0] $git[1]\n" if ($level);
-		system ("git --git-dir media/.git remote add r_$rname $git[0] $git[1]") == 0
+		print "adding remote r_$rname to track $git[0]\n";
+		printf "\$ git --git-dir media/.git remote add r_$rname $git[0]\n" if ($level);
+		system ("git --git-dir media/.git remote add r_$rname $git[0]") == 0
 			or die "Can't create remote r_$rname";
 	}
 	print "updating remote $rname\n";
