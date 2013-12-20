@@ -7,6 +7,10 @@ VIDEO_SH_VEU
 VIDEO_RENESAS_VSP1
 VIDEO_RCAR_VIN
 
+[3.7.0]
+# i2c_add_mux_adapter prototype change
+DVB_M88DS3103
+
 [3.6.0]
 # needs devm_clk_get, clk_enable, clk_disable
 VIDEO_CODA

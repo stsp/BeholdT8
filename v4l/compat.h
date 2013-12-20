@@ -1403,4 +1403,8 @@ static inline void bitmap_clear(unsigned long *map, int start, int nr)
 }
 #endif
 
+#ifdef NEED_DEVM_KMALLOC
+#define devm_kmalloc devm_kzalloc
+#endif
+
 #endif /*  _COMPAT_H */
