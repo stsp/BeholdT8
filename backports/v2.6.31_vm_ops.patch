@@ -63,10 +63,10 @@ index b7ae872..30a450e 100644
  	.open		= gspca_vm_open,
  	.close		= gspca_vm_close,
  };
-diff --git a/drivers/media/usb/sn9c102/sn9c102_core.c b/drivers/media/usb/sn9c102/sn9c102_core.c
+diff --git a/drivers/staging/media/sn9c102/sn9c102_core.c b/drivers/staging/media/sn9c102/sn9c102_core.c
 index c957e9a..a5126fe 100644
---- a/drivers/media/usb/sn9c102/sn9c102_core.c
-+++ b/drivers/media/usb/sn9c102/sn9c102_core.c
+--- a/drivers/staging/media/sn9c102/sn9c102_core.c
++++ b/drivers/staging/media/sn9c102/sn9c102_core.c
 @@ -2077,7 +2077,7 @@ static void sn9c102_vm_close(struct vm_area_struct* vma)
  }
  
