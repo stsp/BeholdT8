@@ -12,10 +12,6 @@ VIDEO_RCAR_VIN
 DVB_M88DS3103
 
 [3.6.0]
-# needs devm_clk_get, clk_enable, clk_disable
-VIDEO_CODA
-VIDEO_MT9P031
-VIDEO_MT9V032
 # needs include/linux/sizes.h
 VIDEO_M5MOLS
 VIDEO_S5C73M3
@@ -23,6 +19,11 @@ VIDEO_S5C73M3
 VIDEOBUF2_DMA_CONTIG
 
 [3.5.0]
+# needs devm_clk_get, clk_enable, clk_disable
+VIDEO_CODA
+VIDEO_MT9P031
+VIDEO_MT9V032
+VIDEO_S5K5BAF
 # needs devm_gpio_request_one
 VIDEO_OV9650
 VIDEO_ADV7183
