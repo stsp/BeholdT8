@@ -281,9 +281,17 @@ sub get_remote_name()
 		$name =~ s,\.git$,,g;
 		$name =~ s,/,_,g;
 
-		return $name;
+		return ($name, 0);
 	}
-	die "Invalid URL. Need to use one from linuxtv.org site\n";
+	if (!($git[0] =~ m,^(http|git|git\+ssh|ssh):\/\/,)) {
+		my $name = $git[0];
+		$name =~ s,\s*$,,;
+		$name =~ s,/$,,;
+		$name =~ s,/,_,g;
+
+		return ($name, 1);
+	}
+	die "Invalid URL. Need to use one from linuxtv.org site or a local one\n";
 }
 
 sub check_git($$)
@@ -309,10 +317,12 @@ sub license ()
 	print "* All drivers and build system are under GPLv2 License     *\n";
 	print "* Firmware files are under the license terms found at:     *\n";
 	printf "* %-56s *\n", $firmware_url;
-	print "* Please abort if you don't agree with the license         *\n";
+	print "* Please abort in the next 5 secs if you don't agree with  *\n";
+	print "* the license                                              *\n";
 	print "************************************************************\n";
 	print "\n";
 	sleep 5;
+	print "Not aborted. It means that the licence was agreed. Proceeding...\n\n";
 }
 
 sub which($)
@@ -358,7 +368,16 @@ if ($main_git) {
 }
 
 if (@git == 2) {
-	my $rname = get_remote_name();
+	my $name;
+	my $workdir;
+
+	my ($rname,$local) = get_remote_name();
+
+	if ($local) {
+		$name = "l_" . $rname;
+	} else {
+		$name = "r_" . $rname;
+	}
 
 	if ($git[0] ne $main_git_url) {
 		print "\n";
@@ -370,6 +389,7 @@ if (@git == 2) {
 		print "* fail, as the backport patches may not fit on the needs   *\n";
 		print "************************************************************\n";
 		print "\n";
+		$workdir = qx(which git-new-workdir);
 	} else {
 		print "************************************************************\n";
 		printf "* building %-38s git tree *\n", $git[0];
@@ -378,40 +398,57 @@ if (@git == 2) {
 	license;
 
 	if (!stat "./media/.git/config") {
-		print "Getting the latest Kernel tree. This will take some time\n";
-		system("git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git media") == 0
-			or die "Can't clone from the upstream tree";
-	} else {
+		if (!$local) {
+			print "Getting the latest Kernel tree. This will take some time\n";
+			system("git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git media") == 0
+				or die "Can't clone from the upstream tree";
+			system('git --git-dir media/.git config format.cc "Linux Media Mailing List <linux-media@vger.kernel.org>"');
+			system('git --git-dir media/.git config format.signoff true');
+			system('git --git-dir media/.git config format.numbered auto');
+			system('git --git-dir media/.git config sendemail.chainreplyto false');
+		} else {
+			if ($workdir ne "") {
+				print "Creating a new workdir from $git[0] at media\n";
+				system("git new-workdir $git[0] media") == 0
+					or die "Can't create a new workdir";
+			} else {
+				print "Creating a new clone\n";
+				system("git clone -l $git[0] media") == 0
+					or die "Can't create a new clone";
+			}
+		}
+	} elsif ($workdir eq "") {
 		system("git --git-dir media/.git remote update origin") == 0
 			or die "Can't update from the upstream tree";
 	}
 
-	system('git --git-dir media/.git config format.cc "Linux Media Mailing List <linux-media@vger.kernel.org>"');
-	system('git --git-dir media/.git config format.signoff true');
-	system('git --git-dir media/.git config format.numbered auto');
-	system('git --git-dir media/.git config sendemail.chainreplyto false');
-
-	if (!check_git("remote", "r_$rname")) {
-		print "adding remote r_$rname to track $git[0]\n";
-		printf "\$ git --git-dir media/.git remote add r_$rname $git[0]\n" if ($level);
-		system ("git --git-dir media/.git remote add r_$rname $git[0]") == 0
-			or die "Can't create remote r_$rname";
-	}
-	print "updating remote $rname\n";
-	system ("git --git-dir media/.git remote update r_$rname") == 0
-			or die "Can't update remote r_$rname";
-
-	print "creating a local branch $rname\n";
-	if (!check_git("branch", "$rname/$git[1]")) {
-		print "\$ (cd media; git checkout -b $rname/$git[1] remotes/r_$rname/$git[1])\n" if ($level);
-		system ("(cd media; git checkout -b $rname/$git[1] remotes/r_$rname/$git[1])") == 0
-				or die "Can't create local branch $rname";
+	if ($workdir eq "") {
+		if (!check_git("remote", "$name")) {
+			print "adding remote $name to track $git[0]\n";
+			printf "\$ git --git-dir media/.git remote add $name $git[0]\n" if ($level);
+			system ("git --git-dir media/.git remote add $name $git[0]") == 0
+				or die "Can't create remote $name";
+		}
+		print "updating remote $rname\n";
+		system ("git --git-dir media/.git remote update $name") == 0
+				or die "Can't update remote $name";
+		print "creating a local branch $rname\n";
+		if (!check_git("branch", "$rname/$git[1]")) {
+			print "\$ (cd media; git checkout -b $rname/$git[1] remotes/$name/$git[1])\n" if ($level);
+			system ("(cd media; git checkout -b $rname/$git[1] remotes/$name/$git[1])") == 0
+					or die "Can't create local branch $rname";
+		} else {
+			system ("(cd media; git checkout $rname/$git[1])") == 0
+					or die "Can't checkout to branch $rname";
+			system ("(cd media; git pull . remotes/$name/$git[1])") == 0
+					or die "Can't update local branch $name";
+		}
 	} else {
-		system ("(cd media; git checkout $rname/$git[1])") == 0
-				or die "Can't checkout to branch $rname";
-		system ("(cd media; git pull . remotes/r_$rname/$git[1])") == 0
-				or die "Can't update local branch $rname";
+		print "git checkout $git[1]\n";
+		system ("(cd media; git checkout $git[1])") == 0
+			or die "Can't checkout $git[1]";
 	}
+
 
 	system ("make -C linux dir DIR=../media/") == 0
 		or die "Can't link the building system to the media directory.";
