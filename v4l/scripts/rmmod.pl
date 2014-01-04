@@ -193,15 +193,17 @@ sub unload_pulseaudio($)
 	return if (!$try_pulseaudio);
 
 	for my $pid (@pulse) {
-#		printf "LANG=C sudo -u \\\#$pid pacmd list-sources |\n";
-		open IN, "LANG=C sudo -u \\\#$pid pacmd list-sources |";
+		my $user = getpwuid($pid);
+
+#		printf "LANG=C su $user -c \"pacmd list-sources\" |\n";
+		open IN, "LANG=C su $user -c \"pacmd list-sources\" |";
 		while (<IN>) {
 			$cur_module = $1 if (/^\s*module:\s*(\d+)/);
 
 			if (/^\s*alsa.driver_name\s*=\s*"(.*)"/) {
 				if ($1 eq $driver_name) {
-					print "LANG=C sudo -u \\#$pid pactl unload-module $cur_module\n";
-					system ("LANG=C sudo -u \\#$pid pactl unload-module $cur_module");
+#					print "LANG=C su $user -c \"pactl unload-module $cur_module\"\n";
+					system ("LANG=C su $user -c \"pactl unload-module $cur_module\"");
 				}
 				next;
 			}
@@ -210,20 +212,20 @@ sub unload_pulseaudio($)
 			# the same interface as the video node. Pulseaudio can't
 			# get the driver name in this case
 			if (/^\s*alsa.card_name\s*=\s*"Em28xx/) {
-				print "LANG=C sudo -u \\#$pid pactl unload-module $cur_module\n";
-				system ("LANG=C sudo -u \\#$pid pactl unload-module $cur_module");
+#				print "LANG=C su $user -c \"pactl unload-module $cur_module\"\n";
+				system ("LANG=C su $user -c \"pactl unload-module $cur_module\"");
 			}
 		}
 		close IN;
 
-#		printf "LANG=C sudo -u \\\#$pid pacmd list-sinks |\n";
-		open IN, "LANG=C sudo -u \\#$pid pacmd list-sinks |" or return;
+#		printf "LANG=C su $user -c \"pacmd list-sinks\" |\n";
+		open IN, "LANG=C su $user -c \"pacmd list-sinks\" |" or return;
 		while (<IN>) {
 			$cur_module = $1 if (/^\s*module:\s*(\d+)/);
 			if (/^\s*alsa.driver_name\s*=\s*"(.*)"/) {
 				if ($1 eq $driver_name) {
-					print "LANG=C sudo -u \\#$pid pactl unload-module $1\n";
-					system ("LANG=C sudo -u \\#$pid pactl unload-module $1");
+#					print "LANG=C su $user -c \"pactl unload-module $1\"\n";
+					system ("LANG=C su $user -c \"pactl unload-module $1\"");
 				}
 			}
 		}
