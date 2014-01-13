@@ -603,6 +603,7 @@ sub check_other_dependencies()
 	check_files_for_func("dma_set_coherent_mask", "NEED_DMA_SET_COHERENT_MASK", "include/linux/dma-mapping.h");
 	check_files_for_func("bitmap_clear", "NEED_BITMAP_CLEAR", "include/linux/bitmap.h");
 	check_files_for_func("devm_kmalloc", "NEED_DEVM_KMALLOC", "include/linux/device.h");
+	check_files_for_func("usb_speed_string", "NEED_USB_SPEED_STRING", "include/linux/usb/ch9.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

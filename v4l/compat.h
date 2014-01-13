@@ -1407,4 +1407,12 @@ static inline void bitmap_clear(unsigned long *map, int start, int nr)
 #define devm_kmalloc devm_kzalloc
 #endif
 
+#ifdef NEED_USB_SPEED_STRING
+#include <linux/usb.h>
+static inline const char *usb_speed_string(enum usb_device_speed speed)
+{
+	return "UNKNOWN";
+}
+#endif
+
 #endif /*  _COMPAT_H */
