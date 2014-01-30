@@ -1409,6 +1409,8 @@ static inline void bitmap_clear(unsigned long *map, int start, int nr)
 
 #ifdef NEED_USB_SPEED_STRING
 #include <linux/usb.h>
+/* undefine err since it clashes with err defines from drivers. */
+#undef err
 static inline const char *usb_speed_string(enum usb_device_speed speed)
 {
 	return "UNKNOWN";
