@@ -1417,4 +1417,14 @@ static inline const char *usb_speed_string(enum usb_device_speed speed)
 }
 #endif
 
+#ifdef NEED_ETHER_ADDR_EQUAL
+static inline bool ether_addr_equal(const u8 *addr1, const u8 *addr2)
+{
+	const u16 *a = (const u16 *)addr1;
+	const u16 *b = (const u16 *)addr2;
+
+	return ((a[0] ^ b[0]) | (a[1] ^ b[1]) | (a[2] ^ b[2])) == 0;
+}
+#endif
+
 #endif /*  _COMPAT_H */
