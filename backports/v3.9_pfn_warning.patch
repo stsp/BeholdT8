@@ -1,0 +1,13 @@
+diff --git a/drivers/media/v4l2-core/videobuf2-dma-contig.c b/drivers/media/v4l2-core/videobuf2-dma-contig.c
+index 33d3871d..330cb5e 100644
+--- a/drivers/media/v4l2-core/videobuf2-dma-contig.c
++++ b/drivers/media/v4l2-core/videobuf2-dma-contig.c
+@@ -617,7 +617,7 @@ static void *vb2_dc_get_userptr(void *alloc_ctx, unsigned long vaddr,
+ 	/* extract page list from userspace mapping */
+ 	ret = vb2_dc_get_user_pages(start, pages, n_pages, vma, write);
+ 	if (ret) {
+-		unsigned long pfn;
++		unsigned long pfn = 0;
+ 		if (vb2_dc_get_user_pfn(start, n_pages, vma, &pfn) == 0) {
+ 			buf->dma_addr = vb2_dc_pfn_to_dma(buf->dev, pfn);
+ 			buf->size = size;

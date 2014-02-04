@@ -30,6 +30,9 @@ add v3.11_dev_groups.patch
 [3.10.255]
 add v3.10_fw_driver_probe.patch
 
+[3.9.255]
+add v3.9_pfn_warning.patch
+
 [3.8.255]
 add v3.8_config_of.patch
 
