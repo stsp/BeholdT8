@@ -8,16 +8,16 @@
 # Java support added by Maciej Stachowiak <mjs@eazel.com>
 # last updated 28 December 2000
 #
-# Mauro Carvalho Chehab <mchehab@brturbo.com.br>: modified to
+# Mauro Carvalho Chehab <mchehab@infradead.org>: modified to
 # allow signed-off-by tags, GMT Time and V4L format.
 # CHANVE_LOG Env variables now are mandatory.
 # Updated at 15 January 2005
 #
-# Mauro Carvalho Chehab <mchehab@brturbo.com.br>: modified to
+# Mauro Carvalho Chehab <mchehab@infradead.org>: modified to
 # work with Mercurial
 # Updated at 29 August 2005
 #
-# Mauro Carvalho Chehab <mchehab@brturbo.com.br>: modified to
+# Mauro Carvalho Chehab <mchehab@infradead.org>: modified to
 # just generate a changelog entry
 # Updated at 01 January 2006
 ##

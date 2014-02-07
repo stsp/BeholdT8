@@ -287,13 +287,13 @@ patches from it.
 
 =head1 BUGS
 
-Report bugs to Mauro Carvalho Chehab <mchehab@redhat.com>
+Report bugs to <linux-media@vger.kernel.org>
 
 =head1 COPYRIGHT
 
 Copyright (c) 2006 Trent Piepho <xyzzy@speakeasy.org>
 
-Copyright (c) 2012 by Mauro Carvalho Chehab <mchehab@redhat.com>.
+Copyright (c) 2012 by Mauro Carvalho Chehab
 
 License GPLv2: GNU GPL version 2 <http://gnu.org/licenses/gpl.html>.
 
