@@ -578,6 +578,7 @@ sub check_other_dependencies()
 	check_files_for_func("__i2c_transfer", "NEED_UNLOCK_I2C_XFER", "include/linux/i2c.h");
 	check_files_for_func("I2C_CLIENT_SCCB", "NEED_I2C_CLIENT_SCCB", "include/linux/i2c.h");
 	check_files_for_func("kstrtou16", "NEED_KSTRTOU16", "include/linux/kernel.h");
+	check_files_for_func("kstrtoul", "NEED_KSTRTOUL", "include/linux/kernel.h");
 	check_files_for_func("memweight", "NEED_MEMWEIGHT", "include/linux/string.h");
 	check_files_for_func("dev_dbg_ratelimited", "NEED_DEV_DBG_RATELIMITED", "include/linux/device.h");
 	check_files_for_func("i2c_lock_adapter", "NEED_LOCK_ADAPTER", "include/linux/i2c.h");

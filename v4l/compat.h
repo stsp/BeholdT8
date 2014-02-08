@@ -1021,6 +1021,13 @@ static inline int kstrtou16(const char *s, unsigned int base, u16 *res)
 }
 #endif
 
+#ifdef NEED_KSTRTOUL
+#include <linux/kernel.h>
+
+#define kstrtoul strict_strtoul
+
+#endif
+
 #ifdef NEED_MEMWEIGHT
 static inline size_t memweight(const void *ptr, size_t bytes)
 {
