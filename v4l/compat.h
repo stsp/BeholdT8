@@ -1425,6 +1425,10 @@ static inline const char *usb_speed_string(enum usb_device_speed speed)
 }
 #endif
 
+#ifdef NEED_USB_SPEED_WIRELESS
+#define USB_SPEED_WIRELESS USB_SPEED_VARIABLE
+#endif
+
 #ifdef NEED_ETHER_ADDR_EQUAL
 static inline bool ether_addr_equal(const u8 *addr1, const u8 *addr2)
 {
