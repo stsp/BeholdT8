@@ -1162,3 +1162,15 @@ index 2f62be9..c496e58 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include <linux/module.h>
+diff --git a/drivers/media/dvb-frontends/drx39xyj/drxj.c b/drivers/media/dvb-frontends/drx39xyj/drxj.c
+index a99040b..8ff1ed7 100644
+--- a/drivers/media/dvb-frontends/drx39xyj/drxj.c
++++ b/drivers/media/dvb-frontends/drx39xyj/drxj.c
+@@ -53,6 +53,7 @@
+ INCLUDE FILES
+ ----------------------------------------------------------------------------*/
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ":%s: " fmt, __func__
+ 
+ #include <linux/module.h>
