@@ -1,0 +1,24 @@
+diff --git a/drivers/media/dvb-frontends/rtl2832.c b/drivers/media/dvb-frontends/rtl2832.c
+index fdbed35..ce701bc 100644
+--- a/drivers/media/dvb-frontends/rtl2832.c
++++ b/drivers/media/dvb-frontends/rtl2832.c
+@@ -1055,7 +1055,7 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
+ 	INIT_DELAYED_WORK(&priv->i2c_gate_work, rtl2832_i2c_gate_work);
+ 
+ 	/* create muxed i2c adapter for demod itself */
+-	priv->i2c_adapter = i2c_add_mux_adapter(i2c, &i2c->dev, priv, 0, 0,
++	priv->i2c_adapter = i2c_add_mux_adapter(i2c, priv, 0, 0,
+ 			rtl2832_select, NULL);
+ 	if (priv->i2c_adapter == NULL)
+ 		goto err;
+@@ -1066,8 +1066,8 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
+ 		goto err;
+ 
+ 	/* create muxed i2c adapter for demod tuner bus */
+-	priv->i2c_adapter_tuner = i2c_add_mux_adapter(i2c, &i2c->dev, priv,
+-			0, 1, rtl2832_select, rtl2832_deselect);
++	priv->i2c_adapter_tuner = i2c_add_mux_adapter(i2c, priv,
++			0, 1, rtl2832_select, rtl2832_deselect);
+ 	if (priv->i2c_adapter_tuner == NULL)
+ 		goto err;
+ 
