@@ -6,6 +6,7 @@
 VIDEO_SH_VEU
 VIDEO_RENESAS_VSP1
 VIDEO_RCAR_VIN
+IR_IMG
 
 [3.7.0]
 # i2c_add_mux_adapter prototype change
