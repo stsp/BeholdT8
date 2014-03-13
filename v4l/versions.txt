@@ -120,6 +120,8 @@ IR_FINTEK
 DVB_DRXK
 # Requires ss_ep_comp in usb_host_endpoint
 USB_VIDEO_CLASS
+# Relies on IRQF_ONESHOT
+VIDEO_ADV7180
 
 [2.6.31]
 # These rely on arch support that wasn't available until 2.6.31
@@ -130,7 +132,6 @@ VIDEO_DM355_CCDC
 # Start version for those drivers - probably compile with older versions
 VIDEO_CX25821
 VIDEO_CX25821_ALSA
-VIDEO_ADV7180
 RADIO_TEF6862
 # follow_pfn needed by VIDEOBUF_DMA_CONTIG and drivers that use it
 VIDEOBUF_DMA_CONTIG
@@ -141,8 +142,6 @@ VIDEO_MX1
 VIDEO_MX3
 
 [2.6.26]
-# Requires struct i2c_device_id
-VIDEO_ADV7180
 # requires id_table and new i2c stuff
 RADIO_TEA5764
 VIDEO_THS7303
