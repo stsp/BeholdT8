@@ -414,7 +414,7 @@ index 5c42750..69f4ab1 100644
 @@ -257,11 +257,11 @@ int ir_raw_event_register(struct rc_dev *dev)
  
  	dev->raw->dev = dev;
- 	dev->enabled_protocols = ~0;
+ 	rc_set_enabled_protocols(dev, ~0);
 -	rc = kfifo_alloc(&dev->raw->kfifo,
 -			 sizeof(struct ir_raw_event) * MAX_IR_EVENT_SIZE,
 -			 GFP_KERNEL);
