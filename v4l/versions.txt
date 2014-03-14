@@ -33,6 +33,8 @@ VIDEO_VS6624
 VIDEO_NOON010PC30
 # needs GPIOF_EXPORT
 VIDEO_S5K6AA
+# needs dev_err_ratelimited
+MEDIA_TUNER_E4000
 
 [3.4.0]
 # needs devm_regulator_bulk_get
