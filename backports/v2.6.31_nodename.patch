@@ -24,6 +24,15 @@ diff --git a/drivers/media/pci/ddbridge/ddbridge-core.c b/drivers/media/pci/ddbr
 index 36e3452..2565057 100644
 --- a/drivers/media/pci/ddbridge/ddbridge-core.c
 +++ b/drivers/media/pci/ddbridge/ddbridge-core.c
+@@ -1479,7 +1479,7 @@ static const struct file_operations ddb_fops = {
+ 	.open           = ddb_open,
+ };
+ 
+-static char *ddb_devnode(struct device *device, mode_t *mode)
++static char *ddb_devnode(struct device *device)
+ {
+ 	struct ddb *dev = dev_get_drvdata(device);
+ 
 @@ -1499,7 +1499,7 @@ static int ddb_class_create(void)
  		unregister_chrdev(ddb_major, DDB_NAME);
  		return PTR_ERR(ddb_class);
