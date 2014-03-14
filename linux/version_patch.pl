@@ -72,7 +72,7 @@ if (open IN,".linked_dir") {
 	while (<IN>) {
 		if (m/^path:\s*(.*)/) {
 			my $dir=$1;
-			my $new_log = qx(git --git-dir $dir/.git log --pretty=oneline -n3 |sed -r 's,([\x22]),,g; s,([\x25\x5c]),\x5c\\1,g');
+			my $new_log = qx(git --git-dir $dir/.git log --pretty=oneline -n3 |sed -r 's,([\x22]),,g; s,([\x25\x5c]),\\1\\1,g');
 			if ($new_log ne $logs) {
 				printf("Git version changed.\n");
 				open OUT, ">git_log";
