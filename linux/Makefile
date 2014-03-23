@@ -55,8 +55,9 @@ TARFILES += firmware/ihex2fw.c
 TARFILES += firmware/vicam/firmware.H16
 TARFILES += firmware/ttusb-budget/dspbootcode.bin.ihex
 
-TODAY_TAR := linux-media-`date "+%Y-%m-%d"`.tar
-TODAY_TAR_MD5 := linux-media-`date "+%Y-%m-%d"`.tar.bz2.md5
+DATE := `git log -n1 '--pretty=format:%h %ai' |perl -ne 'print "$$2-$$1" if (m/([\da-f]+)\s+(\S+)/)'`
+TODAY_TAR := linux-media-${DATE}.tar
+TODAY_TAR_MD5 := ${TODAY_TAR}.bz2.md5
 LATEST_TAR := http://linuxtv.org/downloads/drivers/linux-media-LATEST.tar.bz2
 LATEST_TAR_MD5 := http://linuxtv.org/downloads/drivers/linux-media-LATEST.tar.bz2.md5
 
