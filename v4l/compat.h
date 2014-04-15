@@ -1439,4 +1439,9 @@ static inline bool ether_addr_equal(const u8 *addr1, const u8 *addr2)
 }
 #endif
 
+#ifdef NEED_SND_CARD_NEW
+#define snd_card_new(p, idx, id, module, extra_size, ret) \
+	snd_card_create(idx, id, module, extra_size, ret)
+#endif
+
 #endif /*  _COMPAT_H */

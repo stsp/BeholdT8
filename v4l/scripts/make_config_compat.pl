@@ -607,6 +607,7 @@ sub check_other_dependencies()
 	check_files_for_func("usb_speed_string", "NEED_USB_SPEED_STRING", "include/linux/usb/ch9.h");
 	check_files_for_func("USB_SPEED_WIRELESS", "NEED_USB_SPEED_WIRELESS", "include/linux/usb/ch9.h");
 	check_files_for_func("ether_addr_equal", "NEED_ETHER_ADDR_EQUAL", "include/linux/etherdevice.h");
+	check_files_for_func("snd_card_new", "NEED_SND_CARD_NEW", "include/sound/core.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");
