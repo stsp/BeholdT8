@@ -1444,4 +1444,8 @@ static inline bool ether_addr_equal(const u8 *addr1, const u8 *addr2)
 	snd_card_create(idx, id, module, extra_size, ret)
 #endif
 
+#ifdef NEED_COMPAT_PUT_TIMESPEC
+#define compat_put_timespec put_compat_timespec
+#endif
+
 #endif /*  _COMPAT_H */
