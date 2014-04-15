@@ -95,4 +95,3 @@ add v2.6.32_request_firmware_nowait.patch
 [2.6.31]
 add v2.6.31_nodename.patch
 add v2.6.31_vm_ops.patch
-add v2.6.31_device_type.patch
