@@ -1,6 +1,5 @@
 # Use this for stuff for drivers that don't compile
 [3.255.255]
-VIDEO_S5C73M3
 
 [3.9.0]
 # needs devm_ioremap_resource
@@ -16,7 +15,7 @@ DVB_M88DS3103
 [3.6.0]
 # needs include/linux/sizes.h
 VIDEO_M5MOLS
-#VIDEO_S5C73M3
+VIDEO_S5C73M3
 # needs dma_mmap_coherent and sg_alloc_table_from_pages.
 VIDEOBUF2_DMA_CONTIG
 
