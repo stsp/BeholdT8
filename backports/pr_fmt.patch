@@ -1174,3 +1174,15 @@ index a99040b..8ff1ed7 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ":%s: " fmt, __func__
  
  #include <linux/module.h>
+diff --git a/drivers/media/usb/gspca/dtcs033.c b/drivers/media/usb/gspca/dtcs033.c
+index 5e42c71..ba01a3e 100644
+--- a/drivers/media/usb/gspca/dtcs033.c
++++ b/drivers/media/usb/gspca/dtcs033.c
+@@ -14,6 +14,7 @@
+  * GNU General Public License for more details.
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ #define MODULE_NAME "dtcs033"
+ #include "gspca.h"
