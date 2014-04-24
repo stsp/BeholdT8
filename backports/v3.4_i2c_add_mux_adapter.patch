@@ -1,5 +1,18 @@
+diff --git a/drivers/media/dvb-frontends/m88ds3103.c b/drivers/media/dvb-frontends/m88ds3103.c
+index 06b6a85..dd70881 100644
+--- a/drivers/media/dvb-frontends/m88ds3103.c
++++ b/drivers/media/dvb-frontends/m88ds3103.c
+@@ -1229,7 +1229,7 @@ struct dvb_frontend *m88ds3103_attach(const struct m88ds3103_config *cfg,
+ 		goto err;
+ 
+ 	/* create mux i2c adapter for tuner */
+-	priv->i2c_adapter = i2c_add_mux_adapter(i2c, &i2c->dev, priv, 0, 0,
++	priv->i2c_adapter = i2c_add_mux_adapter(i2c, priv, 0, 0,
+ 			m88ds3103_select, m88ds3103_deselect);
+ 	if (priv->i2c_adapter == NULL)
+ 		goto err;
 diff --git a/drivers/media/dvb-frontends/rtl2832.c b/drivers/media/dvb-frontends/rtl2832.c
-index fdbed35..ce701bc 100644
+index 2455c97..30ebee0 100644
 --- a/drivers/media/dvb-frontends/rtl2832.c
 +++ b/drivers/media/dvb-frontends/rtl2832.c
 @@ -1055,7 +1055,7 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
@@ -11,14 +24,25 @@ index fdbed35..ce701bc 100644
  			rtl2832_select, NULL);
  	if (priv->i2c_adapter == NULL)
  		goto err;
-@@ -1066,8 +1066,8 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
+@@ -1066,7 +1066,7 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
  		goto err;
  
  	/* create muxed i2c adapter for demod tuner bus */
 -	priv->i2c_adapter_tuner = i2c_add_mux_adapter(i2c, &i2c->dev, priv,
--			0, 1, rtl2832_select, rtl2832_deselect);
 +	priv->i2c_adapter_tuner = i2c_add_mux_adapter(i2c, priv,
-+			0, 1, rtl2832_select, rtl2832_deselect);
+ 			0, 1, rtl2832_select, rtl2832_deselect);
  	if (priv->i2c_adapter_tuner == NULL)
  		goto err;
+diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-frontends/si2168.c
+index 05cc6a5..606af3e 100644
+--- a/drivers/media/dvb-frontends/si2168.c
++++ b/drivers/media/dvb-frontends/si2168.c
+@@ -696,7 +696,7 @@ static int si2168_probe(struct i2c_client *client,
+ 		goto err;
  
+ 	/* create mux i2c adapter for tuner */
+-	s->adapter = i2c_add_mux_adapter(client->adapter, &client->dev, s,
++	s->adapter = i2c_add_mux_adapter(client->adapter, s,
+ 			0, 0, si2168_select, si2168_deselect);
+ 	if (s->adapter == NULL)
+ 		goto err;
