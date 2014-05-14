@@ -1,8 +1,8 @@
 diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
-index eb472b5..d463473 100644
+index e5b2beb..35b25e9 100644
 --- a/drivers/media/pci/saa7134/saa7134-video.c
 +++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -1239,7 +1239,6 @@ static int video_release(struct file *file)
+@@ -1237,7 +1237,6 @@ static int video_release(struct file *file)
  
  	/* stop video capture */
  	if (res_check(fh, RESOURCE_VIDEO)) {
@@ -28,18 +28,21 @@ index eb472b5..d463473 100644
  	return videobuf_streamon(saa7134_queue(file));
  }
  EXPORT_SYMBOL_GPL(saa7134_streamon);
-@@ -1990,9 +1978,6 @@ int saa7134_streamoff(struct file *file, void *priv,
- 	int err;
- 	int res = saa7134_resource(file);
- 
+@@ -1986,12 +1974,6 @@ EXPORT_SYMBOL_GPL(saa7134_streamon);
+ int saa7134_streamoff(struct file *file, void *priv,
+ 					enum v4l2_buf_type type)
+ {
+-	struct saa7134_dev *dev = video_drvdata(file);
+-	int res = saa7134_resource(file);
+-
 -	if (res != RESOURCE_EMPRESS)
 -		pm_qos_remove_request(&dev->qos_request);
 -
- 	err = videobuf_streamoff(saa7134_queue(file));
- 	if (err < 0)
- 		return err;
+ 	return videobuf_streamoff(saa7134_queue(file));
+ }
+ EXPORT_SYMBOL_GPL(saa7134_streamoff);
 diff --git a/drivers/media/pci/saa7134/saa7134.h b/drivers/media/pci/saa7134/saa7134.h
-index 2474e84..bf141f9 100644
+index 482489a..ae865c4 100644
 --- a/drivers/media/pci/saa7134/saa7134.h
 +++ b/drivers/media/pci/saa7134/saa7134.h
 @@ -29,7 +29,6 @@
@@ -50,10 +53,10 @@ index 2474e84..bf141f9 100644
  
  #include <asm/io.h>
  
-@@ -597,7 +596,6 @@ struct saa7134_dev {
- 	unsigned int               vbi_fieldcount;
+@@ -600,7 +599,6 @@ struct saa7134_dev {
  	struct saa7134_format      *fmt;
  	unsigned int               width, height;
+ 	unsigned int               vbi_hlen, vbi_vlen;
 -	struct pm_qos_request	   qos_request;
  
  	/* various v4l controls */
