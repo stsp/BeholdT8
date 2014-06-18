@@ -718,12 +718,6 @@ static inline unsigned long hrtimer_forward_now(struct hrtimer *timer,
 #endif
 #endif /* _LINUX_HRTIMER_H */
 
-#ifndef PCI_VDEVICE
-#define PCI_VDEVICE(vendor, device)             \
-	PCI_VENDOR_ID_##vendor, (device),       \
-	PCI_ANY_ID, PCI_ANY_ID, 0, 0
-#endif
-
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 22)
 #define strncasecmp(a, b, c) strnicmp(a, b, c)
 #define strcasecmp(a, b) strnicmp(a, b, sizeof(a))
