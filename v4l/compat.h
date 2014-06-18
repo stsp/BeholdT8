@@ -678,19 +678,6 @@ static inline int usb_endpoint_type(const struct usb_endpoint_descriptor *epd)
 	} while (0)
 #endif
 
-#ifdef NEED_SND_CARD_CREATE
-static inline int snd_card_create(int idx, const char *id,
-			      struct module *module, int extra_size,
-			      struct snd_card **card)
-{
-	*card = snd_card_new(idx, id, module, extra_size);
-
-	if (*card == NULL)
-		return -ENOMEM;
-	return 0;
-}
-#endif
-
 /* This macro was added in commit v2.6.23-5792-g34c6538 */
 #ifndef DMA_BIT_MASK
 #define DMA_BIT_MASK(n)	(((n) == 64) ? ~0ULL : ((1ULL<<(n))-1))
