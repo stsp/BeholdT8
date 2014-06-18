@@ -1429,4 +1429,8 @@ static inline bool ether_addr_equal(const u8 *addr1, const u8 *addr2)
 #define compat_put_timespec put_compat_timespec
 #endif
 
+#ifdef NEED_SMP_MB_AFTER_ATOMIC
+#define smp_mb__after_atomic smp_mb__after_clear_bit
+#endif
+
 #endif /*  _COMPAT_H */
