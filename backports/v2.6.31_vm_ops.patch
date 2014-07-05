@@ -63,19 +63,6 @@ index b7ae872..30a450e 100644
  	.open		= gspca_vm_open,
  	.close		= gspca_vm_close,
  };
-diff --git a/drivers/staging/media/sn9c102/sn9c102_core.c b/drivers/staging/media/sn9c102/sn9c102_core.c
-index c957e9a..a5126fe 100644
---- a/drivers/staging/media/sn9c102/sn9c102_core.c
-+++ b/drivers/staging/media/sn9c102/sn9c102_core.c
-@@ -2077,7 +2077,7 @@ static void sn9c102_vm_close(struct vm_area_struct* vma)
- }
- 
- 
--static const struct vm_operations_struct sn9c102_vm_ops = {
-+static struct vm_operations_struct sn9c102_vm_ops = {
- 	.open = sn9c102_vm_open,
- 	.close = sn9c102_vm_close,
- };
 diff --git a/drivers/media/usb/stkwebcam/stk-webcam.c b/drivers/media/usb/stkwebcam/stk-webcam.c
 index c43c8d3..6d14f20 100644
 --- a/drivers/media/usb/stkwebcam/stk-webcam.c
