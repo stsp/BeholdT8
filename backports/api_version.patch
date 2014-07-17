@@ -1,30 +1,52 @@
 diff --git a/drivers/media/usb/pvrusb2/pvrusb2-v4l2.c b/drivers/media/usb/pvrusb2/pvrusb2-v4l2.c
+index 7c280f3..f5ee9d4 100644
 --- a/drivers/media/usb/pvrusb2/pvrusb2-v4l2.c
 +++ b/drivers/media/usb/pvrusb2/pvrusb2-v4l2.c
-@@ -94,1 +94,1 @@ static struct v4l2_capability pvr_capabi
+@@ -93,7 +93,7 @@ static struct v4l2_capability pvr_capability ={
+ 	.driver         = "pvrusb2",
+ 	.card           = "Hauppauge WinTV pvr-usb2",
+ 	.bus_info       = "usb",
 -	.version        = LINUX_VERSION_CODE,
 +	.version        = V4L2_VERSION,
+ 	.capabilities   = (V4L2_CAP_VIDEO_CAPTURE |
+ 			   V4L2_CAP_TUNER | V4L2_CAP_AUDIO | V4L2_CAP_RADIO |
+ 			   V4L2_CAP_READWRITE),
 diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index f8135f4..9df68b6 100644
 --- a/drivers/media/usb/uvc/uvc_driver.c
 +++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -1861,1 +1861,1 @@ static int uvc_probe(struct usb_interfac
+@@ -1901,7 +1901,7 @@ static int uvc_probe(struct usb_interface *intf,
+ 			sizeof(dev->mdev.serial));
+ 	strcpy(dev->mdev.bus_info, udev->devpath);
+ 	dev->mdev.hw_revision = le16_to_cpu(udev->descriptor.bcdDevice);
 -	dev->mdev.driver_version = LINUX_VERSION_CODE;
 +	dev->mdev.driver_version = V4L2_VERSION;
+ 	if (media_device_register(&dev->mdev) < 0)
+ 		goto error;
+ 
 diff --git a/drivers/media/usb/uvc/uvc_v4l2.c b/drivers/media/usb/uvc/uvc_v4l2.c
+index 378ae02..feda716 100644
 --- a/drivers/media/usb/uvc/uvc_v4l2.c
 +++ b/drivers/media/usb/uvc/uvc_v4l2.c
-@@ -574,1 +574,1 @@ static long uvc_v4l2_do_ioctl(struct fil
+@@ -570,7 +570,7 @@ static long uvc_v4l2_do_ioctl(struct file *file, unsigned int cmd, void *arg)
+ 		strlcpy(cap->card, vdev->name, sizeof cap->card);
+ 		usb_make_path(stream->dev->udev,
+ 			      cap->bus_info, sizeof(cap->bus_info));
 -		cap->version = LINUX_VERSION_CODE;
 +		cap->version = V4L2_VERSION;
+ 		cap->capabilities = V4L2_CAP_DEVICE_CAPS | V4L2_CAP_STREAMING
+ 				  | chain->caps;
+ 		if (stream->type == V4L2_BUF_TYPE_VIDEO_CAPTURE)
 diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+index e0bafda..6225391 100644
 --- a/drivers/media/v4l2-core/v4l2-ioctl.c
 +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-@@ -927,7 +927,7 @@ static int v4l_querycap(const struct v4l2_ioctl_ops *ops,
- {
+@@ -1009,7 +1009,7 @@ static int v4l_querycap(const struct v4l2_ioctl_ops *ops,
  	struct v4l2_capability *cap = (struct v4l2_capability *)arg;
+ 	int ret;
  
 -	cap->version = LINUX_VERSION_CODE;
 +	cap->version = V4L2_VERSION;
- 	return ops->vidioc_querycap(file, fh, cap);
- }
+ 
+ 	ret = ops->vidioc_querycap(file, fh, cap);
  
