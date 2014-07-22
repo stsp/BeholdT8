@@ -106,10 +106,10 @@ index b67de86..aad0fdd 100644
  #include <linux/device.h>
  #include <linux/errno.h>
  #include <linux/list.h>
-diff --git a/drivers/staging/media/solo6x10/solo6x10.h b/drivers/staging/media/solo6x10/solo6x10.h
+diff --git a/drivers/media/pci/solo6x10/solo6x10.h b/drivers/media/pci/solo6x10/solo6x10.h
 index 6f91d2e..4c17a23 100644
---- a/drivers/staging/media/solo6x10/solo6x10.h
-+++ b/drivers/staging/media/solo6x10/solo6x10.h
+--- a/drivers/media/pci/solo6x10/solo6x10.h
++++ b/drivers/media/pci/solo6x10/solo6x10.h
 @@ -32,7 +32,6 @@
  #include <linux/wait.h>
  #include <linux/stringify.h>
