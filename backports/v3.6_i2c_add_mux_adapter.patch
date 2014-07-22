@@ -34,15 +34,15 @@ index fdbed35..2455c97 100644
  		goto err;
  
 diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-frontends/si2168.c
-index 8637d2e..05cc6a5 100644
+index 41bdbc4..e184de6 100644
 --- a/drivers/media/dvb-frontends/si2168.c
 +++ b/drivers/media/dvb-frontends/si2168.c
-@@ -697,7 +697,7 @@ static int si2168_probe(struct i2c_client *client,
+@@ -635,7 +635,7 @@ static int si2168_probe(struct i2c_client *client,
  
  	/* create mux i2c adapter for tuner */
  	s->adapter = i2c_add_mux_adapter(client->adapter, &client->dev, s,
 -			0, 0, 0, si2168_select, si2168_deselect);
 +			0, 0, si2168_select, si2168_deselect);
- 	if (s->adapter == NULL)
+ 	if (s->adapter == NULL) {
+ 		ret = -ENODEV;
  		goto err;
- 
