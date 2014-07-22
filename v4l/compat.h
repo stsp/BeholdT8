@@ -871,6 +871,8 @@ static inline int snd_ctl_enum_info(struct snd_ctl_elem_info *info, unsigned int
 
 #ifdef NEED_DEV_DBG_RATELIMITED
 #define dev_dbg_ratelimited dev_dbg
+#define dev_err_ratelimited dev_err
+#define dev_notice_ratelimited dev_notice
 #endif
 
 #ifdef NEED_MODULE_USB_DRIVER
