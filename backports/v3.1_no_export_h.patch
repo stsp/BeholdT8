@@ -46,10 +46,10 @@ index b55012c..8346c1e 100644
  
  #include "fmdrv.h"
  #include "fmdrv_v4l2.h"
-diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
+diff --git a/drivers/media/rc/rc-ir-raw.c b/drivers/media/rc/rc-ir-raw.c
 index 5c42750..7131728 100644
---- a/drivers/media/rc/ir-raw.c
-+++ b/drivers/media/rc/ir-raw.c
+--- a/drivers/media/rc/rc-ir-raw.c
++++ b/drivers/media/rc/rc-ir-raw.c
 @@ -12,7 +12,6 @@
   *  GNU General Public License for more details.
   */

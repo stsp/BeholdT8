@@ -380,10 +380,10 @@ index 6fed927..77aad1f 100644
  	spinlock_t doneq_lock;		/* lock protecting the queue */
  	wait_queue_head_t proc_list;	/* wait queue */
  	struct video_device *vdev;	/* video device parameters */
-diff --git a/drivers/media/rc/ir-raw.c b/drivers/media/rc/ir-raw.c
+diff --git a/drivers/media/rc/rc-ir-raw.c b/drivers/media/rc/rc-ir-raw.c
 index c72f57c..c311df9 100644
---- a/drivers/media/rc/ir-raw.c
-+++ b/drivers/media/rc/ir-raw.c
+--- a/drivers/media/rc/rc-ir-raw.c
++++ b/drivers/media/rc/rc-ir-raw.c
 @@ -41,7 +41,7 @@ static int ir_raw_event_thread(void *data)
  	while (!kthread_should_stop()) {
  
