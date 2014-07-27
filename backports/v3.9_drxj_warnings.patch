@@ -1,0 +1,40 @@
+diff --cc drivers/hid/hid-picolcd_cir.c
+index 59d5eb1,045f8eb..0000000
+--- a/drivers/hid/hid-picolcd_cir.c
++++ b/drivers/hid/hid-picolcd_cir.c
+@@@ -114,7 -114,7 +114,11 @@@ int picolcd_init_cir(struct picolcd_dat
+  
+  	rdev->priv             = data;
+  	rdev->driver_type      = RC_DRIVER_IR_RAW;
+++<<<<<<< HEAD
+ +	rdev->allowed_protos   = RC_BIT_ALL;
+++=======
++ 	rdev->allowed_protocols = RC_BIT_ALL;
+++>>>>>>> 0a6824bc10de58dac8beca4ad6744753f1cf9a6f
+  	rdev->open             = picolcd_cir_open;
+  	rdev->close            = picolcd_cir_close;
+  	rdev->input_name       = data->hdev->name;
+diff --git a/drivers/media/dvb-frontends/drx39xyj/drxj.c b/drivers/media/dvb-frontends/drx39xyj/drxj.c
+index 7ca7a21..0ffd69b 100644
+--- a/drivers/media/dvb-frontends/drx39xyj/drxj.c
++++ b/drivers/media/dvb-frontends/drx39xyj/drxj.c
+@@ -2174,7 +2174,7 @@ int drxj_dap_atomic_read_reg32(struct i2c_device_addr *dev_addr,
+ 				     u32 addr,
+ 				     u32 *data, u32 flags)
+ {
+-	u8 buf[sizeof(*data)];
++	u8 buf[sizeof(*data)] = { 0 };
+ 	int rc = -EIO;
+ 	u32 word = 0;
+ 
+@@ -10666,8 +10666,8 @@ ctrl_sig_quality(struct drx_demod_instance *demod,
+ 	struct dtv_frontend_properties *p = &state->frontend.dtv_property_cache;
+ 	enum drx_standard standard = ext_attr->standard;
+ 	int rc;
+-	u32 ber, cnt, err, pkt;
+-	u16 mer, strength;
++	u32 ber = 0, cnt, err = 0, pkt;
++	u16 mer = 0, strength = 0;
+ 
+ 	rc = get_sig_strength(demod, &strength);
+ 	if (rc < 0) {
