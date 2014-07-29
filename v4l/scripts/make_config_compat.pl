@@ -604,6 +604,7 @@ sub check_other_dependencies()
 	check_files_for_func("dma_set_coherent_mask", "NEED_DMA_SET_COHERENT_MASK", "include/linux/dma-mapping.h");
 	check_files_for_func("bitmap_clear", "NEED_BITMAP_CLEAR", "include/linux/bitmap.h");
 	check_files_for_func("devm_kmalloc", "NEED_DEVM_KMALLOC", "include/linux/device.h");
+	check_files_for_func("devm_kmalloc_array", "NEED_DEVM_KMALLOC_ARRAY", "include/linux/device.h");
 	check_files_for_func("usb_speed_string", "NEED_USB_SPEED_STRING", "include/linux/usb/ch9.h");
 	check_files_for_func("USB_SPEED_WIRELESS", "NEED_USB_SPEED_WIRELESS", "include/linux/usb/ch9.h");
 	check_files_for_func("ether_addr_equal", "NEED_ETHER_ADDR_EQUAL", "include/linux/etherdevice.h");

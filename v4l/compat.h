@@ -1435,4 +1435,14 @@ static inline bool ether_addr_equal(const u8 *addr1, const u8 *addr2)
 #define smp_mb__after_atomic smp_mb__after_clear_bit
 #endif
 
+#ifdef NEED_DEVM_KMALLOC_ARRAY
+static inline void *devm_kmalloc_array(struct device *dev,
+				       size_t n, size_t size, gfp_t flags)
+{
+	if (size != 0 && n > (~(size_t)0) / size)
+		return NULL;
+	return devm_kmalloc(dev, n * size, flags);
+}
+#endif
+
 #endif /*  _COMPAT_H */
