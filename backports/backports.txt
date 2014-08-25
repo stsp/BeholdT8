@@ -25,6 +25,9 @@ add api_version.patch
 add pr_fmt.patch
 add drx39xxj.patch
 
+[3.16.255]
+add v3.16_netdev.patch
+
 [3.11.255]
 add v3.11_dev_groups.patch
 
