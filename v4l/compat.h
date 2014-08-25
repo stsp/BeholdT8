@@ -1458,4 +1458,12 @@ pci_zalloc_consistent(struct pci_dev *hwdev, size_t size,
 }
 #endif
 
+#ifdef NEED_KREF_GET_UNLESS_ZERO
+#include <linux/kref.h>
+static inline int __must_check kref_get_unless_zero(struct kref *kref)
+{
+	return atomic_add_unless(&kref->refcount, 1, 0);
+}
+#endif
+
 #endif /*  _COMPAT_H */
