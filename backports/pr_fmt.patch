@@ -1,5 +1,5 @@
 diff --git a/drivers/media/common/saa7146/saa7146_core.c b/drivers/media/common/saa7146/saa7146_core.c
-index 34b0d0d..405aed3 100644
+index 97afee6..fbccbfd 100644
 --- a/drivers/media/common/saa7146/saa7146_core.c
 +++ b/drivers/media/common/saa7146/saa7146_core.c
 @@ -18,6 +18,7 @@
@@ -11,7 +11,7 @@ index 34b0d0d..405aed3 100644
  
  #include <media/saa7146.h>
 diff --git a/drivers/media/common/saa7146/saa7146_fops.c b/drivers/media/common/saa7146/saa7146_fops.c
-index d9e1d63..6b9a085 100644
+index 6c47f3f..d433dd0 100644
 --- a/drivers/media/common/saa7146/saa7146_fops.c
 +++ b/drivers/media/common/saa7146/saa7146_fops.c
 @@ -1,3 +1,4 @@
@@ -59,7 +59,7 @@ index 2408d7e..f75b45c 100644
  
  #include <linux/module.h>
 diff --git a/drivers/media/dvb-frontends/drx39xyj/drxj.c b/drivers/media/dvb-frontends/drx39xyj/drxj.c
-index 3795f65..35dd41b 100644
+index 7ca7a21..c520cf0 100644
 --- a/drivers/media/dvb-frontends/drx39xyj/drxj.c
 +++ b/drivers/media/dvb-frontends/drx39xyj/drxj.c
 @@ -53,6 +53,7 @@
@@ -167,7 +167,7 @@ index d43911d..c1c4b8b 100644
  
  #include <linux/module.h>
 diff --git a/drivers/media/pci/bt8xx/bttv-input.c b/drivers/media/pci/bt8xx/bttv-input.c
-index 5930bce..12605ec 100644
+index 67c8d6b..194c589 100644
 --- a/drivers/media/pci/bt8xx/bttv-input.c
 +++ b/drivers/media/pci/bt8xx/bttv-input.c
 @@ -18,6 +18,7 @@
@@ -371,7 +371,7 @@ index 0ba3875..e958826 100644
  
  #include "budget.h"
 diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
-index fc9d23f..d8d911f 100644
+index d16d9b4..c35401b 100644
 --- a/drivers/media/rc/ene_ir.c
 +++ b/drivers/media/rc/ene_ir.c
 @@ -30,6 +30,7 @@
@@ -383,7 +383,7 @@ index fc9d23f..d8d911f 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/media/rc/fintek-cir.c b/drivers/media/rc/fintek-cir.c
-index 46b66e5..ae612f2 100644
+index f0a1f7d..21d802b 100644
 --- a/drivers/media/rc/fintek-cir.c
 +++ b/drivers/media/rc/fintek-cir.c
 @@ -23,6 +23,7 @@
@@ -395,7 +395,7 @@ index 46b66e5..ae612f2 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 6f24e77..0336e5b 100644
+index 3d8f515..01ff41d 100644
 --- a/drivers/media/rc/imon.c
 +++ b/drivers/media/rc/imon.c
 @@ -26,6 +26,7 @@
@@ -407,7 +407,7 @@ index 6f24e77..0336e5b 100644
  
  #include <linux/errno.h>
 diff --git a/drivers/media/rc/nuvoton-cir.c b/drivers/media/rc/nuvoton-cir.c
-index d244e1a..5cc5ab0 100644
+index 7f4fd85..bb5fb52 100644
 --- a/drivers/media/rc/nuvoton-cir.c
 +++ b/drivers/media/rc/nuvoton-cir.c
 @@ -25,6 +25,7 @@
@@ -419,7 +419,7 @@ index d244e1a..5cc5ab0 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/media/rc/winbond-cir.c b/drivers/media/rc/winbond-cir.c
-index a8b981f..2e2ce61 100644
+index d839f73..b00c218 100644
 --- a/drivers/media/rc/winbond-cir.c
 +++ b/drivers/media/rc/winbond-cir.c
 @@ -40,6 +40,7 @@
@@ -430,6 +430,18 @@ index a8b981f..2e2ce61 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include <linux/module.h>
+diff --git a/drivers/media/usb/au0828/au0828.h b/drivers/media/usb/au0828/au0828.h
+index a7cc6e3..96f9923 100644
+--- a/drivers/media/usb/au0828/au0828.h
++++ b/drivers/media/usb/au0828/au0828.h
+@@ -19,6 +19,7 @@
+  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/usb.h>
 diff --git a/drivers/media/usb/go7007/go7007-usb.c b/drivers/media/usb/go7007/go7007-usb.c
 index ece27ec..757cfca 100644
 --- a/drivers/media/usb/go7007/go7007-usb.c
@@ -1127,7 +1139,7 @@ index fe01054..101bad4 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/staging/media/lirc/lirc_imon.c b/drivers/staging/media/lirc/lirc_imon.c
-index a5b62ee..1b2ed62 100644
+index 96c76b3..f2c324a1 100644
 --- a/drivers/staging/media/lirc/lirc_imon.c
 +++ b/drivers/staging/media/lirc/lirc_imon.c
 @@ -20,6 +20,7 @@
@@ -1139,7 +1151,7 @@ index a5b62ee..1b2ed62 100644
  
  #include <linux/errno.h>
 diff --git a/drivers/staging/media/lirc/lirc_parallel.c b/drivers/staging/media/lirc/lirc_parallel.c
-index 1394f02..21500cf 100644
+index 672858a..8c44b40 100644
 --- a/drivers/staging/media/lirc/lirc_parallel.c
 +++ b/drivers/staging/media/lirc/lirc_parallel.c
 @@ -22,6 +22,7 @@
@@ -1163,7 +1175,7 @@ index 81f90e1..7b2b12f 100644
  
  #include <linux/errno.h>
 diff --git a/drivers/staging/media/lirc/lirc_serial.c b/drivers/staging/media/lirc/lirc_serial.c
-index efe561c..21d8147 100644
+index bae0d46..087376a 100644
 --- a/drivers/staging/media/lirc/lirc_serial.c
 +++ b/drivers/staging/media/lirc/lirc_serial.c
 @@ -48,6 +48,7 @@
@@ -1175,7 +1187,7 @@ index efe561c..21d8147 100644
  
  #include <linux/module.h>
 diff --git a/drivers/staging/media/lirc/lirc_sir.c b/drivers/staging/media/lirc/lirc_sir.c
-index e31cbb8..59c0d99 100644
+index 79da3ad..7ca9121 100644
 --- a/drivers/staging/media/lirc/lirc_sir.c
 +++ b/drivers/staging/media/lirc/lirc_sir.c
 @@ -33,6 +33,7 @@
