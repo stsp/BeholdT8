@@ -42,6 +42,7 @@ TARFILES += include/uapi/linux/v4l2-dv-timings.h
 TARFILES += include/uapi/linux/v4l2-controls.h
 TARFILES += include/uapi/linux/uvcvideo.h
 TARFILES += include/uapi/linux/vsp1.h
+TARFILES += include/uapi/linux/smiapp.h
 TARFILES += include/uapi/linux/v4l2-subdev.h
 TARFILES += include/uapi/linux/v4l2-common.h
 TARFILES += include/uapi/linux/v4l2-mediabus.h
