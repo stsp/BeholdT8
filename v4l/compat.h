@@ -1445,4 +1445,17 @@ static inline void *devm_kmalloc_array(struct device *dev,
 }
 #endif
 
+#ifdef NEED_PCI_ZALLOC_CONSISTENT
+#include <linux/pci.h>
+#include <linux/dma-mapping.h>
+
+static inline void *
+pci_zalloc_consistent(struct pci_dev *hwdev, size_t size,
+		dma_addr_t *dma_handle)
+{
+	return dma_alloc_coherent(hwdev == NULL ? NULL : &hwdev->dev,
+			size, dma_handle, GFP_ATOMIC | __GFP_ZERO);
+}
+#endif
+
 #endif /*  _COMPAT_H */
