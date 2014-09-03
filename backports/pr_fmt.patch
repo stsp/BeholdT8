@@ -370,6 +370,68 @@ index 0ba3875..e958826 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include "budget.h"
+diff --git a/drivers/media/platform/s3c-camif/camif-capture.c b/drivers/media/platform/s3c-camif/camif-capture.c
+index f336413..0fc6cfe 100644
+--- a/drivers/media/platform/s3c-camif/camif-capture.c
++++ b/drivers/media/platform/s3c-camif/camif-capture.c
+@@ -11,6 +11,7 @@
+  * it under the terms of the GNU General Public License version 2 as
+  * published by the Free Software Foundation.
+ */
++#undef pr_fmt
+ #define pr_fmt(fmt) "%s:%d " fmt, __func__, __LINE__
+ 
+ #include <linux/bug.h>
+diff --git a/drivers/media/platform/s3c-camif/camif-core.c b/drivers/media/platform/s3c-camif/camif-core.c
+index b385747..db2cd44 100644
+--- a/drivers/media/platform/s3c-camif/camif-core.c
++++ b/drivers/media/platform/s3c-camif/camif-core.c
+@@ -9,6 +9,7 @@
+  * by the Free Software Foundation, either version 2 of the License,
+  * or (at your option) any later version.
+  */
++#undef pr_fmt
+ #define pr_fmt(fmt) "%s:%d " fmt, __func__, __LINE__
+ 
+ #include <linux/bug.h>
+diff --git a/drivers/media/platform/s3c-camif/camif-regs.c b/drivers/media/platform/s3c-camif/camif-regs.c
+index ebf5b18..2962b57 100644
+--- a/drivers/media/platform/s3c-camif/camif-regs.c
++++ b/drivers/media/platform/s3c-camif/camif-regs.c
+@@ -8,6 +8,7 @@
+  * it under the terms of the GNU General Public License version 2 as
+  * published by the Free Software Foundation.
+ */
++#undef pr_fmt
+ #define pr_fmt(fmt) "%s:%d " fmt, __func__, __LINE__
+ 
+ #include <linux/delay.h>
+diff --git a/drivers/media/platform/s5p-tv/hdmi_drv.c b/drivers/media/platform/s5p-tv/hdmi_drv.c
+index 754740f..08a0ba4 100644
+--- a/drivers/media/platform/s5p-tv/hdmi_drv.c
++++ b/drivers/media/platform/s5p-tv/hdmi_drv.c
+@@ -10,7 +10,7 @@
+  * by the Free Software Foundiation. either version 2 of the License,
+  * or (at your option) any later version
+  */
+-
++#undef pr_fmt
+ #define pr_fmt(fmt) "s5p-tv (hdmi_drv): " fmt
+ 
+ #ifdef CONFIG_VIDEO_SAMSUNG_S5P_HDMI_DEBUG
+diff --git a/drivers/media/platform/s5p-tv/mixer_video.c b/drivers/media/platform/s5p-tv/mixer_video.c
+index b4d2696..1515cd2 100644
+--- a/drivers/media/platform/s5p-tv/mixer_video.c
++++ b/drivers/media/platform/s5p-tv/mixer_video.c
+@@ -10,7 +10,7 @@
+  * by the Free Software Foundation. either version 2 of the License,
+  * or (at your option) any later version
+  */
+-
++#undef pr_fmt
+ #define pr_fmt(fmt) "s5p-tv (mixer): " fmt
+ 
+ #include "mixer.h"
 diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
 index d16d9b4..c35401b 100644
 --- a/drivers/media/rc/ene_ir.c
