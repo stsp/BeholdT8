@@ -614,6 +614,7 @@ sub check_other_dependencies()
 	check_files_for_func("pci_zalloc_consistent", "NEED_PCI_ZALLOC_CONSISTENT", "include/asm-generic/pci-dma-compat.h");
 	check_files_for_func("kref_get_unless_zero", "NEED_KREF_GET_UNLESS_ZERO", "include/linux/kref.h");
 	check_files_for_func("prandom_u32_max", "NEED_PRANDOM_U32_MAX", "include/linux/random.h");
+	check_files_for_func("GENMASK", "NEED_GENMASK", "include/linux/bitops.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

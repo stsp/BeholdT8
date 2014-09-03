@@ -1474,4 +1474,8 @@ static inline u32 prandom_u32_max(u32 ep_ro)
 }
 #endif
 
+#ifdef NEED_GENMASK
+#define GENMASK(h, l)           (((U32_C(1) << ((h) - (l) + 1)) - 1) << (l))
+#endif
+
 #endif /*  _COMPAT_H */
