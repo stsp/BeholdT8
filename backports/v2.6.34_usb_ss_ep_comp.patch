@@ -1,11 +1,13 @@
---- linux.orig/drivers/media/usb/uvc/uvc_video.c	2012-11-14 14:33:51.995088200 -0500
-+++ linux/drivers/media/usb/uvc/uvc_video.c	2012-11-14 14:36:23.510088227 -0500
-@@ -1447,7 +1447,7 @@
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 7e350d7..9c3aed2 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -1463,7 +1463,7 @@ static unsigned int uvc_endpoint_max_bpi(struct usb_device *dev,
  
  	switch (dev->speed) {
  	case USB_SPEED_SUPER:
--		return ep->ss_ep_comp.wBytesPerInterval;
-+		return ep->ss_ep_comp->desc.wBytesPerInterval;
+-		return le16_to_cpu(ep->ss_ep_comp.wBytesPerInterval);
++		return le16_to_cpu(ep->ss_ep_comp->desc.wBytesPerInterval);
  	case USB_SPEED_HIGH:
  		psize = usb_endpoint_maxp(&ep->desc);
  		return (psize & 0x07ff) * (1 + ((psize >> 11) & 3));
