@@ -1482,4 +1482,14 @@ static inline u32 prandom_u32_max(u32 ep_ro)
 #define GENMASK(h, l)           (((U32_C(1) << ((h) - (l) + 1)) - 1) << (l))
 #endif
 
+#ifdef NEED_MULT_FRAC
+#define mult_frac(x, numer, denom)(			\
+{							\
+	typeof(x) quot = (x) / (denom);			\
+	typeof(x) rem  = (x) % (denom);			\
+	(quot * (numer)) + ((rem * (numer)) / (denom));	\
+}							\
+)
+#endif
+
 #endif /*  _COMPAT_H */

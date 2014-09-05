@@ -616,6 +616,7 @@ sub check_other_dependencies()
 	check_files_for_func("prandom_u32_max", "NEED_PRANDOM_U32_MAX", "include/linux/random.h");
 	check_files_for_func("prandom_u32", "NEED_PRANDOM_U32", "include/linux/random.h");
 	check_files_for_func("GENMASK", "NEED_GENMASK", "include/linux/bitops.h");
+	check_files_for_func("mult_frac", "NEED_MULT_FRAC", "include/linux/kernel.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");
