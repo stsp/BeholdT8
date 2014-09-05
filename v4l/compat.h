@@ -1468,6 +1468,10 @@ static inline int __must_check kref_get_unless_zero(struct kref *kref)
 
 #ifdef NEED_PRANDOM_U32_MAX
 #include <linux/random.h>
+#ifdef NEED_PRANDOM_U32
+#define prandom_u32 random32
+#endif
+
 static inline u32 prandom_u32_max(u32 ep_ro)
 {
         return (u32)(((u64) prandom_u32() * ep_ro) >> 32);
