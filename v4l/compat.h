@@ -1492,4 +1492,27 @@ static inline u32 prandom_u32_max(u32 ep_ro)
 )
 #endif
 
+#ifdef NEED_CLK_HELPERS
+#include <linux/clk.h>
+static inline int clk_prepare_enable(struct clk *clk)
+{
+	int ret;
+
+	ret = clk_prepare(clk);
+	if (ret)
+		return ret;
+	ret = clk_enable(clk);
+	if (ret)
+		clk_unprepare(clk);
+
+	return ret;
+}
+
+static inline void clk_disable_unprepare(struct clk *clk)
+{
+	clk_disable(clk);
+	clk_unprepare(clk);
+}
+#endif
+
 #endif /*  _COMPAT_H */
