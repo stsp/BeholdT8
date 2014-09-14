@@ -2,7 +2,9 @@
 use FileHandle;
 use File::Find;
 
-my %instdir = ();
+my %srcdir  = (); # keys are directory paths (relative to v4l dir),
+                  # values are hashes with module file names as their keys
+my %instdir = (); # derived from %srcdir
 
 # Take a Makefile line of the form:
 # obj-XXXXX = some_directory/ some_module.o
@@ -12,6 +14,7 @@ my %instdir = ();
 # to install.  Prints the edited line to OUT.
 # Arguments: directory Makefile is in, the objects, original line(s) from
 # Makefile (with newlines intact).
+# Side effects: collates lists of files to install into %srcdir hash
 sub check_line($$$)
 {
 	my $dir = shift;
@@ -29,11 +32,9 @@ sub check_line($$$)
 			next;
 		}
 
-		# It's a file, add it to list of files to install
+		# It's a file, add it to the list of files
 		s/\.o$/.ko/;
-		my $idir = $dir;
-		$idir =~ s|^../linux/drivers/media/?||;
-		$instdir{$idir}{$_} = 1;
+		$srcdir{$dir}{$_} = 1;
 		$count++;
 	}
 	# Removing any tailling whitespace, just to be neat
@@ -184,7 +185,7 @@ sub removeubuntu($)
 	my $dest = "/lib/modules/\$(KERNELRELEASE)/$udir";
 	my $filelist;
 
-	while ( my ($dir, $files) = each(%instdir) ) {
+	while ( my ($dir, $files) = each(%srcdir) ) {
 		$filelist .= ' '. join(' ', keys %$files);
 	}
 	while ( my ($dir, $files) = each(%obsolete) ) {
@@ -232,6 +233,15 @@ removeubuntu("/updates/dkms");
 
 print OUT "\t\@echo \"Installing kernel modules under \$(DESTDIR)\$(KDIR26)/:\"\n";
 
+# change source dirs (relative to v4l dir)
+# into install dirs  (relative to DESTDIR/KDIR26)
+while (my ($dir, $files) = each %srcdir) {
+	my $idir = $dir;
+	$idir =~ s|\.\./linux/drivers/|../|;
+	$idir =~ s|\.\./media/?||;
+	$instdir{$idir} = $files;
+}
+
 while (my ($dir, $files) = each %instdir) {
 	print OUT "\t\@n=0;for i in ", join(' ', keys %$files), ";do ";
 	print OUT "if [ -f \"\$\$i\" ]; then ";
@@ -269,7 +279,7 @@ while ( my ($dir, $files) = each(%instdir) ) {
 	print OUT " rm \$(DESTDIR)\$(KDIR26)/$dir/\$\$i.gz; fi; done; echo;\n\n";
 }
 
-my $mediadeps = join(" \\\n", map("\t../linux/drivers/media/$_/Makefile", keys %instdir));
+my $mediadeps = join(" \\\n", map("\t$_/Makefile", keys %srcdir ));
 $mediadeps =~ s,\.\./linux/drivers/media/\.\.,..,g;
 
 # Print dependencies of Makefile.media
