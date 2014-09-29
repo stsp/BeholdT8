@@ -63,11 +63,13 @@ VIDEO_ADV7343
 # needs devm_regmap_init_i2c
 VIDEO_LM3560
 VIDEO_LM3646
+MEDIA_TUNER_TDA18212
 # needs spi_finalize_current_message
 USB_MSI3101
 MEDIA_TUNER_MSI001
 # needs regmap_bulk_write
 MEDIA_TUNER_M88TS2022
+MEDIA_TUNER_IT913X
 
 [3.3.0]
 # Needs struct dma_interleaved_template in dmaengine.h
