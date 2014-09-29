@@ -1,6 +1,10 @@
 # Use this for stuff for drivers that don't compile
 [3.255.255]
 
+[3.15.0]
+# needs reset_control_get_optional
+RC_ST
+
 [3.13.0]
 # needs gpio/consumer.h
 VIDEO_ADV7604
