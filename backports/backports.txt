@@ -23,6 +23,7 @@
 [3.255.255]
 add api_version.patch
 add pr_fmt.patch
+add debug.patch
 add drx39xxj.patch
 
 [3.16.255]
