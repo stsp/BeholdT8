@@ -9,6 +9,10 @@ RC_ST
 # needs gpio/consumer.h
 VIDEO_ADV7604
 
+[3.11.0]
+# needs freezable_schedule_hrtimeout_range
+DVB_PT3
+
 [3.9.0]
 # needs devm_ioremap_resource
 VIDEO_SH_VEU
