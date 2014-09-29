@@ -35,6 +35,7 @@ add v3.11_dev_groups.patch
 
 [3.10.255]
 add v3.10_fw_driver_probe.patch
+add v3.10_ir_hix5hd2.patch
 
 [3.9.255]
 add v3.9_pfn_warning.patch
