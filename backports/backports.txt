@@ -29,6 +29,7 @@ add drx39xxj.patch
 [3.16.255]
 add v3.16_netdev.patch
 add v3.16_wait_on_bit.patch
+add v3.16_void_gpiochip_remove.patch
 
 [3.11.255]
 add v3.11_dev_groups.patch

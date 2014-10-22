@@ -1,0 +1,17 @@
+diff --git a/drivers/media/dvb-frontends/cxd2820r_core.c b/drivers/media/dvb-frontends/cxd2820r_core.c
+index 422e84b..e0149ad 100644
+--- a/drivers/media/dvb-frontends/cxd2820r_core.c
++++ b/drivers/media/dvb-frontends/cxd2820r_core.c
+@@ -589,8 +589,10 @@ static void cxd2820r_release(struct dvb_frontend *fe)
+ 
+ #ifdef CONFIG_GPIOLIB
+ 	/* remove GPIOs */
+-	if (priv->gpio_chip.label)
+-		gpiochip_remove(&priv->gpio_chip);
++	if (priv->gpio_chip.label) {
++		int ret = gpiochip_remove(&priv->gpio_chip);
++		(void)ret;
++	}
+ 
+ #endif
+ 	kfree(priv);
