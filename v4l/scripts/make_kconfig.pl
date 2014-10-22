@@ -613,6 +613,7 @@ disable_config('VIDEO_HELPER_CHIPS_AUTO');
 disable_config('VIDEO_FIXED_MINOR_RANGES');
 disable_config('STAGING') if (!$enable_staging);
 disable_config('STAGING_BROKEN');
+$config{'COMPILE_TEST'} = 0;
 $intopt { "DVB_MAX_ADAPTERS" } = 8;
 
 # Check dependencies
