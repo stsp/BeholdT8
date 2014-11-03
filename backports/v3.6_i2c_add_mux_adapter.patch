@@ -46,3 +46,15 @@ index 41bdbc4..e184de6 100644
  	if (s->adapter == NULL) {
  		ret = -ENODEV;
  		goto err;
+diff --git a/drivers/media/usb/cx231xx/cx231xx-i2c.c b/drivers/media/usb/cx231xx/cx231xx-i2c.c
+index d1003c7..ab24dfa 100644
+--- a/drivers/media/usb/cx231xx/cx231xx-i2c.c
++++ b/drivers/media/usb/cx231xx/cx231xx-i2c.c
+@@ -571,7 +571,6 @@ int cx231xx_i2c_mux_register(struct cx231xx *dev, int mux_no)
+ 				dev /* mux_priv */,
+ 				0,
+ 				mux_no /* chan_id */,
+-				0 /* class */,
+ 				&cx231xx_i2c_mux_select,
+ 				NULL);
+ 
