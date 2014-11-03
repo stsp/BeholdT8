@@ -618,6 +618,7 @@ sub check_other_dependencies()
 	check_files_for_func("GENMASK", "NEED_GENMASK", "include/linux/bitops.h");
 	check_files_for_func("mult_frac", "NEED_MULT_FRAC", "include/linux/kernel.h");
 	check_files_for_func("clk_prepare_enable", "NEED_CLOCK_HELPERS", "include/linux/clk.h");
+	check_files_for_func("IS_MODULE", "NEED_IS_MODULE", "include/linux/kconfig.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

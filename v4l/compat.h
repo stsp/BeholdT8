@@ -1515,4 +1515,8 @@ static inline void clk_disable_unprepare(struct clk *clk)
 }
 #endif
 
+#ifdef NEED_IS_MODULE
+#define IS_MODULE(option)  defined(option ## _MODULE)
+#endif
+
 #endif /*  _COMPAT_H */
