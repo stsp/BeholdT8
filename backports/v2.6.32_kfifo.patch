@@ -1,5 +1,5 @@
 diff --git a/drivers/media/i2c/cx25840/cx25840-ir.c b/drivers/media/i2c/cx25840/cx25840-ir.c
-index e6588ee..8f929b8 100644
+index 4cf8f18..facb846 100644
 --- a/drivers/media/i2c/cx25840/cx25840-ir.c
 +++ b/drivers/media/i2c/cx25840/cx25840-ir.c
 @@ -117,7 +117,7 @@ struct cx25840_ir_state {
@@ -88,10 +88,10 @@ index e6588ee..8f929b8 100644
  	return 0;
  }
 diff --git a/drivers/media/pci/cx23885/cx23888-ir.c b/drivers/media/pci/cx23885/cx23888-ir.c
-index 2c951de..7d00bdf 100644
+index c1aa888..b04d70c 100644
 --- a/drivers/media/pci/cx23885/cx23888-ir.c
 +++ b/drivers/media/pci/cx23885/cx23888-ir.c
-@@ -136,7 +136,7 @@ struct cx23888_ir_state {
+@@ -131,7 +131,7 @@ struct cx23888_ir_state {
  	atomic_t rxclk_divider;
  	atomic_t rx_invert;
  
@@ -100,7 +100,7 @@ index 2c951de..7d00bdf 100644
  	spinlock_t rx_kfifo_lock;
  
  	struct v4l2_subdev_ir_parameters tx_params;
-@@ -536,7 +536,6 @@ static int cx23888_ir_irq_handler(struct v4l2_subdev *sd, u32 status,
+@@ -531,7 +531,6 @@ static int cx23888_ir_irq_handler(struct v4l2_subdev *sd, u32 status,
  {
  	struct cx23888_ir_state *state = to_state(sd);
  	struct cx23885_dev *dev = state->dev;
@@ -108,7 +108,7 @@ index 2c951de..7d00bdf 100644
  
  	u32 cntrl = cx23888_ir_read4(dev, CX23888_IR_CNTRL_REG);
  	u32 irqen = cx23888_ir_read4(dev, CX23888_IR_IRQEN_REG);
-@@ -609,10 +608,9 @@ static int cx23888_ir_irq_handler(struct v4l2_subdev *sd, u32 status,
+@@ -604,10 +603,9 @@ static int cx23888_ir_irq_handler(struct v4l2_subdev *sd, u32 status,
  			}
  			if (i == 0)
  				break;
@@ -122,7 +122,7 @@ index 2c951de..7d00bdf 100644
  			if (k != j)
  				kror++; /* rx_kfifo over run */
  		}
-@@ -649,10 +647,8 @@ static int cx23888_ir_irq_handler(struct v4l2_subdev *sd, u32 status,
+@@ -644,10 +642,8 @@ static int cx23888_ir_irq_handler(struct v4l2_subdev *sd, u32 status,
  		*handled = true;
  	}
  
@@ -134,7 +134,7 @@ index 2c951de..7d00bdf 100644
  
  	if (events)
  		v4l2_subdev_notify(sd, V4L2_SUBDEV_IR_RX_NOTIFY, &events);
-@@ -678,7 +674,7 @@ static int cx23888_ir_rx_read(struct v4l2_subdev *sd, u8 *buf, size_t count,
+@@ -673,7 +669,7 @@ static int cx23888_ir_rx_read(struct v4l2_subdev *sd, u8 *buf, size_t count,
  		return 0;
  	}
  
@@ -143,7 +143,7 @@ index 2c951de..7d00bdf 100644
  
  	n /= sizeof(union cx23888_ir_fifo_rec);
  	*num = n * sizeof(union cx23888_ir_fifo_rec);
-@@ -817,12 +813,7 @@ static int cx23888_ir_rx_s_parameters(struct v4l2_subdev *sd,
+@@ -812,12 +808,7 @@ static int cx23888_ir_rx_s_parameters(struct v4l2_subdev *sd,
  	o->interrupt_enable = p->interrupt_enable;
  	o->enable = p->enable;
  	if (p->enable) {
@@ -157,7 +157,7 @@ index 2c951de..7d00bdf 100644
  		if (p->interrupt_enable)
  			irqenable_rx(dev, IRQEN_RSE | IRQEN_RTE | IRQEN_ROE);
  		control_rx_enable(dev, p->enable);
-@@ -1184,8 +1175,10 @@ int cx23888_ir_probe(struct cx23885_dev *dev)
+@@ -1179,8 +1170,10 @@ int cx23888_ir_probe(struct cx23885_dev *dev)
  		return -ENOMEM;
  
  	spin_lock_init(&state->rx_kfifo_lock);
@@ -170,7 +170,7 @@ index 2c951de..7d00bdf 100644
  
  	state->dev = dev;
  	sd = &state->sd;
-@@ -1213,7 +1206,7 @@ int cx23888_ir_probe(struct cx23885_dev *dev)
+@@ -1208,7 +1201,7 @@ int cx23888_ir_probe(struct cx23885_dev *dev)
  		default_params = default_tx_params;
  		v4l2_subdev_call(sd, ir, tx_s_parameters, &default_params);
  	} else {
@@ -179,7 +179,7 @@ index 2c951de..7d00bdf 100644
  	}
  	return ret;
  }
-@@ -1232,7 +1225,7 @@ int cx23888_ir_remove(struct cx23885_dev *dev)
+@@ -1227,7 +1220,7 @@ int cx23888_ir_remove(struct cx23885_dev *dev)
  
  	state = to_state(sd);
  	v4l2_device_unregister_subdev(sd);
@@ -380,8 +380,21 @@ index 6fed927..77aad1f 100644
  	spinlock_t doneq_lock;		/* lock protecting the queue */
  	wait_queue_head_t proc_list;	/* wait queue */
  	struct video_device *vdev;	/* video device parameters */
+diff --git a/drivers/media/rc/rc-core-priv.h b/drivers/media/rc/rc-core-priv.h
+index 84967ca..2aca801 100644
+--- a/drivers/media/rc/rc-core-priv.h
++++ b/drivers/media/rc/rc-core-priv.h
+@@ -35,7 +35,7 @@ struct ir_raw_event_ctrl {
+ 	struct list_head		list;		/* to keep track of raw clients */
+ 	struct task_struct		*thread;
+ 	spinlock_t			lock;
+-	struct kfifo			kfifo;		/* fifo for the pulse/space durations */
++	struct kfifo			*kfifo;		/* fifo for the pulse/space durations */
+ 	ktime_t				last_event;	/* when last event occurred */
+ 	enum raw_event_type		last_type;	/* last event type */
+ 	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
 diff --git a/drivers/media/rc/rc-ir-raw.c b/drivers/media/rc/rc-ir-raw.c
-index c72f57c..c311df9 100644
+index e8fff2a..7709c32 100644
 --- a/drivers/media/rc/rc-ir-raw.c
 +++ b/drivers/media/rc/rc-ir-raw.c
 @@ -41,7 +41,7 @@ static int ir_raw_event_thread(void *data)
@@ -436,37 +449,36 @@ index c72f57c..c311df9 100644
  	kfree(dev->raw);
  	dev->raw = NULL;
  }
-diff --git a/drivers/media/rc/rc-core-priv.h b/drivers/media/rc/rc-core-priv.h
-index a9ca871..85560ce 100644
---- a/drivers/media/rc/rc-core-priv.h
-+++ b/drivers/media/rc/rc-core-priv.h
-@@ -35,7 +35,7 @@ struct ir_raw_event_ctrl {
- 	struct list_head		list;		/* to keep track of raw clients */
- 	struct task_struct		*thread;
- 	spinlock_t			lock;
--	struct kfifo			kfifo;		/* fifo for the pulse/space durations */
-+	struct kfifo			*kfifo;		/* fifo for the pulse/space durations */
- 	ktime_t				last_event;	/* when last event occurred */
- 	enum raw_event_type		last_type;	/* last event type */
- 	struct rc_dev			*dev;		/* pointer to the parent rc_dev */
+diff --git a/drivers/staging/media/lirc/lirc_zilog.c b/drivers/staging/media/lirc/lirc_zilog.c
+index 1ccf626..b0e514b 100644
+--- a/drivers/staging/media/lirc/lirc_zilog.c
++++ b/drivers/staging/media/lirc/lirc_zilog.c
+@@ -199,7 +199,7 @@ static void release_ir_device(struct kref *ref)
+ 		lirc_unregister_driver(ir->l.minor);
+ 		ir->l.minor = MAX_IRCTL_DEVICES;
+ 	}
+-	if (kfifo_initialized(&ir->rbuf.fifo))
++	if (ir->rbuf.fifo)
+ 		lirc_buffer_free(&ir->rbuf);
+ 	list_del(&ir->list);
+ 	kfree(ir);
 diff --git a/include/media/lirc_dev.h b/include/media/lirc_dev.h
-index 78f0637..c4f9d37 100644
+index 05e7ad5..f40097c 100644
 --- a/include/media/lirc_dev.h
 +++ b/include/media/lirc_dev.h
-@@ -28,19 +28,15 @@ struct lirc_buffer {
+@@ -28,18 +28,14 @@ struct lirc_buffer {
  	unsigned int size; /* in chunks */
  	/* Using chunks instead of bytes pretends to simplify boundary checking
  	 * And should allow for some performance fine tunning later */
 -	struct kfifo fifo;
 +	struct kfifo *fifo;
- 	u8 fifo_initialized;
  };
  
  static inline void lirc_buffer_clear(struct lirc_buffer *buf)
  {
 -	unsigned long flags;
 -
--	if (buf->fifo_initialized) {
+-	if (kfifo_initialized(&buf->fifo)) {
 -		spin_lock_irqsave(&buf->fifo_lock, flags);
 -		kfifo_reset(&buf->fifo);
 -		spin_unlock_irqrestore(&buf->fifo_lock, flags);
@@ -477,7 +489,7 @@ index 78f0637..c4f9d37 100644
  		WARN(1, "calling %s on an uninitialized lirc_buffer\n",
  		     __func__);
  }
-@@ -49,25 +45,23 @@ static inline int lirc_buffer_init(struct lirc_buffer *buf,
+@@ -48,22 +44,23 @@ static inline int lirc_buffer_init(struct lirc_buffer *buf,
  				    unsigned int chunk_size,
  				    unsigned int size)
  {
@@ -488,8 +500,6 @@ index 78f0637..c4f9d37 100644
  	buf->chunk_size = chunk_size;
  	buf->size = size;
 -	ret = kfifo_alloc(&buf->fifo, size * chunk_size, GFP_KERNEL);
--	if (ret == 0)
--		buf->fifo_initialized = 1;
 +	buf->fifo = kfifo_alloc(size * chunk_size, GFP_KERNEL,
 +				&buf->fifo_lock);
 +	if (IS_ERR(buf->fifo))
@@ -501,9 +511,8 @@ index 78f0637..c4f9d37 100644
  
  static inline void lirc_buffer_free(struct lirc_buffer *buf)
  {
--	if (buf->fifo_initialized) {
+-	if (kfifo_initialized(&buf->fifo)) {
 -		kfifo_free(&buf->fifo);
--		buf->fifo_initialized = 0;
 -	} else
 +	if (buf->fifo)
 +		kfifo_free(buf->fifo);
@@ -511,7 +520,7 @@ index 78f0637..c4f9d37 100644
  		WARN(1, "calling %s on an uninitialized lirc_buffer\n",
  		     __func__);
  }
-@@ -75,11 +69,8 @@ static inline void lirc_buffer_free(struct lirc_buffer *buf)
+@@ -71,11 +68,8 @@ static inline void lirc_buffer_free(struct lirc_buffer *buf)
  static inline int lirc_buffer_len(struct lirc_buffer *buf)
  {
  	int len;
@@ -524,7 +533,7 @@ index 78f0637..c4f9d37 100644
  
  	return len;
  }
-@@ -102,24 +93,19 @@ static inline int lirc_buffer_available(struct lirc_buffer *buf)
+@@ -98,24 +92,19 @@ static inline int lirc_buffer_available(struct lirc_buffer *buf)
  static inline unsigned int lirc_buffer_read(struct lirc_buffer *buf,
  					    unsigned char *dest)
  {
