@@ -1,8 +1,8 @@
 diff --git a/drivers/media/dvb-frontends/m88ds3103.c b/drivers/media/dvb-frontends/m88ds3103.c
-index 248d66b..67a6be5 100644
+index a35e4de..e27fd0d 100644
 --- a/drivers/media/dvb-frontends/m88ds3103.c
 +++ b/drivers/media/dvb-frontends/m88ds3103.c
-@@ -1355,7 +1355,7 @@ struct dvb_frontend *m88ds3103_attach(const struct m88ds3103_config *cfg,
+@@ -1437,7 +1437,7 @@ struct dvb_frontend *m88ds3103_attach(const struct m88ds3103_config *cfg,
  		goto err;
  
  	/* create mux i2c adapter for tuner */
@@ -47,15 +47,15 @@ index 226d3f8..6696c2f 100644
  	if (s->adapter == NULL) {
  		ret = -ENODEV;
 diff --git a/drivers/media/usb/cx231xx/cx231xx-i2c.c b/drivers/media/usb/cx231xx/cx231xx-i2c.c
-index ab24dfa..80a61a7 100644
+index 725c13a..35e3ac1 100644
 --- a/drivers/media/usb/cx231xx/cx231xx-i2c.c
 +++ b/drivers/media/usb/cx231xx/cx231xx-i2c.c
-@@ -563,11 +563,8 @@ static int cx231xx_i2c_mux_select(struct i2c_adapter *adap,
+@@ -568,11 +568,8 @@ static int cx231xx_i2c_mux_select(struct i2c_adapter *adap,
  int cx231xx_i2c_mux_register(struct cx231xx *dev, int mux_no)
  {
  	struct i2c_adapter *i2c_parent = &dev->i2c_bus[1].i2c_adap;
 -	/* what is the correct mux_dev? */
--	struct device *mux_dev = &dev->udev->dev;
+-	struct device *mux_dev = dev->dev;
  
  	dev->i2c_mux_adap[mux_no] = i2c_add_mux_adapter(i2c_parent,
 -				mux_dev,
