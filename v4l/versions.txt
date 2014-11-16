@@ -8,6 +8,7 @@ RC_ST
 [3.13.0]
 # needs gpio/consumer.h
 VIDEO_ADV7604
+RADIO_SI4713
 
 [3.11.0]
 # needs freezable_schedule_hrtimeout_range
@@ -176,8 +177,6 @@ VIDEO_MX3
 # requires id_table and new i2c stuff
 RADIO_TEA5764
 VIDEO_THS7303
-RADIO_SI4713
-I2C_SI4713
 
 [2.6.24]
 # Some freezer routines
