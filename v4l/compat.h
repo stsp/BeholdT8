@@ -1519,4 +1519,12 @@ static inline void clk_disable_unprepare(struct clk *clk)
 #define IS_MODULE(option)  defined(option ## _MODULE)
 #endif
 
+#ifdef NEED_DMA_ATTR_SKIP_CPU_SYNC
+/*
+ * Works fine for Intel architectures, but this can cause
+ * problems on ARM.
+ */
+#define DMA_ATTR_SKIP_CPU_SYNC 0
+#endif
+
 #endif /*  _COMPAT_H */
