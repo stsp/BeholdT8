@@ -30,7 +30,7 @@ index dfac5ed..b0bff69 100644
 +
 +static inline struct dma_buf *dma_buf_export(void *priv,
 +					     const struct dma_buf_ops *ops,
-+					     size_t size, int flags)
++					     size_t size, int flags, struct reservation_object *resv)
 +{
 +	return ERR_PTR(-ENODEV);
 +}
