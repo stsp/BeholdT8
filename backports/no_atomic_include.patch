@@ -22,10 +22,10 @@ index cb69405..5e44ce5 100644
  #include <linux/usb.h>
  #include <linux/mutex.h>
  #include <linux/i2c.h>
-diff --git a/drivers/media/usb/tlg2300/pd-dvb.c b/drivers/media/usb/tlg2300/pd-dvb.c
+diff --git a/drivers/staging/media/tlg2300/pd-dvb.c b/drivers/staging/media/tlg2300/pd-dvb.c
 index ca4994a..148a573 100644
---- a/drivers/media/usb/tlg2300/pd-dvb.c
-+++ b/drivers/media/usb/tlg2300/pd-dvb.c
+--- a/drivers/staging/media/tlg2300/pd-dvb.c
++++ b/drivers/staging/media/tlg2300/pd-dvb.c
 @@ -8,7 +8,6 @@
  
  #include "vendorcmds.h"
