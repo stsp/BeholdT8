@@ -1516,8 +1516,8 @@ static inline void clk_disable_unprepare(struct clk *clk)
 #endif
 
 #ifdef NEED_PCM_STOP_XRUN
-#include <sound/asound.h>
-int snd_pcm_stop_xrun(struct snd_pcm_substream *substream)
+#include <sound/pcm.h>
+static inline int snd_pcm_stop_xrun(struct snd_pcm_substream *substream)
 {
 	unsigned long flags;
 	int ret = 0;

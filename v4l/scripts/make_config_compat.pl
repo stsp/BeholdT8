@@ -78,7 +78,7 @@ sub check_snd_pcm_stop_xrun()
 	}
 
 	if ($old_syntax) {
-		$out.= "\n#define COMPAT_PCM_STOP_XRUN 1\n";
+		$out.= "\n#define NEED_PCM_STOP_XRUN 1\n";
 	}
 	close INNET;
 }
