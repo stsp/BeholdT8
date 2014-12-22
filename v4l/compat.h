@@ -97,12 +97,12 @@ static inline unsigned long find_next_bit_le(const void *addr,
 #include <linux/ctype.h>
 static inline int hex_to_bin(char ch)
 {
-        if ((ch >= '0') && (ch <= '9'))
-                return ch - '0';
-        ch = tolower(ch);
-        if ((ch >= 'a') && (ch <= 'f'))
-                return ch - 'a' + 10;
-        return -1;
+	if ((ch >= '0') && (ch <= '9'))
+		return ch - '0';
+	ch = tolower(ch);
+	if ((ch >= 'a') && (ch <= 'f'))
+		return ch - 'a' + 10;
+	return -1;
 }
 #endif
 
@@ -926,7 +926,7 @@ module_exit(__driver##_exit);
 #ifndef module_i2c_driver
 #define module_i2c_driver(__i2c_driver) \
        module_driver(__i2c_driver, i2c_add_driver, \
-                       i2c_del_driver)
+		       i2c_del_driver)
 #endif
 
 #ifdef NEED_KMALLOC_ARRAY
@@ -953,12 +953,12 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_slave_sg(
 #ifdef NEED_SET_SYSTEM_SLEEP_PM_OPS
 #ifdef CONFIG_PM_SLEEP
 #define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
-        .suspend = suspend_fn, \
-        .resume = resume_fn, \
-        .freeze = suspend_fn, \
-        .thaw = resume_fn, \
-        .poweroff = suspend_fn, \
-        .restore = resume_fn,
+	.suspend = suspend_fn, \
+	.resume = resume_fn, \
+	.freeze = suspend_fn, \
+	.thaw = resume_fn, \
+	.poweroff = suspend_fn, \
+	.restore = resume_fn,
 #else
 #define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
 #endif
@@ -979,11 +979,11 @@ static inline int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
  /* Retry automatically on arbitration loss */
  orig_jiffies = jiffies;
  for (ret = 0, try = 0; try <= adap->retries; try++) {
-         ret = adap->algo->master_xfer(adap, msgs, num);
-         if (ret != -EAGAIN)
-                 break;
-         if (time_after(jiffies, orig_jiffies + adap->timeout))
-                 break;
+	 ret = adap->algo->master_xfer(adap, msgs, num);
+	 if (ret != -EAGAIN)
+		 break;
+	 if (time_after(jiffies, orig_jiffies + adap->timeout))
+		 break;
  }
 
  return ret;
@@ -1053,7 +1053,7 @@ static inline size_t memweight(const void *ptr, size_t bytes)
 #ifndef module_pci_driver
 #define module_pci_driver(__pci_driver) \
        module_driver(__pci_driver, pci_register_driver, \
-                       pci_unregister_driver)
+		       pci_unregister_driver)
 #endif
 
 #ifdef NEED_LOCK_ADAPTER
@@ -1070,8 +1070,8 @@ static inline void i2c_unlock_adapter(struct i2c_adapter *adapter)
 #ifdef NEED_I2C_PROBE_FUNC_QUICK_READ
 static inline int i2c_probe_func_quick_read(struct i2c_adapter *adap, unsigned short addr)
 {
-        return i2c_smbus_xfer(adap, addr, 0, I2C_SMBUS_READ, 0,
-	                              I2C_SMBUS_QUICK, NULL) >= 0;
+	return i2c_smbus_xfer(adap, addr, 0, I2C_SMBUS_READ, 0,
+				      I2C_SMBUS_QUICK, NULL) >= 0;
 }
 #endif
 
@@ -1085,7 +1085,7 @@ static inline int i2c_probe_func_quick_read(struct i2c_adapter *adap, unsigned s
 #ifndef module_pci_driver
 #define module_pci_driver(__pci_driver) \
        module_driver(__pci_driver, pci_register_driver, \
-                       pci_unregister_driver)
+		       pci_unregister_driver)
 #endif
 
 #ifdef NEED_DONTDUMP
@@ -1109,21 +1109,21 @@ static inline int i2c_probe_func_quick_read(struct i2c_adapter *adap, unsigned s
 #define __config_enabled(arg1_or_junk) ___config_enabled(arg1_or_junk 1, 0)
 #define ___config_enabled(__ignored, val, ...) val
 #define IS_ENABLED(option) \
-	        (config_enabled(option) || config_enabled(option##_MODULE))
+		(config_enabled(option) || config_enabled(option##_MODULE))
 #endif
 
 #ifdef NEED_USB_TRANSLATE_ERRORS
 static inline int usb_translate_errors(int error_code)
-{               
-        switch (error_code) {
-        case 0:
-        case -ENOMEM:
-        case -ENODEV:
-        case -EOPNOTSUPP:
-                return error_code;
-        default:
-                return -EIO;
-        }
+{
+	switch (error_code) {
+	case 0:
+	case -ENOMEM:
+	case -ENODEV:
+	case -EOPNOTSUPP:
+		return error_code;
+	default:
+		return -EIO;
+	}
 }
 #endif
 
@@ -1154,11 +1154,11 @@ static inline struct inode *file_inode(struct file *f)
 #include <linux/proc_fs.h>
 static inline void proc_set_size(struct proc_dir_entry *de, loff_t size)
 {
-        de->size = size;
+	de->size = size;
 }
 static inline void *PDE_DATA(const struct inode *inode)
 {
-        return PDE(inode)->data;
+	return PDE(inode)->data;
 }
 #else
 static inline void proc_set_size(struct proc_dir_entry *de, loff_t size) {}
@@ -1168,12 +1168,12 @@ static inline void proc_set_size(struct proc_dir_entry *de, loff_t size) {}
 #ifdef NEED_SIMPLE_DEV_PM_OPS
 #define SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
 	struct dev_pm_ops name = { \
-		        .suspend = suspend_fn, \
-		        .resume = resume_fn, \
-		        .freeze = suspend_fn, \
-		        .thaw = resume_fn, \
-		        .poweroff = suspend_fn, \
-		        .restore = resume_fn, \
+			.suspend = suspend_fn, \
+			.resume = resume_fn, \
+			.freeze = suspend_fn, \
+			.thaw = resume_fn, \
+			.poweroff = suspend_fn, \
+			.restore = resume_fn, \
 	}
 #endif
 
@@ -1474,7 +1474,7 @@ static inline int __must_check kref_get_unless_zero(struct kref *kref)
 
 static inline u32 prandom_u32_max(u32 ep_ro)
 {
-        return (u32)(((u64) prandom_u32() * ep_ro) >> 32);
+	return (u32)(((u64) prandom_u32() * ep_ro) >> 32);
 }
 #endif
 
