@@ -64,6 +64,25 @@ sub check_snd_pcm_rate_to_rate_bit()
 	close INNET;
 }
 
+sub check_snd_pcm_stop_xrun()
+{
+	my $file = "$kdir/include/sound/pcm.h";
+	my $old_syntax = 1;
+
+	open INNET, "<$file" or die "File not found: $file";
+	while (<INNET>) {
+		if (m/snd_pcm_stop_xrun/) {
+			$old_syntax = 0;
+			last;
+		}
+	}
+
+	if ($old_syntax) {
+		$out.= "\n#define COMPAT_PCM_STOP_XRUN 1\n";
+	}
+	close INNET;
+}
+
 sub check_snd_ctl_boolean_mono_info()
 {
 	my $file = "$kdir/include/sound/control.h";
@@ -543,6 +562,7 @@ sub check_other_dependencies()
 	check_sound_driver_h();
 	check_snd_ctl_boolean_mono_info();
 	check_snd_pcm_rate_to_rate_bit();
+	check_snd_pcm_stop_xrun();
 	check_bool();
 	check_is_singular();
 	check_clamp();

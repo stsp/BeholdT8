@@ -1515,6 +1515,21 @@ static inline void clk_disable_unprepare(struct clk *clk)
 }
 #endif
 
+#ifdef NEED_PCM_STOP_XRUN
+#include <sound/asound.h>
+int snd_pcm_stop_xrun(struct snd_pcm_substream *substream)
+{
+	unsigned long flags;
+	int ret = 0;
+
+	snd_pcm_stream_lock_irqsave(substream, flags);
+	if (snd_pcm_running(substream))
+		ret = snd_pcm_stop(substream, SNDRV_PCM_STATE_XRUN);
+	snd_pcm_stream_unlock_irqrestore(substream, flags);
+	return ret;
+}
+#endif
+
 #ifdef NEED_IS_MODULE
 #define IS_MODULE(option)  defined(option ## _MODULE)
 #endif
