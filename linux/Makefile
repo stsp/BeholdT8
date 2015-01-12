@@ -26,7 +26,6 @@ TARFILES += include/linux/fence.h
 TARFILES += include/linux/of_graph.h
 TARFILES += include/linux/kconfig.h
 TARFILES += include/linux/hdmi.h
-TARFILES += include/linux/platform_data/vsp1.h
 TARFILES += include/linux/platform_data/camera-rcar.h
 TARFILES += include/trace/events/v4l2.h
 
