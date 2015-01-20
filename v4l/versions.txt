@@ -132,8 +132,6 @@ VIDEO_APTINA_PLL
 VIDEO_MT9M032
 # Needs include/linux/lcm.h
 VIDEO_SMIAPP_PLL
-# Depends on VIDEO_SMIAPP_PLL and requires gpio_request_one
-VIDEO_SMIAPP
 
 [2.6.33]
 VIDEO_AK881X
