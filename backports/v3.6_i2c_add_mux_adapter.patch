@@ -1,8 +1,8 @@
 diff --git a/drivers/media/dvb-frontends/m88ds3103.c b/drivers/media/dvb-frontends/m88ds3103.c
-index 2ef8ce1..06b6a85 100644
+index ba4ee0b..17da380 100644
 --- a/drivers/media/dvb-frontends/m88ds3103.c
 +++ b/drivers/media/dvb-frontends/m88ds3103.c
-@@ -1229,7 +1229,7 @@ struct dvb_frontend *m88ds3103_attach(const struct m88ds3103_config *cfg,
+@@ -1432,7 +1432,7 @@ struct dvb_frontend *m88ds3103_attach(const struct m88ds3103_config *cfg,
  		goto err;
  
  	/* create mux i2c adapter for tuner */
@@ -12,10 +12,10 @@ index 2ef8ce1..06b6a85 100644
  	if (priv->i2c_adapter == NULL)
  		goto err;
 diff --git a/drivers/media/dvb-frontends/rtl2832.c b/drivers/media/dvb-frontends/rtl2832.c
-index fdbed35..2455c97 100644
+index 53b446a..77acdcf 100644
 --- a/drivers/media/dvb-frontends/rtl2832.c
 +++ b/drivers/media/dvb-frontends/rtl2832.c
-@@ -1055,7 +1055,7 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
+@@ -1109,7 +1109,7 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
  	INIT_DELAYED_WORK(&priv->i2c_gate_work, rtl2832_i2c_gate_work);
  
  	/* create muxed i2c adapter for demod itself */
@@ -24,7 +24,7 @@ index fdbed35..2455c97 100644
  			rtl2832_select, NULL);
  	if (priv->i2c_adapter == NULL)
  		goto err;
-@@ -1067,7 +1067,7 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
+@@ -1121,7 +1121,7 @@ struct dvb_frontend *rtl2832_attach(const struct rtl2832_config *cfg,
  
  	/* create muxed i2c adapter for demod tuner bus */
  	priv->i2c_adapter_tuner = i2c_add_mux_adapter(i2c, &i2c->dev, priv,
@@ -33,11 +33,29 @@ index fdbed35..2455c97 100644
  	if (priv->i2c_adapter_tuner == NULL)
  		goto err;
  
+@@ -1218,7 +1218,7 @@ static int rtl2832_probe(struct i2c_client *client,
+ 	INIT_DELAYED_WORK(&priv->i2c_gate_work, rtl2832_i2c_gate_work);
+ 
+ 	/* create muxed i2c adapter for demod itself */
+-	priv->i2c_adapter = i2c_add_mux_adapter(i2c, &i2c->dev, priv, 0, 0, 0,
++	priv->i2c_adapter = i2c_add_mux_adapter(i2c, &i2c->dev, priv, 0, 0,
+ 			rtl2832_select, NULL);
+ 	if (priv->i2c_adapter == NULL) {
+ 		ret = -ENODEV;
+@@ -1232,7 +1232,7 @@ static int rtl2832_probe(struct i2c_client *client,
+ 
+ 	/* create muxed i2c adapter for demod tuner bus */
+ 	priv->i2c_adapter_tuner = i2c_add_mux_adapter(i2c, &i2c->dev, priv,
+-			0, 1, 0, rtl2832_select, rtl2832_deselect);
++			0, 1, rtl2832_select, rtl2832_deselect);
+ 	if (priv->i2c_adapter_tuner == NULL) {
+ 		ret = -ENODEV;
+ 		goto err_i2c_del_mux_adapter;
 diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-frontends/si2168.c
-index 41bdbc4..e184de6 100644
+index 63341f4..17161ba 100644
 --- a/drivers/media/dvb-frontends/si2168.c
 +++ b/drivers/media/dvb-frontends/si2168.c
-@@ -635,7 +635,7 @@ static int si2168_probe(struct i2c_client *client,
+@@ -670,7 +670,7 @@ static int si2168_probe(struct i2c_client *client,
  
  	/* create mux i2c adapter for tuner */
  	dev->adapter = i2c_add_mux_adapter(client->adapter, &client->dev,
@@ -45,12 +63,12 @@ index 41bdbc4..e184de6 100644
 +			client, 0, 0, si2168_select, si2168_deselect);
  	if (dev->adapter == NULL) {
  		ret = -ENODEV;
- 		goto err;
+ 		goto err_kfree;
 diff --git a/drivers/media/usb/cx231xx/cx231xx-i2c.c b/drivers/media/usb/cx231xx/cx231xx-i2c.c
-index d1003c7..ab24dfa 100644
+index a29c345..725c13a 100644
 --- a/drivers/media/usb/cx231xx/cx231xx-i2c.c
 +++ b/drivers/media/usb/cx231xx/cx231xx-i2c.c
-@@ -571,7 +571,6 @@ int cx231xx_i2c_mux_register(struct cx231xx *dev, int mux_no)
+@@ -576,7 +576,6 @@ int cx231xx_i2c_mux_register(struct cx231xx *dev, int mux_no)
  				dev /* mux_priv */,
  				0,
  				mux_no /* chan_id */,
