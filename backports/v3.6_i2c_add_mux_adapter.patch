@@ -40,10 +40,10 @@ index 41bdbc4..e184de6 100644
 @@ -635,7 +635,7 @@ static int si2168_probe(struct i2c_client *client,
  
  	/* create mux i2c adapter for tuner */
- 	s->adapter = i2c_add_mux_adapter(client->adapter, &client->dev, s,
--			0, 0, 0, si2168_select, si2168_deselect);
-+			0, 0, si2168_select, si2168_deselect);
- 	if (s->adapter == NULL) {
+ 	dev->adapter = i2c_add_mux_adapter(client->adapter, &client->dev,
+-			client, 0, 0, 0, si2168_select, si2168_deselect);
++			client, 0, 0, si2168_select, si2168_deselect);
+ 	if (dev->adapter == NULL) {
  		ret = -ENODEV;
  		goto err;
 diff --git a/drivers/media/usb/cx231xx/cx231xx-i2c.c b/drivers/media/usb/cx231xx/cx231xx-i2c.c

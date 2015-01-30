@@ -41,10 +41,10 @@ index 226d3f8..6696c2f 100644
  	mutex_init(&s->i2c_mutex);
  
  	/* create mux i2c adapter for tuner */
--	s->adapter = i2c_add_mux_adapter(client->adapter, &client->dev, s,
-+	s->adapter = i2c_add_mux_adapter(client->adapter, s,
- 			0, 0, si2168_select, si2168_deselect);
- 	if (s->adapter == NULL) {
+-	dev->adapter = i2c_add_mux_adapter(client->adapter, &client->dev,
++	dev->adapter = i2c_add_mux_adapter(client->adapter,
+ 			client, 0, 0, si2168_select, si2168_deselect);
+ 	if (dev->adapter == NULL) {
  		ret = -ENODEV;
 diff --git a/drivers/media/usb/cx231xx/cx231xx-i2c.c b/drivers/media/usb/cx231xx/cx231xx-i2c.c
 index 725c13a..35e3ac1 100644
