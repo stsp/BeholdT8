@@ -1550,4 +1550,8 @@ static inline __s32 sign_extend32(__u32 value, int index)
 }
 #endif
 
+#ifdef NEED_NETDEV_DBG
+#define netdev_dbg(__dev, format, args...)
+#endif
+
 #endif /*  _COMPAT_H */
