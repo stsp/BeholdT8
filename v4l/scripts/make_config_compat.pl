@@ -640,6 +640,7 @@ sub check_other_dependencies()
 	check_files_for_func("clk_prepare_enable", "NEED_CLOCK_HELPERS", "include/linux/clk.h");
 	check_files_for_func("IS_MODULE", "NEED_IS_MODULE", "include/linux/kconfig.h");
 	check_files_for_func("DMA_ATTR_SKIP_CPU_SYNC", "NEED_DMA_ATTR_SKIP_CPU_SYNC", "include/linux/dma-attrs.h");
+	check_files_for_func("sign_extend32", "NEED_SIGN_EXTEND32", "include/linux/bitops.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

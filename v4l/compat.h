@@ -1542,4 +1542,12 @@ static inline int snd_pcm_stop_xrun(struct snd_pcm_substream *substream)
 #define DMA_ATTR_SKIP_CPU_SYNC 0
 #endif
 
+#ifdef NEED_SIGN_EXTEND32
+static inline __s32 sign_extend32(__u32 value, int index)
+{
+	__u8 shift = 31 - index;
+	return (__s32)(value << shift) >> shift;
+}
+#endif
+
 #endif /*  _COMPAT_H */
