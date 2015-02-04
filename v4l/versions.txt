@@ -32,6 +32,8 @@ IR_IMG
 [3.7.0]
 # i2c_add_mux_adapter prototype change
 DVB_M88DS3103
+# Needs PLATFORM_DEVID_AUTO
+DVB_USB_RTL28XXU
 
 [3.6.0]
 # needs include/linux/sizes.h
