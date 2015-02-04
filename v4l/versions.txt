@@ -29,6 +29,11 @@ VIDEO_RENESAS_VSP1
 VIDEO_RCAR_VIN
 IR_IMG
 
+[3.8.0]
+# needs regmap lock/unlock ops
+DVB_RTL2830
+DVB_RTL2832
+
 [3.7.0]
 # i2c_add_mux_adapter prototype change
 DVB_M88DS3103
