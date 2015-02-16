@@ -1554,4 +1554,8 @@ static inline __s32 sign_extend32(__u32 value, int index)
 #define netdev_dbg(__dev, format, args...)
 #endif
 
+#ifdef NEED_WRITEL_RELAXED
+#define writel_relaxed writel
+#endif
+
 #endif /*  _COMPAT_H */
