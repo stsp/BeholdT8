@@ -20,7 +20,7 @@
 # use linux/patches_for_kernel.pl <version>
 
 # All supported versions need those patches
-[3.255.255]
+[9.255.255]
 add api_version.patch
 add pr_fmt.patch
 add debug.patch
