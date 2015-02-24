@@ -1558,4 +1558,20 @@ static inline __s32 sign_extend32(__u32 value, int index)
 #define writel_relaxed writel
 #endif
 
+#ifdef NEED_GET_USER_PAGES_UNLOCKED
+#include <linux/mm.h>
+static inline long get_user_pages_unlocked(struct task_struct *tsk, struct mm_struct *mm,
+			     unsigned long start, unsigned long nr_pages,
+			     int write, int force, struct page **pages)
+{
+	long err;
+
+	down_read(&mm->mmap_sem);
+	err = get_user_pages(tsk, mm,
+			start, nr_pages, write, force, pages, NULL);
+	up_read(&mm->mmap_sem);
+	return err;
+}
+#endif
+
 #endif /*  _COMPAT_H */
