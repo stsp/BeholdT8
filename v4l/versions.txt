@@ -5,13 +5,16 @@
 # needs of_property_read_u64_array
 VIDEO_SMIAPP
 
+[3.17.0]
+# needs GPIOD_OUT_LOW
+VIDEO_ADV7604
+
 [3.15.0]
 # needs reset_control_get_optional
 RC_ST
 
 [3.13.0]
 # needs gpio/consumer.h
-VIDEO_ADV7604
 RADIO_SI4713
 
 [3.11.0]
