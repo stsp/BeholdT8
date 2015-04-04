@@ -52,6 +52,9 @@ add v3.6_i2c_add_mux_adapter.patch
 [3.4.255]
 add v3.4_i2c_add_mux_adapter.patch
 
+[3.3.255]
+add v3.3_eprobe_defer.patch
+
 [3.2.255]
 add v3.2_devnode_uses_mode_t.patch
 add v3.2_alloc_ordered_workqueue.patch
