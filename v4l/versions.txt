@@ -8,6 +8,7 @@ VIDEO_SMIAPP
 [3.17.0]
 # needs GPIOD_OUT_LOW
 VIDEO_ADV7604
+VIDEO_OV2640
 
 [3.15.0]
 # needs reset_control_get_optional
