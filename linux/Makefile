@@ -16,6 +16,7 @@ TARFILES += sound/pci/bt87x.c
 
 # Pure kernel API
 TARDIR += include/media/
+TARDIR += include/dt-bindings/media/
 TARFILES += include/linux/mmc/sdio_ids.h
 TARFILES += include/sound/aci.h
 TARFILES += include/uapi/linux/usb/video.h
@@ -43,6 +44,7 @@ TARFILES += include/uapi/linux/v4l2-dv-timings.h
 TARFILES += include/uapi/linux/v4l2-controls.h
 TARFILES += include/uapi/linux/uvcvideo.h
 TARFILES += include/uapi/linux/vsp1.h
+TARFILES += include/uapi/linux/xilinx-v4l2-controls.h
 TARFILES += include/uapi/linux/smiapp.h
 TARFILES += include/uapi/linux/v4l2-subdev.h
 TARFILES += include/uapi/linux/v4l2-common.h
