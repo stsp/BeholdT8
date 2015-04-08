@@ -1,5 +1,5 @@
 diff --git a/drivers/media/v4l2-core/v4l2-clk.c b/drivers/media/v4l2-core/v4l2-clk.c
-index 34e416a..d2ec898 100644
+index 34e416a..63e76ae 100644
 --- a/drivers/media/v4l2-core/v4l2-clk.c
 +++ b/drivers/media/v4l2-core/v4l2-clk.c
 @@ -38,6 +38,7 @@ static struct v4l2_clk *v4l2_clk_find(const char *dev_id)
@@ -18,4 +18,26 @@ index 34e416a..d2ec898 100644
 +#endif
  	mutex_lock(&clk_lock);
  	clk = v4l2_clk_find(dev_name(dev));
+ 
+@@ -117,8 +118,10 @@ int v4l2_clk_enable(struct v4l2_clk *clk)
+ {
+ 	int ret;
+ 
++#if 0
+ 	if (clk->clk)
+ 		return clk_prepare_enable(clk->clk);
++#endif
+ 
+ 	ret = v4l2_clk_lock_driver(clk);
+ 	if (ret < 0)
+@@ -146,8 +149,10 @@ void v4l2_clk_disable(struct v4l2_clk *clk)
+ {
+ 	int enable;
+ 
++#if 0
+ 	if (clk->clk)
+ 		return clk_disable_unprepare(clk->clk);
++#endif
+ 
+ 	mutex_lock(&clk->lock);
  
