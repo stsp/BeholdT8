@@ -1112,6 +1112,11 @@ static inline int i2c_probe_func_quick_read(struct i2c_adapter *adap, unsigned s
 		(config_enabled(option) || config_enabled(option##_MODULE))
 #endif
 
+#ifdef NEED_IS_REACHABLE
+#define IS_REACHABLE(option) (config_enabled(option) || \
+		 (config_enabled(option##_MODULE) && config_enabled(MODULE)))
+#endif
+
 #ifdef NEED_USB_TRANSLATE_ERRORS
 static inline int usb_translate_errors(int error_code)
 {
