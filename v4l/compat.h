@@ -1579,4 +1579,8 @@ static inline long get_user_pages_unlocked(struct task_struct *tsk, struct mm_st
 }
 #endif
 
+#ifdef NEED_PR_WARN_ONCE
+#define pr_warn_once pr_warn
+#endif
+
 #endif /*  _COMPAT_H */
