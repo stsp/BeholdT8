@@ -15,6 +15,7 @@ VIDEO_ADV7604
 VIDEO_MT9P031
 SOC_CAMERA_OV2640
 VIDEO_XILINX
+I2C_SI4713
 
 [3.15.0]
 # needs reset_control_get_optional
