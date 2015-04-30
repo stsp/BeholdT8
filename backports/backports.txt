@@ -26,6 +26,9 @@ add pr_fmt.patch
 add debug.patch
 add drx39xxj.patch
 
+[4.0.255]
+add v4.0_drop_trace.patch
+
 [3.16.255]
 add v3.16_netdev.patch
 add v3.16_wait_on_bit.patch
