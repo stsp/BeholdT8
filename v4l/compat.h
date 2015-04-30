@@ -1603,4 +1603,10 @@ static inline int of_property_read_u64_array(const struct device_node *np,
 }
 #endif
 
+#ifdef NEED_MODULE_PNP_DRIVER
+#define module_pnp_driver(__pnp_driver) \
+	module_driver(__pnp_driver, pnp_register_driver, \
+				    pnp_unregister_driver)
+#endif
+
 #endif /*  _COMPAT_H */
