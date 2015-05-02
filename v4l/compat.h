@@ -1600,6 +1600,7 @@ static inline long get_user_pages_unlocked(struct task_struct *tsk, struct mm_st
 #endif
 
 #ifdef NEED_PROP_READ_U64_ARRAY
+struct device_node;
 static inline int of_property_read_u64_array(const struct device_node *np,
 					     const char *propname,
 					     u64 *out_values, size_t sz)
