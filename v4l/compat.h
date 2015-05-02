@@ -6,6 +6,7 @@
 #define _COMPAT_H
 
 #include <linux/version.h>
+#include <linux/compiler.h>
 #include <linux/input.h>
 #include <linux/init.h>
 #include "config-compat.h"
@@ -13,6 +14,10 @@
 
 #undef __devinitconst
 #define __devinitconst
+
+#ifndef uninitialized_var
+#define uninitialized_var(x) x = x
+#endif
 
 /* In v2.6.19-rc6-118-g52bad64 struct work_struct was was changed to be only for
  * non-delayed work and struct delayed_work was created for delayed work.  This
