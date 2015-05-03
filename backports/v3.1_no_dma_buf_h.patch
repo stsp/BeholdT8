@@ -10,7 +10,7 @@ index dfac5ed..b0bff69 100644
  struct dma_buf_attachment *dma_buf_attach(struct dma_buf *dmabuf,
  							struct device *dev);
  void dma_buf_detach(struct dma_buf *dmabuf,
-@@ -196,4 +197,101 @@ void *dma_buf_vmap(struct dma_buf *);
+@@ -196,4 +197,102 @@ void *dma_buf_vmap(struct dma_buf *);
  void dma_buf_vunmap(struct dma_buf *, void *vaddr);
  int dma_buf_debugfs_create_file(const char *name,
  				int (*write)(struct seq_file *));
@@ -28,7 +28,8 @@ index dfac5ed..b0bff69 100644
 +	return;
 +}
 +
-+static inline struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info)
++static inline struct dma_buf *dma_buf_export(void *priv, const struct dma_buf_ops *ops,
++			       size_t size, int flags, struct reservation_object *resv)
 +{
 +	return ERR_PTR(-ENODEV);
 +}
