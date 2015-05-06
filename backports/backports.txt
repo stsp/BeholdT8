@@ -26,10 +26,8 @@ add pr_fmt.patch
 add debug.patch
 add drx39xxj.patch
 
-[4.1.255]
-add v4.1_dma_buf_export.patch
-
 [4.0.255]
+add v4.0_dma_buf_export.patch
 add v4.0_drop_trace.patch
 
 [3.16.255]

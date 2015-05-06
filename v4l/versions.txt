@@ -1,7 +1,7 @@
 # Use this for stuff for drivers that don't compile
 [9.255.255]
 
-[3.20.0]
+[4.0.0]
 # needs of_property_read_u64_array
 VIDEO_SMIAPP
 
