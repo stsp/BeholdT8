@@ -1,16 +1,16 @@
 diff --git a/drivers/media/dvb-frontends/m88ds3103.c b/drivers/media/dvb-frontends/m88ds3103.c
-index 17da380..1e6b645 100644
+index f893cfc..abecdac 100644
 --- a/drivers/media/dvb-frontends/m88ds3103.c
 +++ b/drivers/media/dvb-frontends/m88ds3103.c
-@@ -1432,7 +1432,7 @@ struct dvb_frontend *m88ds3103_attach(const struct m88ds3103_config *cfg,
- 		goto err;
+@@ -1587,7 +1587,7 @@ static int m88ds3103_probe(struct i2c_client *client,
+ 		goto err_kfree;
  
  	/* create mux i2c adapter for tuner */
--	priv->i2c_adapter = i2c_add_mux_adapter(i2c, &i2c->dev, priv, 0, 0,
-+	priv->i2c_adapter = i2c_add_mux_adapter(i2c, priv, 0, 0,
- 			m88ds3103_select, m88ds3103_deselect);
- 	if (priv->i2c_adapter == NULL)
- 		goto err;
+-	dev->i2c_adapter = i2c_add_mux_adapter(client->adapter, &client->dev,
++	dev->i2c_adapter = i2c_add_mux_adapter(client->adapter,
+ 					       dev, 0, 0, m88ds3103_select,
+ 					       m88ds3103_deselect);
+ 	if (dev->i2c_adapter == NULL)
 diff --git a/drivers/media/dvb-frontends/rtl2830.c b/drivers/media/dvb-frontends/rtl2830.c
 index fac1a1d..cf5d8cf 100644
 --- a/drivers/media/dvb-frontends/rtl2830.c
@@ -25,10 +25,10 @@ index fac1a1d..cf5d8cf 100644
  	if (dev->adapter == NULL) {
  		ret = -ENODEV;
 diff --git a/drivers/media/dvb-frontends/rtl2832.c b/drivers/media/dvb-frontends/rtl2832.c
-index ab2418b..1943df0 100644
+index 87e66a8..a1e6cd2 100644
 --- a/drivers/media/dvb-frontends/rtl2832.c
 +++ b/drivers/media/dvb-frontends/rtl2832.c
-@@ -1254,7 +1254,7 @@ static int rtl2832_probe(struct i2c_client *client,
+@@ -1262,7 +1262,7 @@ static int rtl2832_probe(struct i2c_client *client,
  		goto err_regmap_exit;
  
  	/* create muxed i2c adapter for demod tuner bus */
@@ -38,10 +38,10 @@ index ab2418b..1943df0 100644
  	if (dev->i2c_adapter_tuner == NULL) {
  		ret = -ENODEV;
 diff --git a/drivers/media/dvb-frontends/si2168.c b/drivers/media/dvb-frontends/si2168.c
-index 7bbf380..2433694 100644
+index ee0a202..7df7e6b 100644
 --- a/drivers/media/dvb-frontends/si2168.c
 +++ b/drivers/media/dvb-frontends/si2168.c
-@@ -674,7 +674,7 @@ static int si2168_probe(struct i2c_client *client,
+@@ -682,7 +682,7 @@ static int si2168_probe(struct i2c_client *client,
  	mutex_init(&dev->i2c_mutex);
  
  	/* create mux i2c adapter for tuner */
