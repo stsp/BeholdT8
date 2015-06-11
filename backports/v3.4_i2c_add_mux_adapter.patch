@@ -9,8 +9,8 @@ index f893cfc..abecdac 100644
 -	dev->i2c_adapter = i2c_add_mux_adapter(client->adapter, &client->dev,
 +	dev->i2c_adapter = i2c_add_mux_adapter(client->adapter,
  					       dev, 0, 0, m88ds3103_select,
- 					       m88ds3103_deselect);
- 	if (dev->i2c_adapter == NULL)
+ 					       NULL);
+ 	if (dev->i2c_adapter == NULL) {
 diff --git a/drivers/media/dvb-frontends/rtl2830.c b/drivers/media/dvb-frontends/rtl2830.c
 index fac1a1d..cf5d8cf 100644
 --- a/drivers/media/dvb-frontends/rtl2830.c
