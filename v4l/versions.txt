@@ -45,10 +45,11 @@ IR_IMG
 # needs regmap lock/unlock ops
 DVB_RTL2830
 DVB_RTL2832
+DVB_TS2020
+DVB_M88DS3103
 
 [3.7.0]
 # i2c_add_mux_adapter prototype change
-DVB_M88DS3103
 # Needs PLATFORM_DEVID_AUTO
 DVB_USB_RTL28XXU
 
