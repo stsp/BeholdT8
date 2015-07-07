@@ -33,6 +33,8 @@ RADIO_SI4713
 [3.11.0]
 # needs freezable_schedule_hrtimeout_range
 DVB_PT3
+# needs arch_phys_wc_add
+VIDEO_FB_IVTV
 
 [3.10.0]
 # needs include/linux/mfd/syscon.h
