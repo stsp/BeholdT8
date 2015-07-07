@@ -125,6 +125,7 @@ SOC_CAMERA_TW9910
 SOC_CAMERA_PLATFORM
 # Needs of_match_ptr
 VIDEO_THS8200
+VIDEO_ADV7180
 
 [3.0.0]
 # fw_iso_context_queue_flush
@@ -185,8 +186,6 @@ IR_FINTEK
 DVB_DRXK
 # Requires ss_ep_comp in usb_host_endpoint
 USB_VIDEO_CLASS
-# Relies on IRQF_ONESHOT
-VIDEO_ADV7180
 
 [2.6.31]
 # These rely on arch support that wasn't available until 2.6.31
