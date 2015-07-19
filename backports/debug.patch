@@ -34,15 +34,3 @@ index fb2acc5..8edffcb 100644
  	#define DEBUG
  #endif
  
-diff --git a/drivers/media/usb/stk1160/stk1160.h b/drivers/media/usb/stk1160/stk1160.h
-index abdea48..2eed017 100644
---- a/drivers/media/usb/stk1160/stk1160.h
-+++ b/drivers/media/usb/stk1160/stk1160.h
-@@ -58,6 +58,7 @@
-  * new drivers should use.
-  *
-  */
-+#undef DEBUG
- #define DEBUG
- #ifdef DEBUG
- #define stk1160_dbg(fmt, args...) \
