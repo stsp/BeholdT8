@@ -28,6 +28,7 @@ RC_ST
 [3.13.0]
 # needs gpio/consumer.h
 VIDEO_ADP1653
+VIDEO_TC358743
 RADIO_SI4713
 
 [3.11.0]
