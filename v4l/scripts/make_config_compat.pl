@@ -649,6 +649,7 @@ sub check_other_dependencies()
 	check_files_for_func("DIV_ROUND_CLOSEST_ULL", "NEED_DIV_ROUND_CLOSEST_ULL", "include/linux/kernel.h");
 	check_files_for_func("of_property_read_u64_array", "NEED_PROP_READ_U64_ARRAY", "include/linux/of.h");
 	check_files_for_func("module_pnp_driver", "NEED_MODULE_PNP_DRIVER", "include/linux/pnp.h");
+	check_files_for_func("eth_zero_addr", "NEED_ETH_ZERO_ADDR", "include/linux/etherdevice.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

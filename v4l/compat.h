@@ -1615,4 +1615,12 @@ static inline int of_property_read_u64_array(const struct device_node *np,
 				    pnp_unregister_driver)
 #endif
 
+#include <linux/if_ether.h>
+#ifdef NEED_ETH_ZERO_ADDR
+static inline void eth_zero_addr(u8 *addr)
+{
+	memset(addr, 0x00, ETH_ALEN);
+}
+#endif
+
 #endif /*  _COMPAT_H */
