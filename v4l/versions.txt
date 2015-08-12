@@ -59,6 +59,8 @@ DVB_M88DS3103
 # i2c_add_mux_adapter prototype change
 # Needs PLATFORM_DEVID_AUTO
 DVB_USB_RTL28XXU
+# needs pcie_capability_clear_and_set_word
+DVB_NETUP_UNIDVB
 
 [3.6.0]
 # needs include/linux/sizes.h
