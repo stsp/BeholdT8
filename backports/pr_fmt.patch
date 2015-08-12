@@ -20,7 +20,7 @@ index df1e8c9..fceb498 100644
  
  #include <media/saa7146_vv.h>
 diff --git a/drivers/media/common/saa7146/saa7146_hlp.c b/drivers/media/common/saa7146/saa7146_hlp.c
-index be746d1..68f7b68 100644
+index 3dc6a83..b8b65e0 100644
 --- a/drivers/media/common/saa7146/saa7146_hlp.c
 +++ b/drivers/media/common/saa7146/saa7146_hlp.c
 @@ -1,3 +1,4 @@
@@ -59,7 +59,7 @@ index 4cc39e4..cfc102e 100644
  
  #include <linux/device.h>
 diff --git a/drivers/media/dvb-frontends/drx39xyj/drxj.c b/drivers/media/dvb-frontends/drx39xyj/drxj.c
-index 5224535..9448a6f 100644
+index b28b578..4929ef4 100644
 --- a/drivers/media/dvb-frontends/drx39xyj/drxj.c
 +++ b/drivers/media/dvb-frontends/drx39xyj/drxj.c
 @@ -53,6 +53,7 @@
@@ -71,7 +71,7 @@ index 5224535..9448a6f 100644
  
  #include <linux/module.h>
 diff --git a/drivers/media/dvb-frontends/drxk_hard.c b/drivers/media/dvb-frontends/drxk_hard.c
-index ad35264..ac76cac 100644
+index b975da0..2ca468a 100644
 --- a/drivers/media/dvb-frontends/drxk_hard.c
 +++ b/drivers/media/dvb-frontends/drxk_hard.c
 @@ -21,6 +21,7 @@
@@ -83,7 +83,7 @@ index ad35264..ac76cac 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/media/dvb-frontends/lgdt3306a.c b/drivers/media/dvb-frontends/lgdt3306a.c
-index 0e2e43e..656a38d 100644
+index 721fbc0..ad35d6a 100644
 --- a/drivers/media/dvb-frontends/lgdt3306a.c
 +++ b/drivers/media/dvb-frontends/lgdt3306a.c
 @@ -16,6 +16,7 @@
@@ -95,7 +95,7 @@ index 0e2e43e..656a38d 100644
  
  #include <asm/div64.h>
 diff --git a/drivers/media/dvb-frontends/nxt200x.c b/drivers/media/dvb-frontends/nxt200x.c
-index 8a8e1ec..f387ee3 100644
+index 79c3040..72e4f13 100644
 --- a/drivers/media/dvb-frontends/nxt200x.c
 +++ b/drivers/media/dvb-frontends/nxt200x.c
 @@ -37,6 +37,7 @@
@@ -107,7 +107,7 @@ index 8a8e1ec..f387ee3 100644
  
  /* Max transfer size done by I2C transfer functions */
 diff --git a/drivers/media/dvb-frontends/or51211.c b/drivers/media/dvb-frontends/or51211.c
-index 873ea1d..a0fd8e2 100644
+index e82413b..3be0ee8 100644
 --- a/drivers/media/dvb-frontends/or51211.c
 +++ b/drivers/media/dvb-frontends/or51211.c
 @@ -22,6 +22,7 @@
@@ -322,8 +322,20 @@ index 7bc495e..0b83446f 100644
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
  #include "cx25821-video.h"
+diff --git a/drivers/media/pci/ivtv/ivtvfb.c b/drivers/media/pci/ivtv/ivtvfb.c
+index 8b95eef..ce1cd12 100644
+--- a/drivers/media/pci/ivtv/ivtvfb.c
++++ b/drivers/media/pci/ivtv/ivtvfb.c
+@@ -38,6 +38,7 @@
+     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  */
+ 
++#undef pr_fmt
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/module.h>
 diff --git a/drivers/media/pci/saa7134/saa7134.h b/drivers/media/pci/saa7134/saa7134.h
-index 6fec017..a4684dc 100644
+index 6b5f6f4..9d1fed2 100644
 --- a/drivers/media/pci/saa7134/saa7134.h
 +++ b/drivers/media/pci/saa7134/saa7134.h
 @@ -21,6 +21,7 @@
@@ -383,7 +395,7 @@ index 6c4076a..87e16ee 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/media/pci/ttpci/budget-av.c b/drivers/media/pci/ttpci/budget-av.c
-index 54c9910..fd66a5a 100644
+index 3e469d4..6a37f4c 100644
 --- a/drivers/media/pci/ttpci/budget-av.c
 +++ b/drivers/media/pci/ttpci/budget-av.c
 @@ -33,6 +33,7 @@
@@ -781,7 +793,7 @@ index 7d12599..e80bbe0 100644
  
  #include "m5602_s5k4aa.h"
 diff --git a/drivers/media/usb/gspca/m5602/m5602_s5k83a.c b/drivers/media/usb/gspca/m5602/m5602_s5k83a.c
-index 7cbc3a0..ce6d38e 100644
+index bf6b215..b40cf90 100644
 --- a/drivers/media/usb/gspca/m5602/m5602_s5k83a.c
 +++ b/drivers/media/usb/gspca/m5602/m5602_s5k83a.c
 @@ -16,6 +16,7 @@
@@ -913,7 +925,7 @@ index 5102cea..e16f64f 100644
  
  #define MODULE_NAME "se401"
 diff --git a/drivers/media/usb/gspca/sn9c2028.c b/drivers/media/usb/gspca/sn9c2028.c
-index 39b6b2e..4ba4d39 100644
+index 4f2050a..d5a5511 100644
 --- a/drivers/media/usb/gspca/sn9c2028.c
 +++ b/drivers/media/usb/gspca/sn9c2028.c
 @@ -18,6 +18,7 @@
@@ -1261,7 +1273,7 @@ index 44f5655..a45dd88 100644
  
  #include <linux/kernel.h>
 diff --git a/drivers/staging/media/lirc/lirc_imon.c b/drivers/staging/media/lirc/lirc_imon.c
-index 335b98a..11a18da 100644
+index 534b810..4037fcd 100644
 --- a/drivers/staging/media/lirc/lirc_imon.c
 +++ b/drivers/staging/media/lirc/lirc_imon.c
 @@ -20,6 +20,7 @@
@@ -1285,7 +1297,7 @@ index c140834..a331f81 100644
  
  /*** Includes ***/
 diff --git a/drivers/staging/media/lirc/lirc_sasem.c b/drivers/staging/media/lirc/lirc_sasem.c
-index 9e56743..f5ad5b8 100644
+index b247649a..f4cfb07 100644
 --- a/drivers/staging/media/lirc/lirc_sasem.c
 +++ b/drivers/staging/media/lirc/lirc_sasem.c
 @@ -34,6 +34,7 @@
@@ -1309,7 +1321,7 @@ index dc79844..8fe1f6d 100644
  
  #include <linux/module.h>
 diff --git a/drivers/staging/media/lirc/lirc_sir.c b/drivers/staging/media/lirc/lirc_sir.c
-index 29087f6..33609a3 100644
+index 4f326e9..159223d 100644
 --- a/drivers/staging/media/lirc/lirc_sir.c
 +++ b/drivers/staging/media/lirc/lirc_sir.c
 @@ -33,6 +33,7 @@
