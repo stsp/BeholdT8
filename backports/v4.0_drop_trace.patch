@@ -1,18 +1,31 @@
+diff --git a/drivers/media/v4l2-core/Makefile b/drivers/media/v4l2-core/Makefile
+index d1dd440..dc3de00 100644
+--- a/drivers/media/v4l2-core/Makefile
++++ b/drivers/media/v4l2-core/Makefile
+@@ -13,9 +13,6 @@ endif
+ ifeq ($(CONFIG_OF),y)
+   videodev-objs += v4l2-of.o
+ endif
+-ifeq ($(CONFIG_TRACEPOINTS),y)
+-  videodev-objs += v4l2-trace.o
+-endif
+ 
+ obj-$(CONFIG_VIDEO_V4L2) += videodev.o
+ obj-$(CONFIG_VIDEO_V4L2) += v4l2-common.o
 diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-index aa407cb..8b5b67b 100644
+index 4a384fc..6e53288 100644
 --- a/drivers/media/v4l2-core/v4l2-ioctl.c
 +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-@@ -28,9 +28,6 @@
+@@ -28,8 +28,6 @@
  #include <media/v4l2-device.h>
  #include <media/videobuf2-core.h>
  
--#define CREATE_TRACE_POINTS
 -#include <trace/events/v4l2.h>
 -
  /* Zero out the end of the struct pointed to by p.  Everything after, but
   * not including, the specified field is cleared. */
  #define CLEAR_AFTER_FIELD(p, field) \
-@@ -2554,12 +2551,6 @@ video_usercopy(struct file *file, unsigned int cmd, unsigned long arg,
+@@ -2744,12 +2742,6 @@ video_usercopy(struct file *file, unsigned int cmd, unsigned long arg,
  	err = func(file, cmd, parg);
  	if (err == -ENOIOCTLCMD)
  		err = -ENOTTY;
