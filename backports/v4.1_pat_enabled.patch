@@ -10,9 +10,8 @@ index 8b95eef..020955d 100644
 -		pr_warn("ivtvfb needs PAT disabled, boot with nopat kernel parameter\n");
 +#ifdef CONFIG_X86_PAT
 +	if (WARN(pat_enabled,
-+		"ivtvfb needs PAT disabled, boot with nopat kernel parameter\n");
++		"ivtvfb needs PAT disabled, boot with nopat kernel parameter\n"))
  		return -ENODEV;
- 	}
  #endif
 +#endif
  
