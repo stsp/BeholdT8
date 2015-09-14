@@ -11,6 +11,7 @@ TARDIR += drivers/media/
 TARDIR += drivers/staging/media/
 TARDIR += drivers/misc/altera-stapl/
 TARFILES += sound/pci/bt87x.c
+TARFILES += mm/frame_vector.c
 
 # Includes
 

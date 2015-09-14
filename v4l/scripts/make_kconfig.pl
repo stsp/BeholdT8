@@ -602,6 +602,7 @@ EOF
 
 open_kconfig('../linux', '../linux/drivers/media/Kconfig');
 open_kconfig('.', './Kconfig.sound');
+open_kconfig('.', './Kconfig.mm');
 open_kconfig('.', './Kconfig.misc');
 open_kconfig('../linux', './Kconfig.staging');
 close OUT;
