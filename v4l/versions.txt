@@ -21,6 +21,7 @@ SOC_CAMERA_OV2640
 VIDEO_XILINX
 I2C_SI4713
 VIDEO_TC358743
+VIDEO_ADP1653
 
 [3.15.0]
 # needs reset_control_get_optional
@@ -28,7 +29,6 @@ RC_ST
 
 [3.13.0]
 # needs gpio/consumer.h
-VIDEO_ADP1653
 RADIO_SI4713
 
 [3.11.0]
