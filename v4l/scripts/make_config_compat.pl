@@ -651,6 +651,7 @@ sub check_other_dependencies()
 	check_files_for_func("module_pnp_driver", "NEED_MODULE_PNP_DRIVER", "include/linux/pnp.h");
 	check_files_for_func("eth_zero_addr", "NEED_ETH_ZERO_ADDR", "include/linux/etherdevice.h");
 	check_files_for_func("frame_vector_create", "NEED_FRAME_VECTOR", "include/linux/mm.h");
+	check_files_for_func("kvfree", "NEED_KVFREE", "include/linux/mm.h");
 
 	# For tests for uapi-dependent logic
 	check_files_for_func_uapi("usb_endpoint_maxp", "NEED_USB_ENDPOINT_MAXP", "usb/ch9.h");

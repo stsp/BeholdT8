@@ -1623,6 +1623,17 @@ static inline void eth_zero_addr(u8 *addr)
 }
 #endif
 
+#ifdef NEED_KVFREE
+#include <linux/mm.h>
+static inline void kvfree(const void *addr)
+{
+	if (is_vmalloc_addr(addr))
+		vfree(addr);
+	else
+		kfree(addr);
+}
+#endif
+
 #ifdef NEED_FRAME_VECTOR
 #include <linux/mm.h>
 #include <linux/err.h>
