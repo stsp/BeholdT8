@@ -47,6 +47,7 @@ add v3.10_ir_hix5hd2.patch
 
 [3.9.255]
 add v3.9_drxj_warnings.patch
+add v3.9_get_user_pages_locked.patch
 
 [3.8.255]
 add v3.8_config_of.patch
