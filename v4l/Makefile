@@ -203,7 +203,7 @@ all:: default
 #################################################
 # installation invocation rules
 
-modules_install install:: media-install firmware_install
+modules_install install:: media-install firmware_install mm-install
 
 remove rminstall:: media-rminstall
 
