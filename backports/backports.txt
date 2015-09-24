@@ -33,6 +33,9 @@ add v4.1_pat_enabled.patch
 add v4.0_dma_buf_export.patch
 add v4.0_drop_trace.patch
 
+[3.19.255]
+add v3.19_get_user_pages_locked.patch
+
 [3.16.255]
 add v3.16_netdev.patch
 add v3.16_wait_on_bit.patch
@@ -47,7 +50,6 @@ add v3.10_ir_hix5hd2.patch
 
 [3.9.255]
 add v3.9_drxj_warnings.patch
-add v3.9_get_user_pages_locked.patch
 
 [3.8.255]
 add v3.8_config_of.patch
