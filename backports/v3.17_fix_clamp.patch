@@ -1,0 +1,13 @@
+diff --git a/drivers/media/pci/saa7164/saa7164-encoder.c b/drivers/media/pci/saa7164/saa7164-encoder.c
+index 1b184c3..3537c6f 100644
+--- a/drivers/media/pci/saa7164/saa7164-encoder.c
++++ b/drivers/media/pci/saa7164/saa7164-encoder.c
+@@ -389,7 +389,7 @@ int saa7164_s_frequency(struct saa7164_port *port,
+ 	if (f->tuner != 0)
+ 		return -EINVAL;
+ 
+-	port->freq = clamp(f->frequency,
++	port->freq = clamp_t(u32, f->frequency,
+ 			   SAA7164_TV_MIN_FREQ, SAA7164_TV_MAX_FREQ);
+ 
+ 	/* Update the hardware */

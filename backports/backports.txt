@@ -36,6 +36,9 @@ add v4.0_drop_trace.patch
 [3.19.255]
 add v3.19_get_user_pages_locked.patch
 
+[3.17.255]
+add v3.17_fix_clamp.patch
+
 [3.16.255]
 add v3.16_netdev.patch
 add v3.16_wait_on_bit.patch
