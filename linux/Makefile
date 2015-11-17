@@ -18,6 +18,7 @@ TARFILES += mm/frame_vector.c
 # Pure kernel API
 TARDIR += include/media/
 TARDIR += include/dt-bindings/media/
+TARDIR += include/linux/platform_data/media/
 TARFILES += include/linux/mmc/sdio_ids.h
 TARFILES += include/sound/aci.h
 TARFILES += include/uapi/linux/usb/video.h
@@ -30,7 +31,6 @@ TARFILES += include/linux/kconfig.h
 TARFILES += include/linux/hdmi.h
 TARFILES += include/linux/compiler-gcc.h
 TARFILES += include/linux/dma/xilinx_dma.h
-TARFILES += include/linux/platform_data/camera-rcar.h
 TARFILES += include/trace/events/v4l2.h
 TARFILES += include/trace/events/vb2.h
 TARFILES += include/linux/pci_ids.h
