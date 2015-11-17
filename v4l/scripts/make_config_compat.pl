@@ -556,6 +556,26 @@ sub check_files_for_func_uapi($$@)
 	$out.= "\n#define $define 1\n";
 }
 
+sub check_gfp_kswapd_reclaim()
+{
+	my @files = ( "$kdir/include/linux/gfp.h" );
+
+	foreach my $file ( @files ) {
+		open IN, "<$file" or next;
+		while (<IN>) {
+			if (m/__GFP_KSWAPD_RECLAIM/) {
+				close IN;
+				# definition found. No need for compat
+				return;
+			}
+		}
+		close IN;
+	}
+
+	# definition not found. This means that we need compat
+	$out.= "\n#define __GFP_KSWAPD_RECLAIM 0\n";
+}
+
 sub check_other_dependencies()
 {
 	check_spin_lock();
@@ -583,6 +603,7 @@ sub check_other_dependencies()
 	check_autosuspend_delay();
 	check_i2c_smbus_read_word_swapped();
 	check_printk_ratelimited();
+	check_gfp_kswapd_reclaim();
 	check_files_for_func("hex_to_bin", "NEED_HEX_TO_BIN", "include/linux/kernel.h");
 	check_files_for_func("snd_ctl_enum_info", "NEED_SND_CTL_ENUM_INFO", "include/sound/control.h");
 	check_files_for_func("sysfs_attr_init", "NEED_SYSFS_ATTR_INIT", "include/linux/sysfs.h");
