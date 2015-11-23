@@ -32,6 +32,7 @@ add v4.1_pat_enabled.patch
 [4.0.255]
 add v4.0_dma_buf_export.patch
 add v4.0_drop_trace.patch
+add v4.0_fwnode.patch
 
 [3.19.255]
 add v3.19_get_user_pages_locked.patch
