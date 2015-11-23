@@ -286,7 +286,7 @@ clean::
 	$(MAKE) -C firmware $@
 
 distclean:: clean
-	-rm -f .version .*.o.flags .*.o.d Makefile.media \
+	-rm -f .version .*.o.flags .*.o.d *.mod.gcno Makefile.media \
 		Kconfig Kconfig.kern .config .config.cmd .myconfig \
 		.kconfig.dep
 	-rm -rf .tmp_versions .tmp*.ver .tmp*.o .*.gcno
