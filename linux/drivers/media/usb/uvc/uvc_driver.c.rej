@@ -1,0 +1,5 @@
+--- drivers/media/usb/uvc/uvc_driver.c
++++ drivers/media/usb/uvc/uvc_driver.c
+@@ -1939 +1939 @@ static int uvc_probe(struct usb_interface *intf,
+-	dev->mdev.driver_version = V4L2_VERSION;
++	dev->mdev.driver_version = LINUX_VERSION_CODE;

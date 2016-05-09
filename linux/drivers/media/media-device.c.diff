@@ -1,0 +1,8 @@
+--- media-device.c.orig	2016-05-08 08:45:07.000000000 +0300
++++ media-device.c	2016-05-10 02:47:01.381061218 +0300
+@@ -846 +846 @@
+-	mdev->driver_version = LINUX_VERSION_CODE;
++	mdev->driver_version = V4L2_VERSION;
+@@ -875 +875 @@
+-	mdev->driver_version = LINUX_VERSION_CODE;
++	mdev->driver_version = V4L2_VERSION;

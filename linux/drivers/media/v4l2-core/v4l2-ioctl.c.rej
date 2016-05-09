@@ -1,0 +1,5 @@
+--- drivers/media/v4l2-core/v4l2-ioctl.c
++++ drivers/media/v4l2-core/v4l2-ioctl.c
+@@ -1026 +1026 @@ static int v4l_querycap(const struct v4l2_ioctl_ops *ops,
+-	cap->version = V4L2_VERSION;
++	cap->version = LINUX_VERSION_CODE;
