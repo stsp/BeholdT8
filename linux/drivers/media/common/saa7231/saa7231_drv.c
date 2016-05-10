@@ -89,6 +89,7 @@
 #include "cxd2817.h"
 #include "cxd2861.h"
 #endif
+#include "si2168.h"
 
 static unsigned int verbose;
 static unsigned int int_type;
@@ -100,7 +101,7 @@ MODULE_PARM_DESC(verbose, "verbose startup messages, default is 1 (yes)");
 MODULE_PARM_DESC(int_type, "force Interrupt Handler type: 0=INT-A, 1=MSI, 2=MSI-X. default INT-A mode");
 
 #define DRIVER_NAME				"SAA7231"
-#define DRIVER_VER				"0.0.91"
+#define DRIVER_VER				"0.0.93"
 #define MODULE_DBG				(((saa7231)->verbose == SAA7231_DEBUG) ? 1 : 0)
 
 extern void saa7231_dump_write(struct saa7231_dev *saa7231);
@@ -513,6 +514,13 @@ static struct cxd2861_cfg bgt3636_cxd2861_config = {
 };
 #endif
 
+static struct tda18272_config behold_t8_tda18272_config[] = {
+	{
+		.addr		= (0xc6 >> 1),
+		.mode		= TDA18272_SLAVE,
+	}
+};
+
 #define NXP				"NXP Semiconductor"
 #define PURUS_PCIe_REF			0x0001
 #define PURUS_PCI_REF			0x0002
@@ -536,6 +544,10 @@ static struct cxd2861_cfg bgt3636_cxd2861_config = {
 #define BLACKGOLD_BGT3695		0x3695
 #define BLACKGOLD_BGT3696		0x3696
 #define BLACKGOLD_BGT3636		0x3636
+
+#define BEHOLD				"Beholder International Ltd."
+#define BEHOLD_DEVICE			0x5ace
+#define BEHOLD_T8			0x8201
 
 #define SUBVENDOR_ALL			0x0000
 #define SUBDEVICE_ALL			0x0000
@@ -565,6 +577,7 @@ static struct cxd2861_cfg bgt3636_cxd2861_config = {
 #define BGT3695			       15
 #define BGT3696			       16
 #define BGT3636			       17
+#define BEHOLDT8			18
 
 static struct card_desc saa7231_desc[] = {
 	MAKE_DESC(NXP,		"Purus PCIe",	"DVB-S + DVB-T + Analog Ref. design"),
@@ -586,6 +599,7 @@ static struct card_desc saa7231_desc[] = {
 	MAKE_DESC(BLACKGOLD,	"BGT3695",	"Dual DVB-T + Analog"),
 	MAKE_DESC(BLACKGOLD,	"BGT3696",	"Dual ATSC + Analog"),
 	MAKE_DESC(BLACKGOLD,	"BGT3636",	"DVB-S/S2 + DVB-T/T2/C + Analog"),
+	MAKE_DESC(BEHOLD,	"BEHOLDT8",	"DVB-T/T2/C + Analog"),
 	{ }
 };
 
@@ -1078,6 +1092,52 @@ static int saa7231_frontend_attach(struct saa7231_dvb *dvb, int frontend)
 
 		ret = 0;
 		break;
+	case SUBSYS_INFO(BEHOLD_DEVICE, BEHOLD_T8):
+	{
+		struct i2c_adapter *adapter;
+		struct i2c_client *client;
+		struct i2c_board_info info;
+		struct si2168_config si2168_config;
+		memset(&si2168_config, 0, sizeof(si2168_config));
+		si2168_config.i2c_adapter = &adapter;
+		si2168_config.fe = &dvb->fe;
+		si2168_config.ts_mode = SI2168_TS_SERIAL;
+//		si2168_config.clock = 16000000;
+//		si2168_config.clock_mode = 1;
+//		si2168_config.gpio.gpio0 = GP_DISABLE;
+//		si2168_config.mp_pin = 1;
+		memset(&info, 0, sizeof(struct i2c_board_info));
+		strlcpy(info.type, "si2168", I2C_NAME_SIZE);
+		info.addr = 0x67;
+		info.platform_data = &si2168_config;
+		request_module(info.type);
+
+		client = i2c_new_device(&saa7231->i2c[1].i2c_adapter, &info);
+		if (client == NULL || client->dev.driver == NULL) {
+			dprintk(SAA7231_ERROR, 1, "Frontend:%d attach failed", frontend);
+			ret = -ENODEV;
+			goto exit;
+		}
+
+		if (!try_module_get(client->dev.driver->owner)) {
+			i2c_unregister_device(client);
+			dprintk(SAA7231_ERROR, 1, "Frontend:%d attach failed", frontend);
+			ret = -ENODEV;
+			goto exit;
+		}
+		if (!dvb->fe) {
+			dprintk(SAA7231_ERROR, 1, "Frontend:%d attach failed", frontend);
+			ret = -ENODEV;
+			goto exit;
+		} else {
+			dvb_attach(tda18272_attach,
+				    dvb->fe,
+				    &saa7231->i2c[1].i2c_adapter,
+				    &behold_t8_tda18272_config[frontend]);
+		}
+		ret = 0;
+		break;
+	}
 	}
 exit:
 	return ret;
@@ -1312,6 +1372,28 @@ static struct saa7231_config purus_mpcie_ref_config = {
 	.stream_ports		= 1,
 };
 
+static struct saa7231_config behold_t8 = {
+	.desc			= DEVICE_DESC(BEHOLDT8),
+	.a_tvc			=1,
+	.v_cap			=1,
+	.a_cap			=1,
+
+	.xtal			= 54,
+	.i2c_rate		= SAA7231_I2C_RATE_400,
+	.root_clk		= CLK_ROOT_54MHz,
+	.irq_handler		= saa7231_irq_handler,
+
+	.ext_dvb_adapters	= 1,
+	.ts0_cfg		= 0x41,
+	.ts0_clk		= 0x05,
+//		.ts1_cfg	= 0x41,
+//		.ts1_clk	= 0x05,
+	.frontend_enable	= saa7231_frontend_enable,
+	.frontend_attach	= saa7231_frontend_attach,
+
+	.stream_ports		= 1,
+};
+
 static struct pci_device_id saa7231_pci_table[] = {
 
 	MAKE_ENTRY(BLACKGOLD_TECHNOLOGY, BLACKGOLD_BGT3575, SAA7231, &purus_blackgold_bgt3575),
@@ -1331,6 +1413,8 @@ static struct pci_device_id saa7231_pci_table[] = {
 
 	MAKE_ENTRY(NXP_REFERENCE_BOARD, PURUS_mPCIe_REF, SAA7231, &purus_mpcie_ref_config),
 	MAKE_ENTRY(NXP_REFERENCE_BOARD, PURUS_PCIe_REF, SAA7231, &purus_pcie_ref_config),
+
+	MAKE_ENTRY(BEHOLD_DEVICE, BEHOLD_T8, SAA7231, &behold_t8),
 	{ }
 };
 MODULE_DEVICE_TABLE(pci, saa7231_pci_table);
