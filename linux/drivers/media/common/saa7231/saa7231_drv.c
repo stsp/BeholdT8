@@ -80,6 +80,7 @@
 #include "tda18271.h"
 #include "s5h1411.h"
 #include "tda18272.h"
+#include "tda18273.h"
 #include "cxd2820r.h"
 //#include "cxd2834.h"
 #define HAVE_BGT 0
@@ -513,13 +514,6 @@ static struct cxd2861_cfg bgt3636_cxd2861_config = {
 	.f_xtal		= 41,
 };
 #endif
-
-static struct tda18272_config behold_t8_tda18272_config[] = {
-	{
-		.addr		= (0xc6 >> 1),
-		.mode		= TDA18272_SLAVE,
-	}
-};
 
 #define NXP				"NXP Semiconductor"
 #define PURUS_PCIe_REF			0x0001
@@ -1130,10 +1124,10 @@ static int saa7231_frontend_attach(struct saa7231_dvb *dvb, int frontend)
 			ret = -ENODEV;
 			goto exit;
 		} else {
-			dvb_attach(tda18272_attach,
+			dvb_attach(tda18273_attach,
 				    dvb->fe,
 				    &saa7231->i2c[1].i2c_adapter,
-				    &behold_t8_tda18272_config[frontend]);
+				    0xc6 >> 1);
 		}
 		ret = 0;
 		break;
